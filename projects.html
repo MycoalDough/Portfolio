@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Prompt Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ projects</div>
+    </div>
+    <div class="nav">
+        <div>
+            <input type="checkbox" id="checkbox1" onclick="filterProjects()">
+            <label for="checkbox1">AI</label>
+            <input type="checkbox" id="checkbox2" onclick="filterProjects()">
+            <label for="checkbox2">GAME</label>
+        </div>
+        <div class="project" id="AI">
+            <h3>—</h3>
+            <div class="project-info">
+                <h2>Project Title 1</h2>
+                <h4>2022</h4>
+                <p>nah<br><br></p>
+                <a id="project_link" href="project1.html">> Link to Project 1</a>
+                <a id="project_link" href="project1.html">> Link to Project 1</a>
+                <a id="project_link" href="project1.html">> Link to Project 1</a>
+            </div>
+            <img src="image1.png" alt="Project 1 Image" class="project-image">
+        </div>
+        <div class="project" id="GAME">
+            <h3>—</h3>
+            <div class="project-info">
+                <h2>Project Title 1</h2>
+                <h4>2022</h4>
+                <p>nah<br><br></p>
+                <a id="project_link" href="project1.html">> Link to Project 2</a>
+                <a id="project_link" href="project1.html">> Link to Project 1</a>
+                <a id="project_link" href="project1.html">> Link to Project 1</a>
+            </div>
+            <img src="image1.png" alt="Project 1 Image" class="project-image">
+        </div>
+        <!-- more projects the same way -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -3,15 +3,33 @@
 
 /* Base styles */
 body {
-    background-color: rgb(22, 22, 22);
+    background-color: rgb(0, 0, 0);
     color: white;
     font-family: "Golos Text", sans-serif;
-    padding-top: 150px;
-    padding-left: 400px;
+    padding-top: 100px;
+    padding-left: 300px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow-x: hidden;
 }
+
+.background {
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.05;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Your existing styles go here */
+
 
 /* Styles for the prompt container */
 .prompt-container {
@@ -35,6 +53,7 @@ body {
 /* Styles for navigation */
 .nav {
     margin-top: 0px;
+    z-index: 1; 
     align-self: flex-start;
 }
 
@@ -54,18 +73,13 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Style for cloud images */
 .cloud {
     position: absolute;
-    top: 100px; /* Initial position from the top */
-    left: -100px; /* Initial position from the left, just outside the screen */
-    z-index: -1; /* Set a lower z-index to move clouds behind other elements */
+    top: 100px; 
+    left: -100px;
+    z-index: -1;
 }
 
-/* Additional styles for navigation */
-.nav {
-    z-index: 1; /* Set a higher z-index to keep navigation links on top */
-}
 
 #main_button:hover {
     color: rgb(93, 93, 93);
@@ -74,3 +88,85 @@ body {
 #main_button{
     transition: color 0.3s ease;
 }
+
+/* PROJECTS */
+
+.project {
+    margin-bottom: 10px; 
+    overflow: hidden;
+    position: relative; 
+    padding-bottom: 10px; /* Add some padding between projects */
+    padding-top:10px;
+}
+
+
+.project .project-info {
+    float: right; 
+}
+
+.project-info h2,
+.project-info h4,
+.project-info p,
+.project-info a {
+    margin-bottom: -10px;
+    margin-left: 20px; 
+}
+
+.project-info h2{
+    margin-bottom: -20px;
+}
+
+.project-info h4{
+    color: rgb(167, 163, 163);
+    font-size: 20px;
+}
+
+.project img {
+    top: 0; 
+    width: 400px; 
+    height: auto;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.project a {
+    display: block; 
+    margin-top: 5px;
+}
+
+#project_link{
+    font-size: 15px;
+    color: rgb(115, 115, 162);
+    text-decoration: underline;
+
+}
+
+#project_link:hover{
+    font-size: 15px;
+    color: rgb(34, 34, 52);
+}
+
+#main_menu_p{
+    font-size: 20px;
+    background-color: #b6b6b6;
+    padding: 5px;
+    margin-top: -8px;
+    color: #000000;
+}
+
+.project h3{
+    margin-top: -5px;
+    color: rgb(115, 115, 162);
+    font-weight: 0;
+}
+
+/* Dark Mode Checkbox Styling */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    background-color: #333; /* Dark background color */
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
