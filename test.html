@@ -1,5 +1,3 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +6,17 @@
     <title>Run Script</title>
 </head>
 <body>
+    <label for="input1">First Value:</label>
+    <input type="text" id="input1" value="Test3"><br>
+    <label for="input2">Third Value:</label>
+    <input type="text" id="input2" value="This was sent from the script!"><br>
     <button id="runScriptBtn">Run Script</button>
     <script>
         document.getElementById('runScriptBtn').addEventListener('click', async () => {
             try {
-                const response = await fetch('/run-script');
+                const input1 = document.getElementById('input1').value;
+                const input2 = document.getElementById('input2').value;
+                const response = await fetch(`https://portfolio-893t.onrender.com/run-script?input1=${input1}&input2=${input2}`);
                 const result = await response.text();
                 console.log(result);
                 alert('Script executed successfully!');
