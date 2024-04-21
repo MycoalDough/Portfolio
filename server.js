@@ -1,3 +1,15 @@
+const express = require('express');
+const { google } = require('googleapis');
+const cors = require('cors');
+
+const app = express();
+
+// Enable CORS
+app.use(cors());
+
+// Serve static files (like your HTML file) from the 'public' directory
+app.use(express.static('public'));
+
 // Function to execute the main logic
 async function main(input1, input2) {
     try {
@@ -41,4 +53,9 @@ app.get('/run-script', async (req, res) => {
     const input2 = req.query.input2 || 'This was sent from the script!'; // Default value if input2 is not provided
     await main(input1, input2);
     res.send('Script executed successfully.');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
