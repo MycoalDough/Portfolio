@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Manipulation</title>
+    <title>Run Script</title>
 </head>
 <body>
-    <h1>Google Sheets Data Manipulation</h1>
-    <button id="updateDataBtn">Update Data</button>
-
-    <!-- Load the Google Sheets API client library -->
-    <script src="https://apis.google.com/js/api.js"></script>
-
-    <!-- Import the data.js file -->
-    <script src="data.js"></script>
-
+    <button id="runScriptBtn">Run Script</button>
     <script>
-        // Add event listener to the button
-        document.getElementById("updateDataBtn").addEventListener("click", function() {
-            // Call the main function from data.js when the button is clicked
-            main();
+        document.getElementById('runScriptBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/run-script');
+                const result = await response.text();
+                console.log(result);
+                alert('Script executed successfully!');
+            } catch (error) {
+                console.error(error);
+                alert('Error occurred while running the script.');
+            }
         });
     </script>
 </body>
