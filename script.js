@@ -1,92 +1,50 @@
-function getRandomNumber(min, max) {
-    return Math.random() * (max - min) + min;
-}
+const express = require("express");
+const {google, GoogleApis} = require("googleapis");
 
-function spawnCloud() {
-    var cloud = document.createElement("img");
-    cloud.src = "images/cloud" + Math.floor(Math.random() * 4) + ".png"; 
-    cloud.classList.add("cloud");
+const app = express();
 
-    cloud.style.left = "-100px";
-    cloud.style.top = getRandomNumber(0, window.innerHeight - 200) + "px";
-    cloud.style.opacity = getRandomNumber(0,0.1).toString(); 
-    
-    var size = getRandomNumber(50, 150);
-    cloud.style.width = size + "px";
-    cloud.style.height = "auto";
-    
-    document.body.appendChild(cloud);
+app.get("/", async (req, res) =>{
 
-    // Animation
-    var speed = getRandomNumber(20, 100); 
-    var endPosition = window.innerWidth - 10;
-    var interval = setInterval(function() {
-        var currentPosition = parseFloat(cloud.style.left);
-        if (currentPosition >= endPosition) {
-            clearInterval(interval); 
-            cloud.remove();
-        } else {
-            cloud.style.left = currentPosition + speed / 60 + "px"; 
-        }
-    }, 1000 / 60);
-}
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
 
-setInterval(spawnCloud, getRandomNumber(10000,20000));
+    const client = await auth.getClient();
 
-function filterProjects() {
-    var checkbox1 = document.getElementById("checkbox1");
-    var checkbox2 = document.getElementById("checkbox2");
-    var projects = document.querySelectorAll('.project');
-
-    if (checkbox1.checked && !checkbox2.checked) {
-        projects.forEach(function(project) {
-            if (project.id === "AI") {
-                project.style.display = "block";
-            } else {
-                project.style.display = "none";
-            }
-        });
-    } else if (!checkbox1.checked && checkbox2.checked) {
-        projects.forEach(function(project) {
-            if (project.id === "GAME") {
-                project.style.display = "block";
-            } else {
-                project.style.display = "none";
-            }
-        });
-    } else {
-        projects.forEach(function(project) {
-            project.style.display = "block";
-        });
-    }
-}
+    const googleSheets = google.sheets({version: "v4", auth:client});
 
 
-const letters = "qwertyuiopasdfghjklzxcvbnm234567890!@#$%^&*()";
+    //get ss data
 
-let interval = null;
+    const ssID = "1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0";
 
-document.getElementById("main_menu_p").addEventListener("mouseover", event => {
-      let iteration = 0;
-  
-  clearInterval(interval);
-  
-  interval = setInterval(() => {
-    event.target.innerText = event.target.innerText
-      .split("")
-      .map((letter, index) => {
-        if(index < iteration) {
-          return event.target.dataset.value[index];
-        }
-      
-        return letters[Math.floor(Math.random() * 40)]
-      })
-      .join("");
-    
-    if(iteration >= event.target.dataset.value.length){ 
-      clearInterval(interval);
-    }
-    
-    iteration += 1 / 3;
-  }, 1);
+    const metaData = await googleSheets.spreadsheets.get({
+        auth: auth,
+        spreadsheetId:ssID
+    });
+
+    //read spreadsheet
+    const getRows = await googleSheets.spreadsheets.values.get({
+        auth:auth,
+        spreadsheetId: ssID,
+        range: "Feed!A:C",
+    });
+
+    //write rows to the spreadsheet
+    await googleSheets.spreadsheets.values.append({
+        auth:auth,
+        spreadsheetId:ssID,
+        range: "Feed!A:C",
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            values:[
+                ["Test3","4/21/24 12:25 PM", "this was sent from the server!"]
+            ]
+        },
+    });
+
+    res.send(getRows);
 });
+
+app.listen(1337, (req, res) => console.log("running on 1337"));
