@@ -1,7 +1,14 @@
 const express = require('express');
 const { google } = require('googleapis');
+const cors = require('cors');
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
+
+// Serve static files (like your HTML file) from the 'public' directory
+app.use(express.static('public'));
 
 // Function to execute the main logic
 async function main() {
