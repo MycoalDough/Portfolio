@@ -14,6 +14,8 @@ body {
     overflow-x: hidden;
 }
 
+
+
 .background {
     background-image: url("background.png");
     background-size: cover;
@@ -123,7 +125,7 @@ body {
 
 .project img {
     top: 0; 
-    width: 400px; 
+    width: 500px; 
     height: auto;
     margin-left: 20px;
     margin-top: 10px;
@@ -169,6 +171,7 @@ input[type="checkbox"] {
     outline: none;
     cursor: pointer;
     position: relative;
+    margin-bottom: 20px;
   }
 
 #about_me_div {
@@ -190,4 +193,53 @@ input[type="checkbox"] {
 #about_me_div a:hover {
     background-color: rgba(255, 255, 255, 0.3);
     cursor: pointer;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 80%;
+    background-color: #281f2b78;
+}
+
+.blog_inside {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Define styles for the top-left column */
+.top-left {
+    margin-bottom: 10px;
+    flex-grow: 1; /* Make it stretch */
+    font-size: 20px;
+}
+
+/* Define styles for the top-right column */
+.top-right {
+    font-size: 13px;
+    padding-top: 5px;
+}
+
+/* Define styles for the bottom description column */
+.bottom {
+    margin-top: auto; /* Push it to the bottom */
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        padding-left: 25px; /* Adjust padding for mobile devices */
+    }
+
+    .project,
+    .project-info {
+        float: none !important;
+    }
+
+    .project img{
+        width: 80%;
+    }
 }
