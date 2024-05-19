@@ -9,7 +9,7 @@ fetch(FULL_URL)
     .then(rep => {
         let data = JSON.parse(rep.substr(47).slice(0, -2));
 
-        for (let i = 0; i < data.table.rows.length; i++) {
+        for (let i = data.table.rows.length - 1; i >= 0; i--) {
             let rowData = data.table.rows[i].c;
 
             let div = document.createElement('div');
@@ -60,14 +60,15 @@ fetch(FULL_URL)
         // Create a new Date object with the input parameters
         let dtObj = new Date(...inputDate);
     
-        // Format the date as desired
-        let formattedDate = `${(dtObj.getMonth() + 1)}/${dtObj.getDate()}/${dtObj.getFullYear()} ${dtObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+        // Format the time as desired
+        let formattedTime = dtObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     
         // Increment the month by 1
-        let month = (dtObj.getMonth() + 2) <= 12 ? (dtObj.getMonth() + 2) : 1;
+        let month = (dtObj.getMonth()) <= 12 ? (dtObj.getMonth()) : 1;
     
         // Concatenate the month, day, year, and formatted time
-        let convertedDate = `${month}/${dtObj.getDate()}/${dtObj.getFullYear()} ${formattedDate.substr(formattedDate.indexOf(' ') + 1)} ${dtObj.getHours() >= 12 ? 'PM' : 'AM'}`;
+        let convertedDate = `${month}/${dtObj.getDate()}/${dtObj.getFullYear()} ${formattedTime}`;
     
         return convertedDate;
     }
+    

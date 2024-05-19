@@ -31,6 +31,11 @@ function spawnCloud() {
     }, 1000 / 60);
 }
 
+function getWeather(){
+    const apiKey = "19780ef9e0503a9a115106d18fcb9710";
+    const city = "Rancho Cucamonga";
+
+}
 setInterval(spawnCloud, getRandomNumber(10000,20000));
 
 function filterProjects() {
@@ -66,7 +71,7 @@ const letters = "qwertyuiopasdfghjklzxcvbnm234567890!@#$%^&*()";
 
 let interval = null;
 
-document.getElementById("main_menu_p").addEventListener("mouseover", event => {
+/*document.getElementById("main_menu_p").addEventListener("mouseover", event => {
       let iteration = 0;
   
   clearInterval(interval);
@@ -89,4 +94,27 @@ document.getElementById("main_menu_p").addEventListener("mouseover", event => {
     
     iteration += 1 / 3;
   }, 1);
-});
+}); */
+
+var reverseState = 0; // Initial state
+let reverse = document.getElementById('reverseButton');
+
+if(reverse){
+    document.getElementById('reverseButton').addEventListener('click', function() {
+        var rows = document.querySelectorAll('.row');
+        var parent = rows[0].parentNode;
+        for (var i = rows.length - 1; i >= 0; i--) {
+            parent.appendChild(rows[i]);
+        }
+        
+        // Update button text based on reverseState
+        if (reverseState % 2 === 0) {
+            this.textContent = "SORT: Oldest";
+        } else {
+            this.textContent = "SORT: Recent";
+        }
+        
+        reverseState++; // Increment reverseState
+    });
+}
+

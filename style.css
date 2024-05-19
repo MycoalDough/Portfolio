@@ -59,7 +59,7 @@ body {
     align-self: flex-start;
 }
 
-.nav a {
+.nav a:not(#project-name):not(#project_link):not(#project-image-button) {
     display: block;
     color: rgb(220, 220, 220);
     text-decoration: none;
@@ -71,7 +71,22 @@ body {
     padding: 5px;
 }
 
-.nav a:hover {
+#project-name{
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: -20px;
+    margin-left: 20px; 
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#project-name:hover{
+    color: rgb(100, 100, 165);
+}
+
+
+.nav a:hover:not(#project-link-inside):not(#youtube):not(#project-name):not(#project-image-button){
     background-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -98,12 +113,22 @@ body {
     overflow: hidden;
     position: relative; 
     padding-bottom: 10px; /* Add some padding between projects */
-    padding-top:10px;
+    padding-top: 10px;
+    display: flex; /* Use flexbox for the project container */
+    align-items: flex-start; /* Align items to the start to handle different content heights */
 }
 
+.project-content {
+    display: flex;
+    align-items: flex-start; /* Align items to the start to line up with the top of the image */
+    padding-top: 10px;
+}
 
-.project .project-info {
-    float: right; 
+.project-info {
+    flex: 1; /* Takes up the remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the start */
 }
 
 .project-info h2,
@@ -114,21 +139,22 @@ body {
     margin-left: 20px; 
 }
 
-.project-info h2{
+.project-info h2 {
     margin-bottom: -20px;
 }
 
-.project-info h4{
+.project-info h4 {
     color: rgb(167, 163, 163);
     font-size: 20px;
 }
 
 .project img {
     top: 0; 
-    width: 500px; 
+    width: 500px; /* Adjust as needed */
     height: auto;
     margin-left: 20px;
     margin-top: 10px;
+    padding-top: 5px;
 }
 
 .project a {
@@ -136,10 +162,13 @@ body {
     margin-top: 5px;
 }
 
+
 #project_link{
     font-size: 15px;
     color: rgb(115, 115, 162);
     text-decoration: underline;
+    width: fit-content;
+    padding: 5px;
 
 }
 
@@ -242,4 +271,205 @@ input[type="checkbox"] {
     .project img{
         width: 80%;
     }
+
+    #project-image-inside{
+        width: 100% !important;
+        padding-left: 0px !important;
+    }
+
+    .project-content{
+        display: block !important;
+    }
+
+    #project-video{
+        width:90% !important; 
+        height:auto !important;
+    }
+}
+
+#input1,
+#input2,
+#input3{
+    width: 80%;
+    background-color: #1d1d1d64;
+    color: #ffffff;
+    height: 100px;
+    padding: 15px;
+    font-size: 24px;
+}
+
+
+#about_me_div{
+    font-size: 20px;
+}
+
+#about-me-link{
+    font-size: 21px !important;
+    color: #e0d1b4 !important;
+    display: contents !important;
+    text-decoration: underline !important;
+    transition: 0.2s color ease-in-out !important;
+}
+
+#about-me-link:hover{
+    color: #d8b368 !important;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(108, 211, 108);
+    border-radius: 50%;
+    animation: pulse 1s infinite alternate;
+    margin-right: 5px;
+    margin-top:9px;
+}
+
+.feed_sort p{
+    margin-right: 30px;
+    font-size: 30px;
+    margin-top:2px;
+}
+
+.feed_sort a{
+    margin-left: auto;
+    right:0;
+    font-size: 30px;
+}
+/* Animation keyframes */
+@keyframes pulse {
+    0% {
+        transform: scale(0.7);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.feed_sort{
+    display: flex;
+    width:81%;
+}
+
+.progress-container {
+  width: 300px;
+  margin-top: 20px;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 30px;
+  background-color: #bcbcbc;
+  border-radius: 5px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #3d3d3d;
+  border-radius: 5px;
+  transition: width 1s ease-in-out;
+}
+
+.link_shine{
+  position: absolute;
+  top: -12px;
+  bottom: -12px;
+  background-color: #fff;
+  width: 17px;
+  left: -15%;
+  transform: rotate(25deg);
+  transition: all .12s ease-in-out;
+  animation: shine 1.9s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0%{
+        left:-15%;
+        opacity: 0;
+    }
+
+    30%{
+        opacity: .1;
+    }
+
+    70%{
+        left: 110%;
+        opacity: 0;
+    }
+
+    100%{
+        left: 110%;
+        opacity: 0;
+    }
+}
+
+#reverseButton {
+    position: relative; /* Add relative positioning */
+  }
+
+#youtube{
+    position: relative!important;
+    display: inline-block!important;
+    background-color: #af4242!important;
+    overflow: hidden!important;
+    padding: 8px 12px!important;
+    margin: 10px!important;
+}
+
+#github{
+    position: relative!important;
+    display: inline-block!important;
+    background-color: #636575!important;
+    overflow: hidden!important;
+    padding: 8px 12px!important;
+    margin: 10px!important;
+}
+
+#grey-text{
+    color: #7b7b7b;
+}
+
+#big-text{
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+#project-link-inside{
+    font-size: 20px !important;
+    padding: 5px!important;
+    margin: 0px!important;
+    padding-left: 5px!important;
+    transition: none!important;
+    text-decoration: underline!important;
+}
+
+#project-link-inside:hover{
+    box-shadow: 0 0 0 2px #b6b6b6!important;
+    background-color: none!important;
+    transition: none!important;
+}
+
+#youtube:hover{
+    background-color: #893333;
+}
+
+#project-image-inside{
+    width: 60%;
+    height: auto;
+}
+
+#semi-red-text{
+    color: #d25555;
+}
+
+#project-video{
+    width:60%; 
+    height:30%; 
 }

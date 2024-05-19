@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / projects</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ </div>
+        <div class="prompt" onclick="location.href='projects.html';" id="main_button">projects</div>
+        <div class="prompt">/ AI Stick War</div>
+
+
+    </div>
+    <div class="nav">
+        <p>2 reinforcement learning agents play the game Stick War 2 against eachother.</p>
+        <p id="grey-text">Currently the 2 AI still need more training.</p>
+        <a id="youtube">Devlog<div class="link_shine"></div></a>
+        <a href="" id="github">Source</a>
+        
+        <br><br>
+        <p id="big-text">Resources</p>
+        <a id="project-link-inside" href="https://www.stickpage.com/stickwar2gameplay.shtml">Stick War 2</a>
+        <a id="project-link-inside" href="https://discord.gg/skTrFV3ATt">Discord</a>
+        <br><br>
+        <p id="big-text">Information</p>
+        <p>Using the game engine/editor Unity, I created the environment for the agents to train in. It is almost idential to Stick War 2 (with the exepction of a removal of some of the upgrades for games and AI to go/train faster.)<br>
+        </p>
+        <img id="project-image-inside" src="project-images/stickwar1.png">
+        <br>
+        <p>To connect my environment to the 2 RL agents, I used [socket] to create threads the env and AI can request and send data through. This is how I gave the agents inputs and played their moves.</p>
+        <br>
+        <p>Two RL Agents were introduced to the environment, one played on the [ORDER] team and the other [CHAOS]. </p>
+        <p id="semi-red-text"><br><br>The model I'm using is a Dueling Double Q Network, with Prioritized Experience Replay, N-Step Returns, and Noisy Layers. This model was applied to both agents.</p>
+        <br>
+        <p>Because the environment is very complex, it is going to take a decent amount of time to train, and I'm going for ~30k iterations. Currently, both models have trained for 2k. (5/18/24)</p>
+        <br>
+        <br><br>
+        <p id="big-text">Visuals</p>
+        <br><br>
+        <iframe id="project-video"
+        src="https://www.youtube-nocookie.com/embed/iMztk1DL0Jg?autoplay=0&mute=1&rel=0">
+        </iframe> 
+        <br>
+        <br>
+        <img id="project-image-inside"
+        src="project-images/stickwar2.png"
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
