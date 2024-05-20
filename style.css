@@ -1,6 +1,9 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap');
 
+html{
+    overflow-x: hidden;
+}
 /* Base styles */
 body {
     background-color: rgb(25, 25, 25);
@@ -14,6 +17,15 @@ body {
     overflow-x: hidden;
 }
 
+.temp-text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+    padding: 100px;
+    margin-left: -100px;
+    color: #7b7b7b;
+}
 
 
 .background {
@@ -423,6 +435,16 @@ input[type="checkbox"] {
     margin: 10px!important;
 }
 
+
+#orange-button{
+    position: relative!important;
+    display: inline-block!important;
+    background-color: #d88c40!important;
+    overflow: hidden!important;
+    padding: 8px 12px!important;
+    margin: 10px!important;
+}
+
 #github{
     position: relative!important;
     display: inline-block!important;
@@ -450,6 +472,10 @@ input[type="checkbox"] {
     text-decoration: underline!important;
 }
 
+#project-link-inside:visited{
+    color: rgb(143, 139, 139);
+}
+
 #project-link-inside:hover{
     box-shadow: 0 0 0 2px #b6b6b6!important;
     background-color: none!important;
@@ -457,12 +483,21 @@ input[type="checkbox"] {
 }
 
 #youtube:hover{
-    background-color: #893333;
+    background-color: #893333 !important;
+}
+
+
+#orange-button:hover{
+    background-color: #c77a16 !important;
 }
 
 #project-image-inside{
     width: 60%;
     height: auto;
+    padding: 7px;
+    background-color: #353535;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 #semi-red-text{

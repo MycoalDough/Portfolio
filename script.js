@@ -8,8 +8,8 @@ function spawnCloud() {
     cloud.classList.add("cloud");
 
     cloud.style.left = "-100px";
-    cloud.style.top = getRandomNumber(0, window.innerHeight - 200) + "px";
-    cloud.style.opacity = getRandomNumber(0,0.3).toString(); 
+    cloud.style.top = getRandomNumber(0, window.innerHeight - 150) + "px";
+    cloud.style.opacity = getRandomNumberFloat(0.001,0.3).toString(); 
     
     var size = getRandomNumber(50, 150);
     cloud.style.width = size + "px";
@@ -31,11 +31,6 @@ function spawnCloud() {
     }, 1000 / 60);
 }
 
-function getWeather(){
-    const apiKey = "19780ef9e0503a9a115106d18fcb9710";
-    const city = "Rancho Cucamonga";
-
-}
 setInterval(spawnCloud, getRandomNumber(10000,20000));
 
 function filterProjects() {
@@ -118,3 +113,94 @@ if(reverse){
     });
 }
 
+let SHEET_ID = '1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0';
+let SHEET_TITLE = 'Feed';
+let SHEET_RANGE = 'R3:R3';
+
+let FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
+
+fetch(FULL_URL)
+    .then(res => res.text())
+    .then(rep => {
+        let data = JSON.parse(rep.substr(47).slice(0, -2));
+        let descriptionRow = data.table.rows[0].c[0].v;
+        descriptionRow = "rain"
+
+        // Process the description and perform actions accordingly
+        if (descriptionRow.includes("clear")) {
+            // Do nothing
+            return;
+        } else if (descriptionRow.includes("rain") || descriptionRow.includes("storm")) {
+            setInterval(spawnRain, getRandomNumber(100, 500)); 
+            setInterval(spawnCloud, getRandomNumber(10000, 20000));
+        } else if (descriptionRow.includes("cloud")) {
+            setInterval(spawnCloud, getRandomNumber(10000, 20000));
+        }
+    });
+
+fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
+    .then(res => res.text())
+    .then(rep => {
+        let data = JSON.parse(rep.substr(47).slice(0, -2));
+        let time = data.table.rows[0].c[0].v;
+        console.log(time)
+        let tempTextDiv = document.querySelector('.temp-text');
+                // Set its text content
+
+                if(tempTextDiv){
+                    tempTextDiv.textContent = "it is currently " + time + " in rancho cucamonga with a temperature of ";
+
+                }
+
+    });
+
+fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`)
+    .then(res => res.text())
+    .then(rep => {
+        let data = JSON.parse(rep.substr(47).slice(0, -2));
+        let time = data.table.rows[0].c[0].v;
+        console.log(time + "aidjwioawd")
+        let tempTextDiv = document.querySelector('.temp-text');
+            if(tempTextDiv){
+                tempTextDiv.textContent = tempTextDiv.textContent + Math.round(time * 9/5 + 32) + "° fahrenheit.";
+
+            }
+
+    });
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomNumberFloat(min, max){
+    return Math.random() * (max-min) + min;
+}
+
+function spawnRain() {
+    var cloud = document.createElement("img");
+    cloud.src = "rain.png"; 
+    cloud.classList.add("cloud");
+
+    cloud.style.left = getRandomNumber(0, window.innerWidth - 95) + "px";
+    cloud.style.top = -30 + "px";
+    cloud.style.opacity = getRandomNumberFloat(0.01,0.3).toString(); 
+    
+    var size = getRandomNumber(50, 150);
+    cloud.style.width = size + "px";
+    cloud.style.height = "auto";
+    
+    document.body.appendChild(cloud);
+
+    // Animation
+    var speed = getRandomNumber(500, 1200); 
+    var endPosition = window.innerHeight - 130 + window.scrollY;
+    var interval = setInterval(function() {
+        var currentPosition = parseFloat(cloud.style.top);
+        if (currentPosition >= endPosition) {
+            clearInterval(interval); 
+            cloud.remove();
+        } else {
+            cloud.style.top = currentPosition + speed / 60 + "px"; 
+        }
+    }, 1000 / 60);
+}
