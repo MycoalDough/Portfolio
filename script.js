@@ -138,35 +138,33 @@ fetch(FULL_URL)
         }
     });
 
-fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
-    .then(res => res.text())
-    .then(rep => {
-        let data = JSON.parse(rep.substr(47).slice(0, -2));
-        let time = data.table.rows[0].c[0].v;
-        console.log(time)
-        let tempTextDiv = document.querySelector('.temp-text');
-                // Set its text content
-
+    document.addEventListener("DOMContentLoaded", function() {
+        let text = "";
+    
+        fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
+            .then(res => res.text())
+            .then(rep => {
+                let data = JSON.parse(rep.substr(47).slice(0, -2));
+                let time = data.table.rows[0].c[0].v;
+                text += "it is currently " + time + " in rancho cucamonga with a temperature of ";
+                return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
+            })
+            .then(res => res.text())
+            .then(rep => {
+                let data = JSON.parse(rep.substr(47).slice(0, -2));
+                let temperature = data.table.rows[0].c[0].v;
+                text += Math.round(temperature * 9/5 + 32) + "° fahrenheit.";
+                
+                let tempTextDiv = document.querySelector('.temp-text');
                 if(tempTextDiv){
-                    tempTextDiv.textContent = "it is currently " + time + " in rancho cucamonga with a temperature of ";
-
+                    tempTextDiv.textContent = text;
                 }
-
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
-
-fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`)
-    .then(res => res.text())
-    .then(rep => {
-        let data = JSON.parse(rep.substr(47).slice(0, -2));
-        let time = data.table.rows[0].c[0].v;
-        console.log(time + "aidjwioawd")
-        let tempTextDiv = document.querySelector('.temp-text');
-            if(tempTextDiv){
-                tempTextDiv.textContent = tempTextDiv.textContent + Math.round(time * 9/5 + 32) + "° fahrenheit.";
-
-            }
-
-    });
+    
 
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

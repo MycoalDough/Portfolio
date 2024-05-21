@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / projects</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ </div>
+        <div class="prompt" onclick="location.href='projects.html';" id="main_button">projects</div>
+        <div class="prompt">/ FNAF AI</div>
+
+
+    </div>
+    <div class="nav">
+        <p>A D3QN + Prioritized Experience Replay agent plays a custom made FNAF 1 environment to make it to 6 am.</p>
+        <p id="grey-text"></p>
+
+        <a href="https://www.youtube.com/watch?v=81uOYRQD6UQ" id="youtube">Demonstration<div class="link_shine"></div></a>
+        <a href="https://github.com/MycoalDough/FNAF-RL-Agent" id="github">Source Code</div></a>
+        
+        <br><br>
+        <p id="big-text">Resources</p>
+        <a id="project-link-inside" href="https://discord.gg/skTrFV3ATt">Discord</a>
+        <a id="project-link-inside" href="https://arxiv.org/abs/1706.03762">Research Paper</a>
+        <br><br>
+        <p id="big-text">Information</p>
+        <p>This AI was created using the paper "Attention is all you need". Other transformer models like GPT 4o were also trained loosely resembling this paper.<br>
+        </p>
+        <p>I used a 60 gigabyte text corpus for training data, and a 20 gigabyte text corpus for testing data.</p>
+        <br>
+        <p>This model does not use any encoder layers (because I'm still learning the math and how it works), but utilizes 4 decoder layers as well.</p>
+        <br>
+        <p>The AI model is then put inside of a tkinter UI with a robot being the LLM.</p>
+
+        <br><br>
+        <p id="big-text">Visuals</p>
+        <br><br>
+        <br>
+        <br>
+        <img id="project-image-inside"
+        src="project-images/miragev31.png">
+        <img id="project-image-inside"
+        src="project-images/miragev32.png">
+
+
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
