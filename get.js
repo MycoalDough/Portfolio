@@ -54,6 +54,7 @@ fetch(FULL_URL)
             if (rowData[3] && rowData[3].v) {
                 let imageUrl = convertToThumbnailLink(rowData[3].v);
                 let imageElement = document.createElement('img');
+                imageElement.style.display = "none";
                 imageElement.id = "image-feed";
                 imageElement.src = imageUrl;
                 imageElement.alt = 'Image';
