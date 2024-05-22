@@ -16,12 +16,31 @@ app.use(express.static('public'));
 // Set up multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 
+// Function to upload image to Google Drive
+async function uploadImageToDrive(auth, imagePath) {
+    const drive = google.drive({ version: 'v3', auth });
+    const fileMetadata = {
+        name: path.basename(imagePath),
+        parents: ['1_zC3c5k79ItpB-I9ql42VduSv9k9MhIa'] // Replace 'YOUR_FOLDER_ID' with your actual folder ID
+    };
+    const media = {
+        mimeType: 'image/jpeg', // adjust the mime type accordingly
+        body: fs.createReadStream(imagePath)
+    };
+    const file = await drive.files.create({
+        resource: fileMetadata,
+        media: media,
+        fields: 'id, webViewLink'
+    });
+    return file.data;
+}
+
 // Function to execute the main logic
 async function main(input1, input2, input3, imagePath) {
     try {
         const auth = new google.auth.GoogleAuth({
             keyFile: 'credentials.json',
-            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+            scopes: ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'],
         });
 
         const client = await auth.getClient();
@@ -36,12 +55,11 @@ async function main(input1, input2, input3, imagePath) {
         };
         const localDateString = currentDate.toLocaleString(undefined, options);
 
-        // Save image file to a specific directory (e.g., 'uploads/')
+        // Upload image to Google Drive and get the public URL
         let imageUrl = '';
         if (imagePath) {
-            const newImagePath = path.join('uploads', `${Date.now()}_${path.basename(imagePath)}`);
-            fs.renameSync(imagePath, newImagePath);
-            imageUrl = newImagePath;
+            const driveFile = await uploadImageToDrive(client, imagePath);
+            imageUrl = driveFile.webViewLink;
         }
 
         // Write data to the spreadsheet
@@ -61,7 +79,6 @@ async function main(input1, input2, input3, imagePath) {
     }
 }
 
-// Endpoint to trigger the main function with optional file upload
 app.post('/upload', upload.single('image'), async (req, res) => {
     const input1 = req.body.input1 || 'NA'; // Default value if input1 is not provided
     const input2 = req.body.input2 || 'NA'; // Default value if input2 is not provided
