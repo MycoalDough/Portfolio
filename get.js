@@ -1,6 +1,6 @@
 let SHEET_ID = '1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0';
 let SHEET_TITLE = 'Feed';
-let SHEET_RANGE = 'A:C';
+let SHEET_RANGE = 'A:D';
 
 let FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
 
@@ -20,14 +20,13 @@ fetch(FULL_URL)
 
             let columnALabel = document.createElement('div');
             columnALabel.className = 'top-left';
-            columnALabel.innerHTML = rowData[0].v;
+            columnALabel.innerHTML = rowData[0] ? rowData[0].v : 'No Name';
 
             let columnBLabel = document.createElement('div');
             columnBLabel.className = 'top-right';
 
             // Parse the date string and format it
-            let dateString = rowData[1].v;
-            console.log(rowData[1].v);
+            let dateString = rowData[1] ? rowData[1].v : 'No Date';
             let dateParams = dateString.match(/\d+/g); // Extract numerical values
             if (dateParams && dateParams.length >= 6) {
                 let year = dateParams[0];
@@ -44,12 +43,27 @@ fetch(FULL_URL)
 
             let columnCDescription = document.createElement('div');
             columnCDescription.className = 'bottom';
-            columnCDescription.innerHTML = '<br>' + rowData[2].v + '<br>'; // Add <br>
+            columnCDescription.innerHTML = '<br>' + (rowData[2] ? rowData[2].v : 'No Description') + '<br>'; // Add <br>
 
             div.appendChild(div_inside);
             div_inside.appendChild(columnALabel);
             div_inside.appendChild(columnBLabel);
             div.appendChild(columnCDescription);
+
+            // Check for image URL
+            if (rowData[3] && rowData[3].v) {
+                let imageUrl = convertGoogleDriveLink(rowData[3].v);
+                let imageElement = document.createElement('img');
+                imageElement.src = imageUrl;
+                imageElement.alt = 'Image';
+                imageElement.style.maxWidth = '100%'; // Adjust as needed
+                imageElement.style.height = 'auto';
+                div.appendChild(imageElement);
+            } else {
+                let noImageMessage = document.createElement('div');
+                noImageMessage.innerHTML = 'No image available';
+                div.appendChild(noImageMessage);
+            }
 
             document.body.appendChild(div);
         }
@@ -72,3 +86,14 @@ fetch(FULL_URL)
         return convertedDate;
     }
     
+
+    function convertGoogleDriveLink(driveLink) {
+        // Extract the file ID from the Google Drive link
+        let fileIdMatch = driveLink.match(/\/d\/(.*?)(\/|$)/);
+        if (fileIdMatch && fileIdMatch[1]) {
+            console.log(fileIdMatch[1])
+            return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
+        } else {
+            return driveLink; // Return the original link if it doesn't match the expected pattern
+        }
+    }

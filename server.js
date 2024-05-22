@@ -16,12 +16,12 @@ app.use(express.static('public'));
 // Set up multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 
-// Function to upload image to Google Drive
+// Function to upload image to Google Drive and generate a public URL
 async function uploadImageToDrive(auth, imagePath) {
     const drive = google.drive({ version: 'v3', auth });
     const fileMetadata = {
         name: path.basename(imagePath),
-        parents: ['1_zC3c5k79ItpB-I9ql42VduSv9k9MhIa'] // Replace 'YOUR_FOLDER_ID' with your actual folder ID
+        parents: ['YOUR_FOLDER_ID'] // Replace with your actual folder ID
     };
     const media = {
         mimeType: 'image/jpeg', // adjust the mime type accordingly
@@ -30,9 +30,25 @@ async function uploadImageToDrive(auth, imagePath) {
     const file = await drive.files.create({
         resource: fileMetadata,
         media: media,
-        fields: 'id, webViewLink'
+        fields: 'id'
     });
-    return file.data;
+
+    // Make the file public
+    await drive.permissions.create({
+        fileId: file.data.id,
+        requestBody: {
+            role: 'reader',
+            type: 'anyone',
+        },
+    });
+
+    // Generate the public URL
+    const result = await drive.files.get({
+        fileId: file.data.id,
+        fields: 'webViewLink, webContentLink'
+    });
+
+    return result.data.webContentLink;
 }
 
 // Function to execute the main logic
@@ -58,8 +74,7 @@ async function main(input1, input2, input3, imagePath) {
         // Upload image to Google Drive and get the public URL
         let imageUrl = '';
         if (imagePath) {
-            const driveFile = await uploadImageToDrive(client, imagePath);
-            imageUrl = driveFile.webViewLink;
+            imageUrl = await uploadImageToDrive(client, imagePath);
         }
 
         // Write data to the spreadsheet
@@ -79,6 +94,7 @@ async function main(input1, input2, input3, imagePath) {
     }
 }
 
+// Endpoint to trigger the main function with optional file upload
 app.post('/upload', upload.single('image'), async (req, res) => {
     const input1 = req.body.input1 || 'NA'; // Default value if input1 is not provided
     const input2 = req.body.input2 || 'NA'; // Default value if input2 is not provided
