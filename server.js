@@ -21,7 +21,7 @@ async function uploadImageToDrive(auth, imagePath) {
     const drive = google.drive({ version: 'v3', auth });
     const fileMetadata = {
         name: path.basename(imagePath),
-        parents: ['YOUR_FOLDER_ID'] // Replace with your actual folder ID
+        parents: ['1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0'] // Replace with your actual folder ID
     };
     const media = {
         mimeType: 'image/jpeg', // adjust the mime type accordingly
