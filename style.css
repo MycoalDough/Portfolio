@@ -297,6 +297,20 @@ input[type="checkbox"] {
         width:90% !important; 
         height:auto !important;
     }
+
+    #image-button-feed{
+        width: 50% !important;
+    }
+
+    #image-feed{
+        width: 100% !important;
+        height: auto;
+    }
+}
+
+#image-feed{
+    width: 30%;
+    height: auto;
 }
 
 #input1,
@@ -463,6 +477,10 @@ input[type="checkbox"] {
     text-decoration: underline;
 }
 
+#rain{
+    overflow: hidden;
+}
+
 #project-link-inside{
     font-size: 20px !important;
     padding: 5px!important;
@@ -507,4 +525,27 @@ input[type="checkbox"] {
 #project-video{
     width:60%; 
     height:30%; 
+}
+
+
+.no-image{
+    color: #6f6f6f;
+    font-size: 15px;
+}
+
+#image-button-feed{
+    background-color: #5a5858a9;
+    width: 10%;
+    color: rgb(189, 187, 187);
+    text-decoration: none;
+    font-size: 20px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+    border: none;
+    margin: 10px;
+    padding: 5px;
+}
+
+#image-button-feed:hover{
+        background-color: rgba(255, 255, 255, 0.3);
 }

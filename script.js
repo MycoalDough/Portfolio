@@ -178,6 +178,7 @@ function spawnRain() {
     var cloud = document.createElement("img");
     cloud.src = "rain.png"; 
     cloud.classList.add("cloud");
+    cloud.id = "rain";
 
     cloud.style.left = getRandomNumber(0, window.innerWidth - 95) + "px";
     cloud.style.top = -30 + "px";

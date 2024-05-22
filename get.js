@@ -52,15 +52,30 @@ fetch(FULL_URL)
 
             // Check for image URL
             if (rowData[3] && rowData[3].v) {
-                let imageUrl = convertGoogleDriveLink(rowData[3].v);
+                let imageUrl = convertToThumbnailLink(rowData[3].v);
                 let imageElement = document.createElement('img');
+                imageElement.id = "image-feed";
                 imageElement.src = imageUrl;
                 imageElement.alt = 'Image';
-                imageElement.style.maxWidth = '100%'; // Adjust as needed
-                imageElement.style.height = 'auto';
+
+                let toggleButton = document.createElement('button');
+                toggleButton.innerHTML = 'View Image';
+                toggleButton.id = "image-button-feed";
+                toggleButton.onclick = function() {
+                    if (imageElement.style.display === 'none') {
+                        imageElement.style.display = 'block';
+                        toggleButton.innerHTML = 'Hide Image';
+                    } else {
+                        imageElement.style.display = 'none';
+                        toggleButton.innerHTML = 'View Image';
+                    }
+                };
+
+                div.appendChild(toggleButton);
                 div.appendChild(imageElement);
             } else {
                 let noImageMessage = document.createElement('div');
+                noImageMessage.className = "no-image";
                 noImageMessage.innerHTML = 'No image available';
                 div.appendChild(noImageMessage);
             }
@@ -69,31 +84,28 @@ fetch(FULL_URL)
         }
     });
 
+function convertDate(inputDate) {
+    // Create a new Date object with the input parameters
+    let dtObj = new Date(...inputDate);
 
-    function convertDate(inputDate) {
-        // Create a new Date object with the input parameters
-        let dtObj = new Date(...inputDate);
-    
-        // Format the time as desired
-        let formattedTime = dtObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    
-        // Increment the month by 1
-        let month = (dtObj.getMonth()) <= 12 ? (dtObj.getMonth()) : 1;
-    
-        // Concatenate the month, day, year, and formatted time
-        let convertedDate = `${month}/${dtObj.getDate()}/${dtObj.getFullYear()} ${formattedTime}`;
-    
-        return convertedDate;
-    }
-    
+    // Format the time as desired
+    let formattedTime = dtObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    function convertGoogleDriveLink(driveLink) {
-        // Extract the file ID from the Google Drive link
-        let fileIdMatch = driveLink.match(/\/d\/(.*?)(\/|$)/);
-        if (fileIdMatch && fileIdMatch[1]) {
-            console.log(fileIdMatch[1])
-            return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
-        } else {
-            return driveLink; // Return the original link if it doesn't match the expected pattern
-        }
+    // Increment the month by 1
+    let month = (dtObj.getMonth()) <= 12 ? (dtObj.getMonth()) : 1;
+
+    // Concatenate the month, day, year, and formatted time
+    let convertedDate = `${month}/${dtObj.getDate()}/${dtObj.getFullYear()} ${formattedTime}`;
+
+    return convertedDate;
+}
+
+function convertToThumbnailLink(driveLink) {
+    // Extract the file ID from the Google Drive link
+    let fileIdMatch = driveLink.match(/id=([^&]+)/);
+    if (fileIdMatch && fileIdMatch[1]) {
+        return `https://drive.google.com/thumbnail?id=${fileIdMatch[1]}`;
+    } else {
+        return driveLink; // Return the original link if it doesn't match the expected pattern
     }
+}
