@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / projects</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+
 </head>
 <body>
+    <audio id="hover-sound" src="hover.mp3"></audio>
+    <audio id="unhover-sound" src="unhover.mp3"></audio>
+
     <div class="background"></div>
     <div class="prompt-container">
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
@@ -19,124 +24,145 @@
             <input type="checkbox" id="checkbox2" onclick="filterProjects()">
             <label for="checkbox2">GAME</label>
         </div>
-        <div class="project" id="AI">
-            <h3>—</h3>
-            <div class="project-content">
-                
-                <a id="project-image-button"href="stickwar.html">
-                    <img src="project-images/stickwar.png" alt="Stick War Image" class="project-image">
-                </a>
-                <div class="project-info">
-                    <a id="project-name" href="stickwar.html">AI Stick War</a>
-                    <h4>2024</h4>
-                    <p>2 RL Agents fight in Stick War 2. <br>
-                        Self made agents and environment.
-                        <br><br></p>
-                    <a id="project_link" href="https://github.com/MycoalDough/AI-Stick-War">> GITHUB: Project Code</a>
-                    <a id="project_link" href="https://www.youtube.com/playlist?list=PL0I6Kul-BnkB29rkhIqEXOe3OqtO2EifQ">> YOUTUBE: Dev Log</a>
+        <div class="projects-container">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+                <div class="project-content">
+                    <a id="project-image-button" href="miragev5.html">
+                        <img src="project-images/miragev5.png" alt="Stick War Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="miragev5.html">Mirage V5</a>
+                        <h4>2024</h4>
+                        <p>V5 of the Mirage project. Useful transformer model that does work for me.</p>
+                        <p>Self made LLM that has a personality, voice recognition, and more.</p>
+                        <p>My magnum opus.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project" id="GAME">
-            <h3>—</h3>
-            <div class="project-content">
-                <a id="project-image-button"href="viper.html">
-                    <img src="project-images/viper1.png" alt="Viper Image" class="project-image">
-                </a>                
-                <div class="project-info">
-                    <a id="project-name" href="viper.html">Viper Squadron</a>
-                    <h4>2024</h4>
-                    <p>Aerial dogfight combat simulator.<br><br></p>
-                    <a id="project_link" href="https://www.youtube.com/watch?v=CFjWkzIb5cY">> YOUTUBE: Video</a>
-                </div>
             
-            </div>
-        </div>
-        <div class="project" id="GAME">
-            <h3>—</h3>
-            <div class="project-content">
-                <a id="project-image-button"href="reapingrewards.html">
-                    <img src="project-images/reapingrewards.png" alt="Viper Image" class="project-image">
-                </a>                
-                <div class="project-info">
-                    <a id="project-name" href="reapingrewards.html">Reaping Rewards</a>
-                    <h4>2023</h4>
-                    <p>Farming/chill type game that teaches financial concepts while playing.<br><br></p>
-                    <a id="project_link" href="https://www.youtube.com/watch?v=CFjWkzIb5cY">> YOUTUBE: Video</a>
-                    <a id="project_link" href="https://www.congressionalappchallenge.us/23-CA33/">> HACKATHON: Win</a>
-                </div>
-            
-            </div>
-        </div>
-        <div class="project" id="GAME">
-            <h3>—</h3>
-            <div class="project-content">
-                <a id="project-image-button"href="omegaflowey.html">
-                    <img src="project-images/omegaflowey.png" alt="Viper Image" class="project-image">
-                </a>                
-                <div class="project-info">
-                    <a id="project-name" href="omegaflowey.html">Omega Flowey</a>
-                    <h4>2023</h4>
-                    <p>Omega Flowey battle from Undertale created in 12 hours.<br><br></p>
-                    <a id="project_link" href="https://www.youtube.com/watch?v=u0WuNev6-bQ">> YOUTUBE: Video</a>
-                    <a id="project_link" href="https://mycoaldo.itch.io/omegaflowey">> ITCH.IO: Game</a>
-                </div>
-            
-            </div>
-        </div>
-        <div class="project" id="AI">
-            <h3>—</h3>
-            <div class="project-content">
-                
-                <a id="project-image-button"href="miragev3.html">
-                    <img src="project-images/miragev3.png" alt="Stick War Image" class="project-image">
-                </a>
-                <div class="project-info">
-                    <a id="project-name" href="miragev3.html">Mirage V3</a>
-                    <h4>2023</h4>
-                    <p>Transformer agent trained via the paper <br>
-                        "Attention Is All You Need".
-                        <br><br></p>
-                    <a id="project_link" href="https://github.com/MycoalDough/MirageV3">> GITHUB: Project Code</a>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+                <div class="project-content">
+                    <a id="project-image-button" href="undertalewithinyoutube.html">
+                        <img src="project-images/uwy6.png" alt="Stick War Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="undertalewithinyoutube.html">Undertale Within Youtube</a>
+                        <h4>2024</h4>
+                        <p>An application that allows you to play Undertale ontop of a Youtube video.</p>
+                        <a id="project_link" href="https://github.com/MycoalDough/Undertale">GITHUB: Project</a><br>
+                        <a id="project_link" href="https://www.youtube.com/playlist?list=PL0I6Kul-BnkDRzaDEs5LGfaXUiWEQ4BKm">YOUTUBE: Dev Logs</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project" id="AI">
-            <h3>—</h3>
-            <div class="project-content">
-                
-                <a id="project-image-button"href="fnaf.html">
-                    <img src="project-images/fnaf.png" alt="Stick War Image" class="project-image">
-                </a>
-                <div class="project-info">
-                    <a id="project-name" href="fnaf.html">FNAF AI</a>
-                    <h4>2022</h4>
-                    <p>AI agent attempts to survive the game<br>
-                        Five Nights at Freddy's 1.
-                        <br><br></p>
-                    <a id="project_link" href="https://github.com/MycoalDough/MirageV3">> GITHUB: Project Code</a>
+
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+                <div class="project-content">
+                    <a id="project-image-button" href="summerai.html">
+                        <img src="project-images/summerai.png" alt="Stick War Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="summerai.html">2024 (Small) Summer Projects</a>
+                        <h4>2024</h4>
+                        <p>Small projects that I will be creating during this summer! Too small to be considered actual projects that would be showcased here.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project" id="AI">
-            <h3>—</h3>
-            <div class="project-content">
-                
-                <a id="project-image-button"href="buckshot.html">
-                    <img src="project-images/buckshot.png" alt="Stick War Image" class="project-image">
-                </a>
-                <div class="project-info">
-                    <a id="project-name" href="buckshot.html">Buckshot Roulette AI</a>
-                    <h4>2022</h4>
-                    <p>2 reinforcement agents fight eachother<br>
-                        in the game Buckshot Roulette.
-                        <br><br></p>
-                    <a id="project_link" href="https://github.com/MycoalDough/Buckshot-Roulette">> GITHUB: Project Code</a>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+                <div class="project-content">
+                    <a id="project-image-button" href="stickwar.html">
+                        <img src="project-images/stickwar.png" alt="Stick War Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="stickwar.html">AI Stick War</a>
+                        <h4>2024</h4>
+                        <p>2 RL Agents fight in Stick War 2. Self made agents and environment.</p>
+                        <a id="project_link" href="https://github.com/MycoalDough/AI-Stick-War">GITHUB: Project Code</a><br>
+                        <a id="project_link" href="https://www.youtube.com/playlist?list=PL0I6Kul-BnkB29rkhIqEXOe3OqtO2EifQ">YOUTUBE: Dev Log</a>
+                    </div>
                 </div>
             </div>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+                <div class="project-content">
+                    <a id="project-image-button" href="viper.html">
+                        <img src="project-images/viper1.png" alt="Viper Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="viper.html">Viper Squadron</a>
+                        <h4>2024</h4>
+                        <p>Aerial dogfight combat simulator.</p>
+                        <a id="project_link" href="https://www.youtube.com/watch?v=CFjWkzIb5cY">YOUTUBE: Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+                <div class="project-content">
+                    <a id="project-image-button" href="reapingrewards.html">
+                        <img src="project-images/reapingrewards.png" alt="Reaping Rewards Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="reapingrewards.html">Reaping Rewards</a>
+                        <h4>2023</h4>
+                        <p>Farming/chill type game that teaches financial concepts while playing.</p>
+                        <a id="project_link" href="https://www.youtube.com/watch?v=CFjWkzIb5cY">YOUTUBE: Video</a><br>
+                        <a id="project_link" href="https://www.congressionalappchallenge.us/23-CA33/">HACKATHON: Win</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+                <div class="project-content">
+                    <a id="project-image-button" href="omegaflowey.html">
+                        <img src="project-images/omegaflowey.png" alt="Omega Flowey Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="omegaflowey.html">Omega Flowey</a>
+                        <h4>2023</h4>
+                        <p>Omega Flowey battle from Undertale created in 12 hours.</p>
+                        <a id="project_link" href="https://www.youtube.com/watch?v=u0WuNev6-bQ">YOUTUBE: Video</a><br>
+                        <a id="project_link" href="https://mycoaldo.itch.io/omegaflowey">ITCH.IO: Game</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+                <div class="project-content">
+                    <a id="project-image-button" href="miragev3.html">
+                        <img src="project-images/miragev3.png" alt="Mirage V3 Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="miragev3.html">Mirage V3</a>
+                        <h4>2023</h4>
+                        <p>Transformer agent trained via the paper "Attention Is All You Need".</p><br>
+                        <a id="project_link" href="https://github.com/MycoalDough/MirageV3">GITHUB: Project Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+                <div class="project-content">
+                    <a id="project-image-button" href="fnaf.html">
+                        <img src="project-images/fnaf.png" alt="FNAF AI Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="fnaf.html">FNAF AI</a>
+                        <h4>2022</h4>
+                        <p>AI agent attempts to survive the game Five Nights at Freddy's 1.</p><br>
+                        <a id="project_link" href="https://github.com/MycoalDough/MirageV3">GITHUB: Project Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+                <div class="project-content">
+                    <a id="project-image-button" href="buckshot.html">
+                        <img src="project-images/buckshot.png" alt="Buckshot Roulette AI Image" class="project-image">
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="buckshot.html">Buckshot Roulette AI</a>
+                        <h4>2022</h4>
+                        <p>2 reinforcement agents fight each other in the game Buckshot Roulette.</p><br>
+                        <a id="project_link" href="https://github.com/MycoalDough/Buckshot-Roulette">GITHUB: Project Code</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more projects here if necessary -->
         </div>
-        
-        <!-- more projects the same way -->
     </div>
     <script src="script.js"></script>
 </body>

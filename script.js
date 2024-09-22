@@ -3,6 +3,9 @@ function getRandomNumber(min, max) {
 }
 
 function spawnCloud() {
+    if (document.visibilityState != "visible") {
+        return;
+    }
     var cloud = document.createElement("img");
     cloud.src = "images/cloud" + Math.floor(Math.random() * 4) + ".png"; 
     cloud.classList.add("cloud");
@@ -119,51 +122,39 @@ let SHEET_RANGE = 'R3:R3';
 
 let FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
 
-fetch(FULL_URL)
-    .then(res => res.text())
-    .then(rep => {
-        let data = JSON.parse(rep.substr(47).slice(0, -2));
-        let descriptionRow = data.table.rows[0].c[0].v;
-        descriptionRow = "rain"
+intervalRain = setInterval(spawnRain, getRandomNumber(100, 500)); 
+intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
 
-        // Process the description and perform actions accordingly
-        if (descriptionRow.includes("clear")) {
-            // Do nothing
-            return;
-        } else if (descriptionRow.includes("rain") || descriptionRow.includes("storm")) {
-            setInterval(spawnRain, getRandomNumber(100, 500)); 
-            setInterval(spawnCloud, getRandomNumber(10000, 20000));
-        } else if (descriptionRow.includes("cloud")) {
-            setInterval(spawnCloud, getRandomNumber(10000, 20000));
-        }
-    });
+// Add event listener for visibility change
 
-    document.addEventListener("DOMContentLoaded", function() {
-        let text = "";
-    
-        fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
-            .then(res => res.text())
-            .then(rep => {
-                let data = JSON.parse(rep.substr(47).slice(0, -2));
-                let time = data.table.rows[0].c[0].v;
-                text += "it is currently " + time + " in rancho cucamonga with a temperature of ";
-                return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
-            })
-            .then(res => res.text())
-            .then(rep => {
-                let data = JSON.parse(rep.substr(47).slice(0, -2));
-                let temperature = data.table.rows[0].c[0].v;
-                text += Math.round(temperature * 9/5 + 32) + "° fahrenheit.";
-                
-                let tempTextDiv = document.querySelector('.temp-text');
-                if(tempTextDiv){
-                    tempTextDiv.textContent = text;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
+// Initial call in case the tab is already active when the page loads
+
+document.addEventListener("DOMContentLoaded", function() {
+    let text = "";
+
+    fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
+        .then(res => res.text())
+        .then(rep => {
+            let data = JSON.parse(rep.substr(47).slice(0, -2));
+            let time = data.table.rows[0].c[0].v;
+            text += "It is currently " + time + " in rancho cucamonga with a temperature of ";
+            return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
+        })
+        .then(res => res.text())
+        .then(rep => {
+            let data = JSON.parse(rep.substr(47).slice(0, -2));
+            let temperature = data.table.rows[0].c[0].v;
+            text += Math.round(temperature * 9/5 + 32) + "° fahrenheit";
+            
+            let tempTextDiv = document.querySelector('.temp-text');
+            if(tempTextDiv){
+                tempTextDiv.textContent = text;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
     
 
 function getRandomNumber(min, max) {
@@ -175,6 +166,9 @@ function getRandomNumberFloat(min, max){
 }
 
 function spawnRain() {
+    if (document.visibilityState != "visible") {
+        return;
+    }
     var cloud = document.createElement("img");
     cloud.src = "rain.png"; 
     cloud.classList.add("cloud");
@@ -192,7 +186,7 @@ function spawnRain() {
 
     // Animation
     var speed = getRandomNumber(500, 1200); 
-    var endPosition = window.innerHeight - 130 + window.scrollY;
+    var endPosition = window.innerHeight - 140 + window.scrollY;
     var interval = setInterval(function() {
         var currentPosition = parseFloat(cloud.style.top);
         if (currentPosition >= endPosition) {
@@ -203,3 +197,85 @@ function spawnRain() {
         }
     }, 1000 / 60);
 }
+
+const hoverSound = new Audio('hover.mp3');
+const unhoverSound = new Audio('unhover.mp3');
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    hoverSound.load();
+    unhoverSound.load();
+});
+function playHoverSound() {
+    if (hoverSound.paused) {
+        hoverSound.currentTime = 0; // Rewind to the beginning
+        hoverSound.play();
+    } else {
+        hoverSound.currentTime = 0; // Rewind to the beginning
+    }
+}
+
+// Function to play unhover sound
+function playUnhoverSound() {
+    if (unhoverSound.paused) {
+        unhoverSound.currentTime = 0; // Rewind to the beginning
+        unhoverSound.play();
+    } else {
+        unhoverSound.currentTime = 0; // Rewind to the beginning
+    }
+}
+
+
+function playHover(){
+    var audio = document.getElementById("hover-sound");
+    audio.play();
+}
+
+function playUNHover(){
+    var audio = document.getElementById("unhover-sound");
+    audio.play();
+}
+
+
+
+
+// Change text on hover and click
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let lofiImageDrawer = document.getElementById("lofi_image_drawer");
+    
+    if (lofiImageDrawer) {
+        let randomChance = Math.random();
+
+        if (randomChance <= 0.07) {
+            lofiImageDrawer.src = "sans.png";
+        }
+    }
+
+    let lofi_image_desk = document.getElementById("lofi_image_desk");
+    
+    if (lofi_image_desk) {
+        let randomChance = Math.random();
+
+        if (randomChance <= 0.07) {
+            lofi_image_desk.src = "sans.png";
+        }
+    }
+});
+
+
+const copyButton = document.getElementById('copyButton');
+const popup = document.getElementById('popup');
+
+
+copyButton.addEventListener('click', () => {
+    navigator.clipboard.writeText("mycoaldough@gmail.com").catch(function(error) {
+        console.error("Failed to copy text: ", error);
+    });
+        popup.textContent = 'Copied!';
+});
+
+// Reset popup text when unhovered
+copyButton.addEventListener('mouseleave', () => {
+    popup.textContent = 'Copy to clipboard';
+});
