@@ -20,18 +20,11 @@ function spawnCloud() {
     
     document.body.appendChild(cloud);
 
-    // Animation
-    var speed = getRandomNumber(20, 100); 
-    var endPosition = window.innerWidth - 10;
     var interval = setInterval(function() {
-        var currentPosition = parseFloat(cloud.style.left);
-        if (currentPosition >= endPosition) {
-            clearInterval(interval); 
-            cloud.remove();
-        } else {
-            cloud.style.left = currentPosition + speed / 60 + "px"; 
-        }
-    }, 1000 / 60);
+        clearInterval(interval); 
+        cloud.remove();
+
+}, 25000);
 }
 
 setInterval(spawnCloud, getRandomNumber(10000,20000));
@@ -128,34 +121,38 @@ intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
 // Add event listener for visibility change
 
 // Initial call in case the tab is already active when the page loads
-
 document.addEventListener("DOMContentLoaded", function() {
-    let text = "";
+    // Check if screen width is greater than 768px (not a phone size)
+        let text = "";
 
-    fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
-        .then(res => res.text())
-        .then(rep => {
-            let data = JSON.parse(rep.substr(47).slice(0, -2));
-            let time = data.table.rows[0].c[0].v;
-            text += "It is currently " + time + " in rancho cucamonga with a temperature of ";
-            return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
-        })
-        .then(res => res.text())
-        .then(rep => {
-            let data = JSON.parse(rep.substr(47).slice(0, -2));
-            let temperature = data.table.rows[0].c[0].v;
-            text += Math.round(temperature * 9/5 + 32) + "° fahrenheit";
-            
-            let tempTextDiv = document.querySelector('.temp-text');
-            if(tempTextDiv){
-                tempTextDiv.textContent = text;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R1:R1`)
+            .then(res => res.text())
+            .then(rep => {
+                let data = JSON.parse(rep.substr(47).slice(0, -2));
+                let time = data.table.rows[0].c[0].v;
+                if (window.innerWidth < 900) {
+                    text += "its " + time + " and ";
+                }else{
+                    text += "it is currently " + time + " in rancho cucamonga with a temperature of ";
+                }
+                return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
+            })
+            .then(res => res.text())
+            .then(rep => {
+                let data = JSON.parse(rep.substr(47).slice(0, -2));
+                let temperature = data.table.rows[0].c[0].v;
+                text += Math.round(temperature * 9/5 + 32) + "° fahrenheit";
+                
+                let tempTextDiv = document.querySelector('.temp-text');
+                if (tempTextDiv) {
+                    tempTextDiv.textContent = text;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 });
-    
+
 
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -184,18 +181,11 @@ function spawnRain() {
     
     document.body.appendChild(cloud);
 
-    // Animation
-    var speed = getRandomNumber(500, 1200); 
-    var endPosition = window.innerHeight - 140 + window.scrollY;
     var interval = setInterval(function() {
-        var currentPosition = parseFloat(cloud.style.top);
-        if (currentPosition >= endPosition) {
             clearInterval(interval); 
             cloud.remove();
-        } else {
-            cloud.style.top = currentPosition + speed / 60 + "px"; 
-        }
-    }, 1000 / 60);
+
+    }, 1000);
 }
 
 const hoverSound = new Audio('hover.mp3');

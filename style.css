@@ -5,13 +5,19 @@ html{
     overflow-x: hidden;
 }
 
-/* Base styles */
+/* 
+*{
+    border: 1px solid red;
+    overflow-x: hidden;
+}
+*/
+
 body {
     background-color: rgb(25, 25, 25);
     color: white;
     font-family: "Golos Text", sans-serif;
     padding-top: 100px;
-    padding-left: 300px;
+    padding-left: 12%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -20,12 +26,13 @@ body {
 
 .temp-text {
     position: absolute;
-    bottom: 0;
-    width: 100%;
+    bottom: 10%;
+    width: 80%;
     text-align: left;
     padding: 100px;
-    margin-left: -100px;
+    margin-left: -6%;
     color: #7b7b7b;
+    overflow: hidden;
 }
 
 
@@ -104,10 +111,13 @@ body {
 }
 
 .cloud {
-    position: absolute;
     top: 100px; 
     left: -100px;
     z-index: -1;
+    overflow-x: hidden;
+    position: fixed;
+    pointer-events: none;
+    animation: cloud_move 25s linear;
 }
 
 
@@ -301,8 +311,16 @@ input[type="checkbox"] {
     body {
         padding-left: 20px; /* Adjust padding for mobile devices */
     }
+
+    .temp-text{
+        font-size: 10px !important;
+        margin-left: -0% !important;
+        position: absolute !important;
+        padding: 0px !important;
+        overflow: hidden !important;
+    }
     
-    #lofi_image{
+    #lofi_image, #lofi_image_desk, #lofi_image_drawer{
         width: 0% !important;
     }
     .project,
@@ -518,8 +536,32 @@ input[type="checkbox"] {
 
 #rain{
     overflow: hidden;
-    position: absolute;
+    position: fixed;
+    box-sizing: border-box !important;
+    pointer-events: none;
+    top: -10px; /* Start above the viewport */
+    animation: fall 1s linear;
 }
+
+@keyframes fall {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100vh); /* Fall to the bottom of the viewport */
+    }
+  }
+
+
+  @keyframes cloud_move {
+    0% {
+      left: 0%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
 
 #project-link-inside{
     font-size: 20px !important;
@@ -760,8 +802,10 @@ input[type="checkbox"] {
 
   #lofi_image{
     width: 40%;
-    margin-left:34%;
+    margin-left: 38%;
     opacity: 0.5;
+    top: 50%;
+    position: absolute;
   }
 
 
@@ -769,7 +813,16 @@ input[type="checkbox"] {
     position: relative;
     display: inline-block;
     transition: filter 0.3s ease;
+}
 
+.button-container a {
+    font-size: clamp(5px, 5vw, 25px) !important; /* Font is responsive but capped at 25px */
+    word-wrap: break-word;
+    max-width: 100vw;
+    cursor: pointer;
+}
+
+a{    cursor: pointer;
 }
 
 #copyButton {
@@ -778,18 +831,19 @@ input[type="checkbox"] {
     background: none;
     cursor: pointer;
     transition: filter 0.3s ease;
-
 }
 
-#hr_contact{
+#hr_contact {
     margin: 10px;
 }
+
 .button-image {
-    width: 40px; /* Set the size of the image */
+    width: 40px;
     height: 40px;
     transition: filter 0.3s ease;
 }
 
+/* Popup styling */
 .popup {
     visibility: hidden;
     background-color: #6b6b6b;
@@ -806,14 +860,14 @@ input[type="checkbox"] {
     transition: opacity 0.3s;
 }
 
-
-#copyButton:hover{
+/* Hover effects applied only to the button */
+#copyButton:hover {
     filter: invert(80%);
     background-color: #6d6d6d;
-
 }
 
-.button-container:hover .popup {
+/* Show popup only when hovering over the button */
+#copyButton:hover + .popup {
     visibility: visible;
     opacity: 1;
 }
