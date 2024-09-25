@@ -18,7 +18,7 @@ async function uploadImageToDrive(auth, imagePath) {
     const drive = google.drive({ version: 'v3', auth });
     const fileMetadata = {
         name: path.basename(imagePath),
-        parents: ['your-folder-id'] // Replace with your actual folder ID
+        parents: ['1_zC3c5k79ItpB-I9ql42VduSv9k9MhIa'] // Replace with your actual folder ID
     };
     const media = {
         mimeType: 'image/jpeg',
@@ -63,7 +63,7 @@ async function main(input1, input2, input3, imagePath) {
 
         const client = await auth.getClient();
         const googleSheets = google.sheets({ version: 'v4', auth: client });
-        const ssID = 'your-spreadsheet-id';
+        const ssID = '1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0';
 
         const currentDate = new Date();
         const options = { timeZone: 'America/Los_Angeles' };
