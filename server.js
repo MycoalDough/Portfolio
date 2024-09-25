@@ -5,12 +5,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const app = express();
-
 // Enable CORS
+const app = express();
 app.use(cors());
-
-// Serve static files (like your HTML file) from the 'public' directory
 app.use(express.static('public'));
 
 // Set up multer for file uploads
@@ -21,10 +18,10 @@ async function uploadImageToDrive(auth, imagePath) {
     const drive = google.drive({ version: 'v3', auth });
     const fileMetadata = {
         name: path.basename(imagePath),
-        parents: ['1_zC3c5k79ItpB-I9ql42VduSv9k9MhIa'] // Replace with your actual folder ID
+        parents: ['your-folder-id'] // Replace with your actual folder ID
     };
     const media = {
-        mimeType: 'image/jpeg', // adjust the mime type accordingly
+        mimeType: 'image/jpeg',
         body: fs.createReadStream(imagePath)
     };
     const file = await drive.files.create({
@@ -51,24 +48,24 @@ async function uploadImageToDrive(auth, imagePath) {
     return result.data.webContentLink;
 }
 
-// Function to execute the main logic
+// Main function to authenticate and perform actions
 async function main(input1, input2, input3, imagePath) {
     try {
+        // Parse GOOGLE_CREDENTIALS from environment variable
+        const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+
+        // Set up Google authentication
         const auth = new google.auth.GoogleAuth({
-            keyFile: 'credentials.json',
+            credentials,
             scopes: ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive.file'],
         });
 
         const client = await auth.getClient();
-
         const googleSheets = google.sheets({ version: 'v4', auth: client });
-
-        const ssID = '1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0';
+        const ssID = 'your-spreadsheet-id';
 
         const currentDate = new Date();
-        const options = {
-            timeZone: 'America/Los_Angeles', // Rancho Cucamonga time zone
-        };
+        const options = { timeZone: 'America/Los_Angeles' };
         const localDateString = currentDate.toLocaleString(undefined, options);
 
         // Upload image to Google Drive and get the public URL
@@ -96,9 +93,9 @@ async function main(input1, input2, input3, imagePath) {
 
 // Endpoint to trigger the main function with optional file upload
 app.post('/upload', upload.single('image'), async (req, res) => {
-    const input1 = req.body.input1 || 'NA'; // Default value if input1 is not provided
-    const input2 = req.body.input2 || 'NA'; // Default value if input2 is not provided
-    const input3 = req.body.input3 || 'NA'; // Default value if input3 is not provided
+    const input1 = req.body.input1 || 'NA';
+    const input2 = req.body.input2 || 'NA';
+    const input3 = req.body.input3 || 'NA';
     const imagePath = req.file ? req.file.path : null;
 
     await main(input1, input2, input3, imagePath);
