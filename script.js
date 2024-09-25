@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (window.innerWidth < 900) {
                     text += "its " + time + " and ";
                 }else{
-                    text += "it is currently " + time + " in the  with a temperature of ";
+                    text += "it is currently " + time + " in san bernardino county with a temperature of ";
                 }
                 return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
             })
@@ -142,6 +142,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 let data = JSON.parse(rep.substr(47).slice(0, -2));
                 let temperature = data.table.rows[0].c[0].v;
                 text += Math.round(temperature * 9/5 + 32) + "° fahrenheit";
+                if(window.innerWidth < 900){
+                    text += " in sbc";
+                }
                 
                 let tempTextDiv = document.querySelector('.temp-text');
                 if (tempTextDiv) {
