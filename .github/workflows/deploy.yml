@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18' 
 
       - name: Install Dependencies
         run: npm install
@@ -23,14 +23,7 @@ jobs:
       - name: Create Google Credentials File
         run: |
           echo ${{ secrets.GOOGLE_CREDENTIALS_BASE64 }} | base64 --decode > credentials.json
-        # Set GOOGLE_CREDENTIALS environment variable
-        env:
-          GOOGLE_CREDENTIALS_BASE64: ${{ secrets.GOOGLE_CREDENTIALS_BASE64 }}
-
-      - name: Set GOOGLE_CREDENTIALS env variable
-        run: |
-          export GOOGLE_CREDENTIALS=$(cat credentials.json)
 
       - name: Deploy to Server
         run: |
-          node server.js & 
+          node server.js &
