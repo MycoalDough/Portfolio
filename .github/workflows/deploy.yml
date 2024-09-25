@@ -34,3 +34,7 @@ jobs:
       - name: Deploy to Server
         run: |
           node server.js &
+
+      - name: Verify Google Credentials File
+        run: |
+          cat credentials.json
