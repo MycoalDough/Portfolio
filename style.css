@@ -26,11 +26,10 @@ body {
 
 .temp-text {
     position: absolute;
-    bottom: 10%;
+    bottom: 13%;
     width: 80%;
     text-align: left;
-    padding: 100px;
-    margin-left: -6%;
+    margin-left: 0%;
     color: #7b7b7b;
     overflow: hidden;
 }
@@ -309,7 +308,7 @@ input[type="checkbox"] {
 
 @media only screen and (max-width: 768px) {
     body {
-        padding-left: 20px; /* Adjust padding for mobile devices */
+        padding-left: 0px; /* Adjust padding for mobile devices */
     }
 
     .temp-text{
@@ -831,6 +830,20 @@ a{    cursor: pointer;
     background: none;
     cursor: pointer;
     transition: filter 0.3s ease;
+}
+
+#click_see_more1{
+    text-align: center;
+  left: 10px;
+  position: absolute;
+  margin-top: -5px;
+  color: gray;
+}
+@media (min-width: 900px) {
+    #click_see_more1{
+        left: 40% !important; position: absolute; margin: 5px; color: grey; text-align: center; display: block;
+
+    }
 }
 
 #hr_contact {

@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (window.innerWidth < 900) {
                     text += "its " + time + " and ";
                 }else{
-                    text += "it is currently " + time + " in rancho cucamonga with a temperature of ";
+                    text += "it is currently " + time + " in the  with a temperature of ";
                 }
                 return fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=R2:R2`);
             })
