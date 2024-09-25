@@ -33,4 +33,4 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          node server.js &
+          node server.js & 
