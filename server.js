@@ -52,8 +52,9 @@ async function uploadImageToDrive(auth, imagePath) {
 async function main(input1, input2, input3, imagePath) {
     try {
         // Load GOOGLE_CREDENTIALS from credentials.json file
-        const credentials = JSON.parse(fs.readFileSync('credentials.json', 'utf8'));
-
+        const credentialsBase64 = process.env.GOOGLE_CREDENTIALS_BASE64;
+        const credentials = JSON.parse(Buffer.from(credentialsBase64, 'base64').toString('utf-8'));
+        
         // Set up Google authentication
         const auth = new google.auth.GoogleAuth({
             credentials,
