@@ -3,7 +3,8 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main 
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,10 +20,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Set Google Credentials
-        run: echo "GOOGLE_CREDENTIALS=${{ secrets.GOOGLE_CREDENTIALS }}" >> $GITHUB_ENV
+      - name: Create Google Credentials File
+        run: |
+          echo ${{ secrets.GOOGLE_CREDENTIALS_BASE64 }} | base64 --decode > credentials.json
 
       - name: Deploy to Server
         run: |
-          npm run build   # Build your app if necessary
-          node server.js  # Replace this with your actual deployment command
+          npm run build  # Build your app if needed
+          node server.js  # Your actual deployment command
