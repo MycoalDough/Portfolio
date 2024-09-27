@@ -229,6 +229,37 @@ function playUNHover(){
 }
 
 
+function filterContent() {
+    const searchValue = document.getElementById('searchBox').value.toLowerCase();
+    const rows = document.querySelectorAll('.row'); // Adjust this selector to target the correct rows
+
+    rows.forEach(row => {
+        const topText = row.querySelector('.top-left').textContent.toLowerCase();
+        const bottomText = row.querySelector('.bottom').textContent.toLowerCase();
+        const textContent = topText + ' ' + bottomText;
+        
+        if (!searchValue || textContent.includes(searchValue)) {
+            row.style.display = '';
+            highlightText(row, searchValue);
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+function highlightText(row, searchValue) {
+    const highlightClass = 'highlight';
+    const innerHTMLs = [row.querySelector('.top-left'), row.querySelector('.bottom')];
+
+    innerHTMLs.forEach(element => {
+        let innerHTML = element.textContent;
+        if (searchValue) {
+            const re = new RegExp(searchValue, 'gi');
+            innerHTML = innerHTML.replace(re, match => `<span class="${highlightClass}">${match}</span>`);
+        }
+        element.innerHTML = innerHTML;
+    });
+}
 
 
 // Change text on hover and click
