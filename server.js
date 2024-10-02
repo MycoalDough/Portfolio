@@ -14,38 +14,73 @@ app.use(express.static('public'));
 const upload = multer({ dest: 'uploads/' });
 
 // Function to upload image to Google Drive and generate a public URL
-async function uploadImageToDrive(auth, imagePath) {
+async function uploadImageToDrive(auth, imagePath, maxRetries = 5) {
     const drive = google.drive({ version: 'v3', auth });
+    console.log('Starting upload process with exponential backoff...');
+    console.log('Image path:', imagePath);
+
     const fileMetadata = {
         name: path.basename(imagePath),
         parents: ['1_zC3c5k79ItpB-I9ql42VduSv9k9MhIa'] // Replace with your actual folder ID
     };
+
     const media = {
         mimeType: 'image/jpeg',
         body: fs.createReadStream(imagePath)
     };
-    const file = await drive.files.create({
-        resource: fileMetadata,
-        media: media,
-        fields: 'id'
-    });
 
-    // Make the file public
-    await drive.permissions.create({
-        fileId: file.data.id,
-        requestBody: {
-            role: 'reader',
-            type: 'anyone',
-        },
-    });
+    let attempt = 0;
+    let delay = 1000; // Starting delay of 1 second
 
-    // Generate the public URL
-    const result = await drive.files.get({
-        fileId: file.data.id,
-        fields: 'webViewLink, webContentLink'
-    });
+    while (attempt < maxRetries) {
+        try {
+            // Try uploading the file
+            const file = await drive.files.create({
+                resource: fileMetadata,
+                media: media,
+                fields: 'id'
+            });
 
-    return result.data.webContentLink;
+            console.log('File uploaded successfully. File ID:', file.data.id);
+
+            // Make the file public
+            await drive.permissions.create({
+                fileId: file.data.id,
+                requestBody: {
+                    role: 'reader',
+                    type: 'anyone',
+                },
+            });
+
+            console.log('Permissions set to public.');
+
+            // Generate the public URL
+            const result = await drive.files.get({
+                fileId: file.data.id,
+                fields: 'webViewLink, webContentLink'
+            });
+
+            console.log('File URL:', result.data.webContentLink);
+            return result.data.webContentLink;  // Exit function after successful upload
+
+        } catch (error) {
+            attempt++;
+            console.error(`Attempt ${attempt} failed: ${error.message}`);
+
+            if (attempt >= maxRetries) {
+                console.error('Max retries reached. Failing the upload.');
+                throw error;  // Rethrow error after max retries
+            }
+
+            // Exponential backoff: wait before retrying
+            const jitter = Math.random() * 500;  // Optional jitter to avoid thundering herd
+            const backoffTime = delay + jitter;
+            console.log(`Retrying in ${backoffTime.toFixed(0)}ms...`);
+
+            await new Promise(resolve => setTimeout(resolve, backoffTime));  // Wait before retrying
+            delay *= 2;  // Exponentially increase the delay
+        }
+    }
 }
 
 // Main function to authenticate and perform actions
@@ -89,6 +124,7 @@ async function main(input1, input2, input3, imagePath) {
         console.log(localDateString);
     } catch (error) {
         console.error('Error:', error);
+        throw error;
     }
 }
 
@@ -99,8 +135,21 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     const input3 = req.body.input3 || 'NA';
     const imagePath = req.file ? req.file.path : null;
 
-    await main(input1, input2, input3, imagePath);
-    res.send('Data sent successfully.');
+    console.log('Received data:', { input1, input2, input3 });
+
+    if (!req.file) {
+        console.log('No image file uploaded.');
+    } else {
+        console.log('Image file uploaded:', imagePath);
+    }
+
+    try {
+        await main(input1, input2, input3, imagePath);
+        res.send('Data sent successfully.');
+    } catch (error) {
+        console.error('Error while uploading:', error);
+        res.status(500).send('Internal Server Error.');
+    }
 });
 
 app.get('/', (req, res) => {
