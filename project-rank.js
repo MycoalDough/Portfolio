@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     projects.forEach((project, index) => {
         project.setAttribute('data-original-order', index);
     });
+
+    toggleSortProjects();
 });
 
 function toggleSortProjects() {
