@@ -19,6 +19,9 @@
     </div>
     <div class="nav">
         <div>
+            <input type="checkbox" id="sortCheckbox" onclick="toggleSortProjects()" checked>
+            <label for="sortCheckbox">Sort by Michael's Ranking</label>
+            <br>
             <input type="checkbox" id="checkbox1" onclick="filterProjects()">
             <label for="checkbox1">AI</label>
             <input type="checkbox" id="checkbox2" onclick="filterProjects()">
@@ -26,7 +29,7 @@
         </div>
         <p id="click_see_more1">click on a project card image or title to see more</p>
         <div class="projects-container">
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="1">
                 <div class="project-content">
                     <a id="project-image-button" href="miragev5.html">
                         <img src="project-images/miragev5.png" alt="Stick War Image" class="project-image">
@@ -41,7 +44,7 @@
                 </div>
             </div>
             
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME" data-rank="3">
                 <div class="project-content">
                     <a id="project-image-button" href="undertalewithinyoutube.html">
                         <img src="project-images/uwy6.png" alt="Stick War Image" class="project-image">
@@ -56,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="5">
                 <div class="project-content">
                     <a id="project-image-button" href="summerai.html">
                         <img src="project-images/summerai.png" alt="Stick War Image" class="project-image">
@@ -68,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="2">
                 <div class="project-content">
                     <a id="project-image-button" href="stickwar.html">
                         <img src="project-images/stickwar.png" alt="Stick War Image" class="project-image">
@@ -82,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME" data-rank="6">
                 <div class="project-content">
                     <a id="project-image-button" href="viper.html">
                         <img src="project-images/viper1.png" alt="Viper Image" class="project-image">
@@ -95,10 +98,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME" data-rank="4">
                 <div class="project-content">
                     <a id="project-image-button" href="reapingrewards.html">
-                        <img src="project-images/reapingrewards.png" alt="Reaping Rewards Image" class="project-image">
+                        <img src="project-images/reapingrewards.png" alt="Reaping Rewards Image" class="project-image" >
                     </a>
                     <div class="project-info">
                         <a id="project-name" href="reapingrewards.html">Reaping Rewards</a>
@@ -109,10 +112,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME" data-rank="9">
                 <div class="project-content">
                     <a id="project-image-button" href="omegaflowey.html">
-                        <img src="project-images/omegaflowey.png" alt="Omega Flowey Image" class="project-image">
+                        <img src="project-images/omegaflowey.png" alt="Omega Flowey Image" class="project-image" >
                     </a>
                     <div class="project-info">
                         <a id="project-name" href="omegaflowey.html">Omega Flowey</a>
@@ -123,10 +126,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="6">
                 <div class="project-content">
                     <a id="project-image-button" href="miragev3.html">
-                        <img src="project-images/miragev3.png" alt="Mirage V3 Image" class="project-image">
+                        <img src="project-images/miragev3.png" alt="Mirage V3 Image" class="project-image" >
                     </a>
                     <div class="project-info">
                         <a id="project-name" href="miragev3.html">Mirage V3</a>
@@ -136,10 +139,10 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="7">
                 <div class="project-content">
                     <a id="project-image-button" href="fnaf.html">
-                        <img src="project-images/fnaf.png" alt="FNAF AI Image" class="project-image">
+                        <img src="project-images/fnaf.png" alt="FNAF AI Image" class="project-image" >
                     </a>
                     <div class="project-info">
                         <a id="project-name" href="fnaf.html">FNAF AI</a>
@@ -149,7 +152,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI">
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="8">
                 <div class="project-content">
                     <a id="project-image-button" href="buckshot.html">
                         <img src="project-images/buckshot.png" alt="Buckshot Roulette AI Image" class="project-image">
@@ -165,6 +168,9 @@
             <!-- Add more projects here if necessary -->
         </div>
     </div>
+    <script src="project-rank.js"></script>
+
     <script src="script.js"></script>
+
 </body>
 </html>
