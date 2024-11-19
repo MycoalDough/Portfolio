@@ -30,8 +30,12 @@
     <script>
         window.onload = async function() {
             try{
-                const response = await fetch("https://script.google.com/macros/s/AKfycbzUODUKkZXsuEHE4PUzkiiRgzEbn0nbskPlNUAsVVhZifIq5n2aHbCWb-8QFXle5Cs_pw/exec", {
-                        method: 'POST'
+                const formData = new FormData();
+                formData.append('handler', 'views');
+
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwzdzlBPxlAjYTFnxl6uQlO1-Rbuk5cJ4pzQGCv2jMEQOJngCBZvKYEc4BE0b3dU_-Row/exec", {
+                        method: 'POST',
+                        body: formData
                     });
             }catch(error){
                 console.error("ERROR sending POST request: ", error);
