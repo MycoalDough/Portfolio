@@ -1,6 +1,6 @@
 let SHEET_ID = '1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0';
 let SHEET_TITLE = 'Feed';
-let SHEET_RANGE = 'A:D';
+let SHEET_RANGE = 'A:O';
 
 let FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
 
@@ -80,6 +80,12 @@ fetch(FULL_URL)
                 noImageMessage.innerHTML = 'No image available';
                 div.appendChild(noImageMessage);
             }
+
+            // Add views from column O
+            let viewsLabel = document.createElement('div');
+            viewsLabel.className = 'bottom-right';
+            viewsLabel.innerHTML = "views: " + (rowData[14] ? rowData[14].v : '0');
+            div.appendChild(viewsLabel);
 
             document.body.appendChild(div);
         }

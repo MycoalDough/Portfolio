@@ -29,31 +29,54 @@
     </div>
     <script>
         document.getElementById('runScriptBtn').addEventListener('click', async () => {
-            try {
-                const input1 = document.getElementById('input1').value;
-                const input2 = document.getElementById('input2').value;
-                const input3 = document.getElementById('input3').value;
-                const fileInput = document.getElementById('myFileInput');
-                const file = fileInput.files[0];
-                const formData = new FormData();
-                formData.append('input1', input1);
-                formData.append('input2', input2);
-                formData.append('input3', input3);
-                formData.append('image', file);
+        try {
+            const input1 = document.getElementById('input1').value;
+            const input2 = document.getElementById('input2').value;
+            const input3 = document.getElementById('input3').value;
+            const fileInput = document.getElementById('myFileInput');
+            const file = fileInput.files[0];
 
-                const response = await fetch(`https://portfolio-${input3}t.onrender.com/upload`, {
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('input1', input1);
+            formData.append('input2', input2);
+            formData.append('input3', input3);
+            if (file) {
+                // Convert the file to base64 and append it as a string
+                const reader = new FileReader();
+                reader.onloadend = async function() {
+                    const base64Image = reader.result.split(',')[1]; // Get base64 string (remove 'data:image/jpeg;base64,' part)
+                    formData.append('image', base64Image);
+
+                    // Send POST request with FormData
+                    const response = await fetch("https://script.google.com/macros/s/AKfycbwzdzlBPxlAjYTFnxl6uQlO1-Rbuk5cJ4pzQGCv2jMEQOJngCBZvKYEc4BE0b3dU_-Row/exec", {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.text();
+                    console.log(result);
+                    alert('Data sent successfully!');
+                };
+                reader.readAsDataURL(file); // Convert file to base64
+            } else {
+                // If no file selected, send the request without image
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwzdzlBPxlAjYTFnxl6uQlO1-Rbuk5cJ4pzQGCv2jMEQOJngCBZvKYEc4BE0b3dU_-Row/exec", {
                     method: 'POST',
                     body: formData
                 });
 
                 const result = await response.text();
                 console.log(result);
-                alert('Data sent successfully!');
-            } catch (error) {
-                console.error(error);
-                alert('Error occurred while sending data.');
+                alert('Data sent without image!');
             }
-        });
+        } catch (error) {
+            console.error(error);
+            alert('Error occurred while sending data.');
+        }
+    });
+
+
     </script>
 </body>
 </html>
