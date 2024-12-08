@@ -542,6 +542,36 @@ input[type="checkbox"] {
     padding: 8px 12px!important;
     margin: 10px!important;
 }
+.version-button-container {
+    display: flex;
+    width: 100%;
+}
+
+.version-button {
+    width: 50%;
+    text-align: center; 
+    padding: 10px;
+    margin: 2px;
+    border: 0px solid #ccc; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    box-sizing: border-box;
+    transition: background-color 300ms linear;
+}
+
+.version-button:hover {
+    background-color: #d53030;
+    transition: background-color 300ms linear;
+}
+
+.version-button.white {
+    background-color: rgb(255, 29, 29);
+    color: rgb(255, 255, 255);
+}
+.version-button.red {
+    background-color: #a43838;
+    color: white;
+}
 
 #grey-text{
     color: #7b7b7b;
@@ -903,3 +933,32 @@ a{    cursor: pointer;
     visibility: visible;
     opacity: 1;
 }
+
+.impact-effect {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background-color: white;
+    border-radius: 50%; /* Makes it a circle */
+    opacity: 0.5;
+    transform: translate(-50%, -50%);
+    animation: impact-animation 1s forwards;
+    pointer-events: none; /* Ensures the effect doesn’t interfere with clicks */
+}
+
+@keyframes impact-animation {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+}
+
