@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / projects / m_clips</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ </div>
+        <div class="prompt" onclick="location.href='projects.html';" id="main_button">projects</div>
+        <div class="prompt">/ Mycoal Clipping Software</div>
+
+
+    </div>
+    <div class="nav">
+        <p>Clipping software that records the last 10 seconds of audio and video and saves to drive.</p>
+
+        
+        <br><br>
+        <p id="big-text">Resources</p>
+        <a id="project-link-inside" href="https://discord.gg/skTrFV3ATt">Discord</a>
+        <a id="project-link-inside" href="https://www.ffmpeg.org/">FFmpeg</a>
+        <a id="project-link-inside" href="https://medal.tv/">Medal (inspiration)</a>
+
+        <br><br>
+        <p id="big-text">Information</p>
+        <p>This is a clipping software, which is always recording. It stores the most recent 10 seconds always, and when I press F8, it will save the audio from system and mic as well as the screen and save it as a mp4 file.</p>
+        <br>
+        <p>It also adds a watermark that says "Mycoal Clips" to the bottom right of the video.</p>
+        <br>
+        <p>It barely uses system memory or CPU, and saved mp4 files are usually >5mb so I can upload them online.</p>
+
+        <br>
+        
+        <br>
+        <p id="big-text">Michael's Description</p>
+        <p>my friends were always clipping their epic kills in video games with medal but i wanted to try to create my own software</p>
+        <p style="color: orange;">TUTORIAL TIME!!!</p>
+        <p>alright so basically, to save the video, i would take screenshots via pyautogui to match my variable FPS, and store to a list. i would delete the last element if it was screenshotted 10 seconds ago</p>
+        <p>using pyaudio and FFmpeg, i was able to get my system sound and microphone and clip the data via reading the stream, and like the video, i delete the last element past 10 seconds</p>
+        <p>when i press F8, it would combine the 3 together and then add a watermark to the video (i thought the watermark would be hilarious)</p>
+        <p>now, this sounds really easy, but it WASN'T. for some reason, the sound was always offset from the video because the FPS had to be very specific each time, and they would start to record their parts at different times</p>
+        <p>i had to come up with my own formula to figure out the FPS after every clip (for some reason they were different for each clip?) and i time stamped each data saved and sorted em (it took me 3 days to make this simple program)</p>
+        
+        <br>
+        <p id="big-text">Funny Clips</p>
+        <p>woahh not visuals???</p>
+        <br><br>
+        <br>
+        <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+            <video style="width: 100%; height: auto; display: block;" controls>
+                <source src="project-images/clipsoftwarevideo1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+            <video style="width: 100%; height: auto; display: block;" controls>
+                <source src="project-images/clipsoftwarevideo2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+            <video style="width: 100%; height: auto; display: block;" controls>
+                <source src="project-images/clipsoftwarevideo3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

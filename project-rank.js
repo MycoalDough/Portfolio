@@ -33,12 +33,89 @@ function toggleSortProjects() {
     projects.forEach(project => projectsContainer.appendChild(project));
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const projectsContainer = document.querySelector('.projects-container');
+    const projects = Array.from(projectsContainer.children);
+
+    // Save the original order in a custom data attribute
+    projects.forEach((project, index) => {
+        project.setAttribute('data-original-order', index);
+    });
+
+    toggleSortProjects();
+});
+
+function toggleSortProjects() {
+    const checkbox = document.getElementById('sortCheckbox');
+    const projectsContainer = document.querySelector('.projects-container');
+    const projects = Array.from(projectsContainer.children);
+
+    if (checkbox.checked) {
+        // Sort projects by rank
+        projects.sort((a, b) => {
+            const rankA = parseInt(a.getAttribute('data-rank'));
+            const rankB = parseInt(b.getAttribute('data-rank'));
+            return rankA - rankB;
+        });
+    } else {
+        // Sort projects back to their original order
+        projects.sort((a, b) => {
+            return a.getAttribute('data-original-order') - b.getAttribute('data-original-order');
+        });
+    }
+
+    // Reorder the DOM elements
+    projects.forEach(project => projectsContainer.appendChild(project));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const projectsContainer = document.querySelector('.projects-container');
+    const projects = Array.from(projectsContainer.children);
+
+    // Save the original order in a custom data attribute
+    projects.forEach((project, index) => {
+        project.setAttribute('data-original-order', index);
+    });
+
+    toggleSortProjects();
+
+    // **Set default button colors**
+    document.querySelectorAll(".project").forEach(projectDiv => {
+        const v1Button = projectDiv.querySelector(".version-button[data-version='v1']");
+        const v2Button = projectDiv.querySelector(".version-button[data-version='v2']");
+        
+        if (v1Button && v2Button) {
+            v1Button.classList.add("white");
+            v2Button.classList.add("red");
+        }
+    });
+});
+
+function toggleSortProjects() {
+    const checkbox = document.getElementById('sortCheckbox');
+    const projectsContainer = document.querySelector('.projects-container');
+    const projects = Array.from(projectsContainer.children);
+
+    if (checkbox.checked) {
+        // Sort projects by rank
+        projects.sort((a, b) => {
+            const rankA = parseInt(a.getAttribute('data-rank'));
+            const rankB = parseInt(b.getAttribute('data-rank'));
+            return rankA - rankB;
+        });
+    } else {
+        // Sort projects back to their original order
+        projects.sort((a, b) => {
+            return a.getAttribute('data-original-order') - b.getAttribute('data-original-order');
+        });
+    }
+
+    // Reorder the DOM elements
+    projects.forEach(project => projectsContainer.appendChild(project));
+}
+
 if (window.location.pathname.includes("projects.html")) {
     document.querySelectorAll(".version-button").forEach(button => {
-        if (button.dataset.version === "v1") {
-            button.classList.add("white"); 
-            document.querySelector(".version-button[data-version='v2']").classList.add("red"); 
-        }
         button.addEventListener("click", () => {
             const projectDiv = button.closest(".project"); 
 
@@ -50,7 +127,11 @@ if (window.location.pathname.includes("projects.html")) {
             const link1 = button.dataset.youtubeLink;
             const link2 = button.dataset.itchioLink;
 
-            projectDiv.querySelector("#project-name").textContent = name;
+            // Update project name and set it as a clickable link to imageLink
+            const projectName = projectDiv.querySelector("#project-name");
+            projectName.textContent = name;
+            projectName.href = imageLink; // Now links to imageLink
+
             projectDiv.querySelector("#project-year").textContent = year;
             projectDiv.querySelector("#project-description").textContent = description;
 
@@ -62,15 +143,17 @@ if (window.location.pathname.includes("projects.html")) {
             projectLinks[0].href = link1; 
             projectLinks[1].href = link2;  
 
-            document.querySelectorAll(".version-button").forEach(b => {
+            // **Fix: Only affect buttons inside this project container**
+            projectDiv.querySelectorAll(".version-button").forEach(b => {
                 b.classList.remove("white", "red");
             });
+
             if (button.dataset.version === "v1") {
                 button.classList.add("white"); 
-                document.querySelector(".version-button[data-version='v2']").classList.add("red"); 
+                projectDiv.querySelector(".version-button[data-version='v2']").classList.add("red"); 
             } else {
                 button.classList.add("white"); 
-                document.querySelector(".version-button[data-version='v1']").classList.add("red");
+                projectDiv.querySelector(".version-button[data-version='v1']").classList.add("red");
             }
 
             // Impact Effect

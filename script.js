@@ -30,32 +30,25 @@ function spawnCloud() {
 setInterval(spawnCloud, getRandomNumber(10000,20000));
 
 function filterProjects() {
-    var checkbox1 = document.getElementById("checkbox1");
-    var checkbox2 = document.getElementById("checkbox2");
+    var checkbox1 = document.getElementById("checkbox1"); // AI
+    var checkbox2 = document.getElementById("checkbox2"); // GAME
+    var checkbox3 = document.getElementById("checkbox3"); // OTHER
     var projects = document.querySelectorAll('.project');
 
-    if (checkbox1.checked && !checkbox2.checked) {
-        projects.forEach(function(project) {
-            if (project.id === "AI") {
-                project.style.display = "block";
-            } else {
-                project.style.display = "none";
-            }
-        });
-    } else if (!checkbox1.checked && checkbox2.checked) {
-        projects.forEach(function(project) {
-            if (project.id === "GAME") {
-                project.style.display = "block";
-            } else {
-                project.style.display = "none";
-            }
-        });
-    } else {
-        projects.forEach(function(project) {
+    projects.forEach(function(project) {
+        if (
+            (checkbox1.checked && project.id === "AI") ||
+            (checkbox2.checked && project.id === "GAME") ||
+            (checkbox3.checked && project.id === "OTHER") ||
+            (!checkbox1.checked && !checkbox2.checked && !checkbox3.checked)
+        ) {
             project.style.display = "block";
-        });
-    }
+        } else {
+            project.style.display = "none";
+        }
+    });
 }
+
 
 
 const letters = "qwertyuiopasdfghjklzxcvbnm234567890!@#$%^&*()";

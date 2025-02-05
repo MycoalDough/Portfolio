@@ -26,9 +26,27 @@
             <label for="checkbox1">AI</label>
             <input type="checkbox" id="checkbox2" onclick="filterProjects()">
             <label for="checkbox2">GAME</label>
+            <input type="checkbox" id="checkbox3" onclick="filterProjects()">
+            <label for="checkbox3">OTHER</label>
         </div>
         <p id="click_see_more1">click on a project card image or title to see more</p>
         <div class="projects-container">
+
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="OTHER" data-rank="4">
+                <div class="project-content">
+                    <a id="project-image-button" href="clippingsoftware.html">
+                        <img src="project-images/clippingsoftware.png" alt="Ragdoll RPG Image" class="project-image" >
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="clippingsoftware.html">Mycoal Clipping Software</a>
+                        <h4>2025</h4>
+                        <p>Clipping software like Medal that's built into my PC</p>
+                        <p>Project not released</p>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="1">
                 <div class="project-content">
                     <a id="project-image-button" href="miragev5.html">
@@ -85,19 +103,46 @@
                     </div>
                 </div>
             </div>
+
             <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME" data-rank="6">
                 <div class="project-content">
                     <a id="project-image-button" href="viper.html">
-                        <img src="project-images/viper1.png" alt="Viper Image" class="project-image">
+                        <img src="project-images/viper1.png" alt="Omega Flowey Image" class="project-image">
                     </a>
                     <div class="project-info">
-                        <a id="project-name" href="viper.html">Viper Squadron</a>
-                        <h4>2024</h4>
-                        <p>Aerial dogfight combat simulator.</p>
-                        <a id="project_link" href="https://www.youtube.com/watch?v=CFjWkzIb5cY">YOUTUBE: Video</a>
+                        <a id="project-name" href="viper.html">VIPER SQUADRON V1</a>
+                        <h4 id="project-year">2024</h4>
+                        <p id="project-description">Aerial dogfight combat simulator.</p>
+                        <a id="project_link" href="https://www.youtube.com/watch?v=CFjWkzIb5cY">YOUTUBE: Video</a><br>
+                        <a id="project_link" href="https://mycoaldo.itch.io/viper-squadron">ITCH.IO: Game</a>
+                    </div>
+                    <div class="version-button-container">
+                        <button class="version-button" 
+                            data-version="v1"
+                            data-name="VIPER SQUADRON V1"
+                            data-year="2024"
+                            data-description="Aerial dogfight combat simulator."
+                            data-image-src="project-images/viper1.png"
+                            data-image-link="viper.html"
+                            data-youtube-link="https://www.youtube.com/watch?v=CFjWkzIb5cY"
+                            data-itchio-link="https://mycoaldo.itch.io/viper-squadron">
+                            V1
+                        </button>
+                        <button class="version-button" 
+                            data-version="v2"
+                            data-name="VIPER SQUADRON V2"
+                            data-year="2024"
+                            data-description="V2 of the VIPER SQUADRON fight with MAJOR improvements."
+                            data-image-src="project-images/viper_v2_1.png"
+                            data-image-link="viper_v2.html"
+                            data-youtube-link="https://www.youtube.com/watch?v=05H4vXaV2S8"
+                            data-itchio-link="https://mycoaldo.itch.io/viper-squadron-v2">
+                            V2
+                        </button>
                     </div>
                 </div>
             </div>
+
             <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="GAME" data-rank="4">
                 <div class="project-content">
                     <a id="project-image-button" href="reapingrewards.html">
@@ -235,6 +280,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Add more projects here if necessary -->
         </div>
     </div>
