@@ -19,8 +19,8 @@
     </div>
     <div class="nav">
         <div>
-            <input type="checkbox" id="sortCheckbox" onclick="toggleSortProjects()" checked>
-            <label for="sortCheckbox">Sort by Michael's Ranking</label>
+            <input type="checkbox" id="sortCheckbox" unchecked>
+            <label for="sortCheckbox">Sort by Michael's Ranking</label>            
             <br>
             <input type="checkbox" id="checkbox1" onclick="filterProjects()">
             <label for="checkbox1">AI</label>
@@ -31,6 +31,22 @@
         </div>
         <p id="click_see_more1">click on a project card image or title to see more</p>
         <div class="projects-container">
+
+            <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="AI" data-rank="5.1">
+                <div class="project-content">
+                    <a id="project-image-button" href="yapdollar.html">
+                        <img src="project-images/yapdollar.png" alt="Ragdoll RPG Image" class="project-image" >
+                    </a>
+                    <div class="project-info">
+                        <a id="project-name" href="yapdollar.html">PDF to Yap Dollar</a>
+                        <h4>2025</h4>
+                        <p>Converts a PDF file into a Yap Dollar video, who summarizes the file.</p>
+                        <p>Project not released</p>
+                        <a id="project_link" href="https://www.youtube.com/watch?v=PE-NmaO6hDQ">YOUTUBE: Demonstration</a>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" id="OTHER" data-rank="4">
                 <div class="project-content">

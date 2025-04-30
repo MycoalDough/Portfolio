@@ -2,6 +2,56 @@ function getRandomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+async function loadFullPage(url) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Page load failed: ${response.statusText}`);
+  
+      const text = await response.text();
+      const parser = new DOMParser();
+      const newDoc = parser.parseFromString(text, 'text/html');
+  
+      document.head.innerHTML = newDoc.head.innerHTML;
+  
+      document.body.innerHTML = '';
+      for (const node of newDoc.body.childNodes) {
+        document.body.appendChild(document.importNode(node, true));
+      }
+  
+      newDoc.querySelectorAll('script').forEach(oldScript => {
+        const newScript = document.createElement('script');
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
+        } else {
+          newScript.textContent = oldScript.textContent;
+        }
+        [...oldScript.attributes].forEach(attr => {
+          newScript.setAttribute(attr.name, attr.value);
+        });
+        document.body.appendChild(newScript);
+      });
+  
+      interceptLinks();
+  
+      console.log(`✅ Loaded: ${url}`);
+    } catch (error) {
+      console.error('❌ Error loading page:', error);
+      alert('Failed to load page. Check console for more info.');
+    }
+  }
+  
+  
+  // Reattach event listeners after every page load
+  window.addEventListener('DOMContentLoaded', () => {
+    interceptLinks();
+  });
+  
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', () => {
+    loadFullPage(location.pathname);
+  });
+  
+
 function spawnCloud() {
     if (document.visibilityState != "visible") {
         return;

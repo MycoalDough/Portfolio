@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / projects / yap_dollar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ </div>
+        <div class="prompt" onclick="location.href='projects.html';" id="main_button">projects</div>
+        <div class="prompt">/ PDF to Yap Dollar</div>
+
+
+    </div>
+    <div class="nav">
+        <p>Summarizes a pdf file and converts it to text that Yap Dollar would say, converting it to an mp4.</p>
+        <h3 style="color: red;">WARNING: CONTENT BELOW CONTAINS SWEARING.</h3>
+
+        <a href="https://www.youtube.com/watch?v=PE-NmaO6hDQ" id="youtube">Demonstration<div class="link_shine"></div></a>
+
+        <br><br>
+        <p id="big-text">Resources</p>
+        <a id="project-link-inside" href="https://discord.gg/skTrFV3ATt">Discord</a>
+        <a id="project-link-inside" href="https://www.youtube.com/watch?v=6MwMNS_p6j8">Yap Dollar (inspiration)</a>
+
+        <br><br>
+        <p id="big-text">Information</p>
+        <p>Using my LLM model MirageV6, I was able to summarize a PDF in 50 words or less.</p>
+        <br>
+        <p>This then allowed me to put it through another model that would convert this boring text into the personality of Yap Dollar.</p>
+        <br>
+        <p>Combinging it with images that relate to the summary and random sound effects, the script would then combine it all into an mp4.</p>
+
+        <br>
+        
+        <br>
+        <p id="big-text">Michael's Description</p>
+        <p>i saw this project on instagram and thought it was hilarious but it costed money, so why not create it myself lol</p>
+        <p style="color: orange;">TUTORIAL TIME!!!</p>
+        <p>first, using fitz, i would open the pdf file to extract all the data. b/c of how small my model's token limit is, it can only take in pdfs of around 1/2 a page</p>
+        <p>then, i would use the MirageV6 model to convert it to a consise summary. then, i'd put it through another model to make it have yap dollar's personality: going on random tangents, swearing, etc.</p>
+        <p>b/c my model is so small, i also created a json with a list to store funny phrases that would randomly add itself to the script. using a final mirage model, i grabbed 15 nouns from the yap dollar script</p>
+        <p>using the duckduckgo api, i then grabbed those images. sometimes the image it grabbed was in the wrong format, which is why i grabbed 15 and not 10 (i made there be 5 extra in case).</p>
+        <p>to compile it all together, moviepy would grab the audio (random sentences would convert to spanish or chinese via deep_translator) and add it with bg music and the images that would change at an interval</p>
+        <p>and finally, random selected sound effects would play at random times like in the actual yap dollar videos. finally, i play: XIAO HONG SHU!!!</p>
+        
+        <br>
+        <p id="big-text">Example Video</p>
+        <p>woahh not visuals???</p>
+        <br>
+        <p>summarizes the constitution my friends and i made for a discord server roleplay</p>
+
+        <br><br>
+        <br>
+        <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+            <video style="width: 100%; height: auto; display: block;" controls>
+                <source src="project-images/yapdollarvideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

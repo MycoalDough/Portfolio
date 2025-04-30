@@ -36,7 +36,6 @@ body {
 
 
 .background {
-    background-image: url("background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -945,6 +944,7 @@ a{    cursor: pointer;
     animation: impact-animation 1s forwards;
     pointer-events: none; /* Ensures the effect doesn’t interfere with clicks */
 }
+
 
 @keyframes impact-animation {
     0% {
