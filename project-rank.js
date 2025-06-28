@@ -1,8 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
     const projectsContainer = document.querySelector('.projects-container');
     const sortCheckbox = document.getElementById('sortCheckbox');
 
-    if (!projectsContainer || !sortCheckbox) return;
+    //if (!projectsContainer || !sortCheckbox) return;
 
     const projects = Array.from(projectsContainer.children);
 
@@ -79,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => impact.remove(), 1000);
         });
     });
-});
 
 function toggleSortProjects() {
     const checkbox = document.getElementById('sortCheckbox');

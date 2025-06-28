@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / ??? / talktocoffee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .title {
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .p {
+            color: white;
+            font-size: 24px;
+            font-weight: none;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .coffee-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .speech-bubble {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 25px;
+            position: relative;
+            margin-bottom: 30px;
+            min-width: 200px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid white;
+        }
+
+        .coffee-emoji {
+            font-size: 120px;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .talk-button {
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 250px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .talk-button.idle {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .talk-button.idle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .talk-button.recording {
+            background: linear-gradient(135deg, #FF6B6B, #FF5252);
+
+            color: #333;
+        }
+
+        .talk-button.transcribing {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+
+            color: white;
+        }
+
+        .recording-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #FF4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.3s ease;
+        }
+
+        .recording-indicator.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background: #FF4444;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .coffee-thoughts {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .coffee-thoughts.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="recording-indicator" id="recordingIndicator">
+            <span class="recording-dot"></span>
+            Recording...
+        </div>
+
+        <h1 class="title">CoffeeChat ☕</h1>
+        <p class="p">idk talk to a coffee</p>
+
+        
+        <div class="coffee-container">
+            <div class="speech-bubble" id="speechBubble"></div>
+            <div class="coffee-thoughts" id="coffeeThoughts">Thinking...</div>
+            <div class="coffee-emoji">☕</div>
+        </div>
+        
+        <button class="talk-button idle" id="talkButton">
+            Talk to Coffee
+        </button>
+    </div>
+
+    <script>
+        const talkButton = document.getElementById('talkButton');
+        const speechBubble = document.getElementById('speechBubble');
+        const recordingIndicator = document.getElementById('recordingIndicator');
+        const coffeeThoughts = document.getElementById('coffeeThoughts');
+        
+        let isRecording = false;
+        let isProcessing = false;
+
+        const responses = ['Yes', 'No'];
+        
+        function getRandomResponse() {
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        function showSpeechBubble(text) {
+            speechBubble.textContent = text;
+            speechBubble.classList.add('show');
+        }
+
+        function hideSpeechBubble() {
+            speechBubble.classList.remove('show');
+        }
+
+        function updateButton(state, text) {
+            talkButton.className = `talk-button ${state}`;
+            talkButton.textContent = text;
+        }
+
+        function showRecordingIndicator() {
+            recordingIndicator.classList.add('show');
+        }
+
+        function hideRecordingIndicator() {
+            recordingIndicator.classList.remove('show');
+        }
+
+        function showCoffeeThinking() {
+            coffeeThoughts.classList.add('show');
+        }
+
+        function hideCoffeeThinking() {
+            coffeeThoughts.classList.remove('show');
+        }
+
+        talkButton.addEventListener('click', () => {
+            if (isProcessing) return;
+
+            if (!isRecording) {
+                // Start recording
+                isRecording = true;
+                
+                hideSpeechBubble();
+                updateButton('recording', 'Stop Recording');
+                showRecordingIndicator();
+                
+            } else {
+                // Stop recording, start transcribing
+                isRecording = false;
+                isProcessing = true;
+                hideRecordingIndicator();
+                updateButton('transcribing', 'Transcribing...');
+                showCoffeeThinking();
+                
+                // Simulate transcription time (1-2 seconds)
+                const transcribeTime = 1000 + Math.random() * 1000;
+                
+                setTimeout(() => {
+                    // Show coffee response
+                    hideCoffeeThinking();
+                    const response = getRandomResponse();
+                    showSpeechBubble(response);
+                    updateButton('idle', 'Talk to Coffee');
+                    isProcessing = false;
+                }, transcribeTime);
+            }
+        });
+
+        // Initial state
+        updateButton('idle', 'Talk to Coffee');
+    </script>
+</body>
+</html>

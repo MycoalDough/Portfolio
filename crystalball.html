@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / ??? / crystalball</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #9b59b6 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .title-screen {
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .title-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .title {
+            color: white;
+            font-size: 56px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 24px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .name-input {
+            padding: 15px 25px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .name-input:focus {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .enter-hint {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .crystal-ball-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .crystal-ball-screen.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .crystal-ball {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3), rgba(138, 43, 226, 0.6));
+            box-shadow: 
+                0 0 50px rgba(138, 43, 226, 0.5),
+                inset -20px -20px 50px rgba(0, 0, 0, 0.2),
+                inset 20px 20px 50px rgba(255, 255, 255, 0.3);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .crystal-ball::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+        }
+
+        .crystal-ball.thinking {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 50px rgba(138, 43, 226, 0.5),
+                    inset -20px -20px 50px rgba(0, 0, 0, 0.2),
+                    inset 20px 20px 50px rgba(255, 255, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 80px rgba(138, 43, 226, 0.8),
+                    0 0 120px rgba(255, 255, 255, 0.3),
+                    inset -20px -20px 50px rgba(0, 0, 0, 0.2),
+                    inset 20px 20px 50px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .crystal-message {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            min-height: 40px;
+            margin-bottom: 30px;
+        }
+
+        .result-name {
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .result-name.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .restart-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .restart-button.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease 0.3s;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Title Screen -->
+        <div class="title-screen" id="titleScreen">
+            <h1 class="title">🔮 Crystal Ball AI 🔮</h1>
+            <p class="subtitle">i can predict your name using advanced ai algorithms.</p>
+            <div class="input-container">
+                <input type="text" class="name-input" id="nameInput" placeholder="Name (for training data)" maxlength="50">
+                <p class="enter-hint">Press Enter to let me guess...</p>
+            </div>
+        </div>
+
+        <!-- Crystal Ball Screen -->
+        <div class="crystal-ball-screen" id="crystalScreen">
+            <div class="crystal-ball" id="crystalBall"></div>
+            <div class="crystal-message" id="crystalMessage">Entering info into neural network...</div>
+            <div class="result-name" id="resultName"></div>
+            <button class="restart-button" id="restartButton">again?</button>
+        </div>
+    </div>
+
+    <script>
+        const titleScreen = document.getElementById('titleScreen');
+        const crystalScreen = document.getElementById('crystalScreen');
+        const nameInput = document.getElementById('nameInput');
+        const crystalBall = document.getElementById('crystalBall');
+        const crystalMessage = document.getElementById('crystalMessage');
+        const resultName = document.getElementById('resultName');
+        const restartButton = document.getElementById('restartButton');
+
+        let userInput = '';
+
+        function startGuessing() {
+            userInput = nameInput.value.trim();
+            if (!userInput) return;
+
+            // Hide title screen and show crystal ball
+            titleScreen.classList.add('hidden');
+            setTimeout(() => {
+                crystalScreen.classList.add('show');
+                crystalBall.classList.add('thinking');
+                
+                // Thinking phase
+                setTimeout(() => {
+                    crystalMessage.textContent = 'Using Advanced AI model to predict name...';
+                    
+                    setTimeout(() => {
+                        crystalMessage.textContent = 'Applying softmax...';
+                        
+                        setTimeout(() => {
+                            // Stop thinking animation and show result
+                            crystalBall.classList.remove('thinking');
+                            crystalMessage.textContent = '';
+                            resultName.textContent = userInput;
+                            resultName.classList.add('show');
+                            
+                            setTimeout(() => {
+                                restartButton.classList.add('show');
+                            }, 500);
+                            
+                        }, 1500);
+                    }, 1500);
+                }, 2000);
+            }, 500);
+        }
+
+        function restart() {
+            // Reset all states
+            crystalScreen.classList.remove('show');
+            crystalBall.classList.remove('thinking');
+            crystalMessage.textContent = 'Thinking...';
+            resultName.classList.remove('show');
+            restartButton.classList.remove('show');
+            
+            setTimeout(() => {
+                titleScreen.classList.remove('hidden');
+                nameInput.value = '';
+                nameInput.focus();
+            }, 500);
+        }
+
+        // Event listeners
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                startGuessing();
+            }
+        });
+
+        restartButton.addEventListener('click', restart);
+
+        // Focus on input when page loads
+        nameInput.focus();
+    </script>
+</body>
+</html>

@@ -2,55 +2,6 @@ function getRandomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-async function loadFullPage(url) {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Page load failed: ${response.statusText}`);
-  
-      const text = await response.text();
-      const parser = new DOMParser();
-      const newDoc = parser.parseFromString(text, 'text/html');
-  
-      document.head.innerHTML = newDoc.head.innerHTML;
-  
-      document.body.innerHTML = '';
-      for (const node of newDoc.body.childNodes) {
-        document.body.appendChild(document.importNode(node, true));
-      }
-  
-      newDoc.querySelectorAll('script').forEach(oldScript => {
-        const newScript = document.createElement('script');
-        if (oldScript.src) {
-          newScript.src = oldScript.src;
-        } else {
-          newScript.textContent = oldScript.textContent;
-        }
-        [...oldScript.attributes].forEach(attr => {
-          newScript.setAttribute(attr.name, attr.value);
-        });
-        document.body.appendChild(newScript);
-      });
-  
-      interceptLinks();
-  
-      console.log(`✅ Loaded: ${url}`);
-    } catch (error) {
-      console.error('❌ Error loading page:', error);
-      alert('Failed to load page. Check console for more info.');
-    }
-  }
-  
-  
-  // Reattach event listeners after every page load
-  window.addEventListener('DOMContentLoaded', () => {
-    interceptLinks();
-  });
-  
-  // Handle browser back/forward buttons
-  window.addEventListener('popstate', () => {
-    loadFullPage(location.pathname);
-  });
-  
 
 function spawnCloud() {
     if (document.visibilityState != "visible") {
@@ -77,7 +28,53 @@ function spawnCloud() {
 }, 25000);
 }
 
+
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomNumberFloat(min, max){
+    return Math.random() * (max-min) + min;
+}
+
+function spawnRain() {
+    if (document.visibilityState != "visible") {
+        return;
+    }
+    var cloud = document.createElement("img");
+    cloud.src = "rain.png"; 
+    cloud.classList.add("cloud");
+    cloud.id = "rain";
+
+    cloud.style.left = getRandomNumber(0, window.innerWidth - 95) + "px";
+    cloud.style.top = -30 + "px";
+    cloud.style.opacity = getRandomNumberFloat(0.01,0.3).toString(); 
+    
+    var size = getRandomNumber(50, 150);
+    cloud.style.width = size + "px";
+    cloud.style.height = "auto";
+    
+    document.body.appendChild(cloud);
+
+    var interval = setInterval(function() {
+            clearInterval(interval); 
+            cloud.remove();
+
+    }, 1000);
+}
+
 setInterval(spawnCloud, getRandomNumber(10000,20000));
+intervalRain = setInterval(spawnRain, getRandomNumber(100, 500)); 
+intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
+
+
+  
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', () => {
+    loadFullPage(location.pathname);
+  });
+  
 
 function filterProjects() {
     var checkbox1 = document.getElementById("checkbox1"); // AI
@@ -103,7 +100,7 @@ function filterProjects() {
 
 const letters = "qwertyuiopasdfghjklzxcvbnm234567890!@#$%^&*()";
 
-let interval = null;
+//let interval = null;
 
 /*document.getElementById("main_menu_p").addEventListener("mouseover", event => {
       let iteration = 0;
@@ -158,8 +155,7 @@ let SHEET_RANGE = 'R3:R3';
 
 let FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
 
-intervalRain = setInterval(spawnRain, getRandomNumber(100, 500)); 
-intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
+
 
 // Add event listener for visibility change
 
@@ -200,39 +196,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getRandomNumberFloat(min, max){
-    return Math.random() * (max-min) + min;
-}
-
-function spawnRain() {
-    if (document.visibilityState != "visible") {
-        return;
-    }
-    var cloud = document.createElement("img");
-    cloud.src = "rain.png"; 
-    cloud.classList.add("cloud");
-    cloud.id = "rain";
-
-    cloud.style.left = getRandomNumber(0, window.innerWidth - 95) + "px";
-    cloud.style.top = -30 + "px";
-    cloud.style.opacity = getRandomNumberFloat(0.01,0.3).toString(); 
-    
-    var size = getRandomNumber(50, 150);
-    cloud.style.width = size + "px";
-    cloud.style.height = "auto";
-    
-    document.body.appendChild(cloud);
-
-    var interval = setInterval(function() {
-            clearInterval(interval); 
-            cloud.remove();
-
-    }, 1000);
-}
 
 const hoverSound = new Audio('hover.mp3');
 const unhoverSound = new Audio('unhover.mp3');
@@ -335,7 +298,8 @@ const copyButton = document.getElementById('copyButton');
 const popup = document.getElementById('popup');
 
 
-copyButton.addEventListener('click', () => {
+if(copyButton){
+    copyButton.addEventListener('click', () => {
     navigator.clipboard.writeText("mycoaldough@gmail.com").catch(function(error) {
         console.error("Failed to copy text: ", error);
     });
@@ -346,3 +310,11 @@ copyButton.addEventListener('click', () => {
 copyButton.addEventListener('mouseleave', () => {
     popup.textContent = 'Copy to clipboard';
 });
+
+}
+
+
+
+
+
+
