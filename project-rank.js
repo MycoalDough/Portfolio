@@ -88,7 +88,7 @@ function toggleSortProjects() {
 
     if (checkbox.checked) {
         projects.sort((a, b) => {
-            return parseInt(a.getAttribute('data-rank')) - parseInt(b.getAttribute('data-rank'));
+            return parseFloat(a.getAttribute('data-rank')) - parseFloat(b.getAttribute('data-rank'));
         });
     } else {
         projects.sort((a, b) => {

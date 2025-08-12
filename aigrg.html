@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / projects / ai grg</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ </div>
+        <div class="prompt" onclick="location.href='projects.html';" id="main_button">projects</div>
+        <div class="prompt">/ AI Grows a Garden</div>
+
+
+    </div>
+    <div class="nav">
+        <p>PPO model learns how to manage time and farm, water, plant, reap, buy seeds, etc. to earn the most money possible from farming in a 3 minute day.</p>
+        <a href="https://www.youtube.com/watch?v=rEuPpWJMzRk" id="youtube">Demonstration<div class="link_shine"></div></a>
+
+        <br><br>
+        <p id="big-text">Resources</p>
+        <a id="project-link-inside" href="https://discord.gg/skTrFV3ATt">Discord</a>
+        <a id="project-link-inside" href="https://arxiv.org/pdf/1707.06347">Model Based on Paper</a>
+
+        <br><br>
+        <p id="big-text">Information</p>
+        <p>In this game, the AI controls the stickfigure. He can: plant, water, reap, and buy (seeds or upgrades).<br>
+        </p>
+        <p>The PPO model has to learn how to manage its time correctly, because each action takes a lot of time. Moving takes the most, so it needs to savor what it does.</p>
+        <br>
+        <p><br><br>Overall, this project taught me the importance of binary flags and giving the AI more info so it doesn't need to waste training w+b on formulas I can give it.</p>
+
+        <br>
+        <p id="big-text">Michael's Description</p>
+        <p>oh man did this project take longer than i thought it would...</p>
+
+        <p>alright so basically i made this project within 3-4 days cause i was leaving the next week, so i wanted to train it (remote desktop allowed me to monitor and check)</p>
+        <p>it never trained correctly over that week so i stopped it within the first day (it converged poorly). when i got back it took another week of tweaking a lot of stuff</p>
+        <p>and then it finally worked! the main takeaway i got was: bianry flags, more inputs, more exploration lol; fun project nonetheless</p>
+
+
+        <br>
+        <p id="big-text">Visuals</p>
+        <br><br>
+        <br>
+        <br>
+
+        <img id="project-image-inside"
+        src="project-images/aigrg1.png">
+        <p>AI in shop</p>
+        <img id="project-image-inside"
+        src="project-images/aigrg2.png">
+        <p>Failed model #1, harvesting a cabbage</p>
+
+        <img id="project-image-inside"
+        src="project-images/aigrg3.png">
+        <p>Watering a blueberry</p>
+
+        <img id="project-image-inside"
+        src="project-images/aigrg4.png">
+        <p>Walking/leaving store</p>
+
+        <img id="project-image-inside"
+        src="project-images/aigrg5.png">
+        <p>Planting tomato plant</p>
+
+
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
