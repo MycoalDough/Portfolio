@@ -1,7 +1,14 @@
+// Run this as early as possible (inline <script> in <head>)
+const DURATION = 12000; // must match animation duration in ms
+const elapsed = Date.now() % DURATION;
+
+const style = document.createElement('style');
+style.textContent = `body::after { animation-delay: -${elapsed}ms; }`;
+document.head.appendChild(style);
+
 function getRandomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
-
 
 function spawnCloud() {
     if (document.visibilityState != "visible") {
