@@ -962,3 +962,56 @@ a{    cursor: pointer;
     }
 }
 
+/* corner brackets */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* draw the corners using background gradients */
+body::before {
+    background:
+        /* top left */
+        linear-gradient(#525252,#525252) left 10px top 10px / 40px 3px no-repeat,
+        linear-gradient(#525252,#525252) left 10px top 10px / 3px 40px no-repeat,
+
+        /* top right */
+        linear-gradient(#525252,#525252) right 10px top 10px / 40px 3px no-repeat,
+        linear-gradient(#525252,#525252) right 10px top 10px / 3px 40px no-repeat,
+
+        /* bottom left */
+        linear-gradient(#525252,#525252) left 10px bottom 10px / 40px 3px no-repeat,
+        linear-gradient(#525252,#525252) left 10px bottom 10px / 3px 40px no-repeat,
+
+        /* bottom right */
+        linear-gradient(#525252,#525252) right 10px bottom 10px / 40px 3px no-repeat,
+        linear-gradient(#525252,#525252) right 10px bottom 10px / 3px 40px no-repeat;
+}
+
+
+
+/* vertical scanline */
+
+body::after {
+    content: '';
+    width: 100%;
+    height: 2px;           /* ← thin line, not a 120px band */
+    top: 0;
+    left: 0;
+    position: fixed;
+
+    background: rgba(255, 255, 255, 0.085);  /* solid, no gradient needed */
+
+    pointer-events: none;
+    animation: scanlineMove 12s linear infinite;
+}
+
+@keyframes scanlineMove {
+    from { transform: translateY(0); }
+    to   { transform: translateY(100vh); }
+}
