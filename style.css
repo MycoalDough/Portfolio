@@ -411,6 +411,23 @@ input[type="checkbox"] {
     transition: 0.2s color ease-in-out !important;
 }
 
+#about-me-no-link{
+    font-size: 21px !important;
+    color: #b4a4b8 !important;
+    display: contents !important;
+    text-decoration: underline !important;
+    transition: 0.2s color ease-in-out !important;
+}
+
+#about-me-no-link-yellow{
+    font-size: 21px !important;
+    font-weight: bold;
+    color: #ffd900 !important;
+    display: contents !important;
+    text-decoration: underline !important;
+    transition: 0.2s color ease-in-out !important;
+}
+
 #about-me-link:hover{
     color: #d8b368 !important;
 }
