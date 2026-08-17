@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://michaeldo.dev/</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/about</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/links</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/projects</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/competitions</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/publications</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/contact</loc>
+    </url>
+
+    <url>
+        <loc>https://michaeldo.dev/feed</loc>
+    </url>
+
+</urlset>
