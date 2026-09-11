@@ -84,22 +84,32 @@ intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
   
 
 function filterProjects() {
-    var checkbox1 = document.getElementById("checkbox1"); // AI
-    var checkbox2 = document.getElementById("checkbox2"); // GAME
-    var checkbox3 = document.getElementById("checkbox3"); // OTHER
-    var projects = document.querySelectorAll('.project');
+    const filters = {
+        AI: document.getElementById("checkboxAI").checked,
+        GAME: document.getElementById("checkboxGAME").checked,
+        SWE: document.getElementById("checkboxSWE").checked,
+        FULLSTACK: document.getElementById("checkboxFULLSTACK").checked,
+        OTHER: document.getElementById("checkboxOTHER").checked
+    };
 
-    projects.forEach(function(project) {
-        if (
-            (checkbox1.checked && project.id === "AI") ||
-            (checkbox2.checked && project.id === "GAME") ||
-            (checkbox3.checked && project.id === "OTHER") ||
-            (!checkbox1.checked && !checkbox2.checked && !checkbox3.checked)
-        ) {
+    const selectedTags = Object.keys(filters).filter(tag => filters[tag]);
+    const projects = document.querySelectorAll(".project");
+
+    projects.forEach(project => {
+        const projectTags = (project.dataset.tags || "")
+            .split(" ")
+            .filter(Boolean);
+
+        if (selectedTags.length === 0) {
             project.style.display = "block";
-        } else {
-            project.style.display = "none";
+            return;
         }
+
+        const matches = selectedTags.some(tag =>
+            projectTags.includes(tag)
+        );
+
+        project.style.display = matches ? "block" : "none";
     });
 }
 

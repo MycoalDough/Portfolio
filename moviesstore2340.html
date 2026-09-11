@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYCOAL / projects / gtmovies</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://michaeldo.dev/crc">
+
+</head>
+<body>
+    <div class="background"></div>
+    <div class="prompt-container">
+        <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
+        <div class="prompt">/ </div>
+        <div class="prompt" onclick="location.href='projects.html';" id="main_button">projects</div>
+        <div class="prompt">/ GT Movies Store</div>
+
+
+    </div>
+    <div class="nav">
+        <p>Project #1 for CS 2340</p>
+        <a href="https://www.youtube.com/watch?v=S1-lhrov8ic" id="youtube">Devlog<div class="link_shine"></div></a>
+        <a href="https://github.com/MycoalDough/customrhythmcreator" id="orange-button">Download Project<div class="link_shine"></div></a>
+
+        <br><br>
+        <p id="big-text">Resources</p>
+        <a id="project-link-inside" href="https://discord.gg/skTrFV3ATt">Discord</a>
+        <a id="project-link-inside" href="https://learning.oreilly.com/library/view/django-5-for/9781835461556/">Django Book</a>
+
+        <br><br>
+        <p id="big-text">GT Movies Store Description</p>
+        <p>The GT Movies Store is a Django web app where users can search, view, review, and purchase movies online.<br>
+        </p>
+        <p>Visitors can learn about the purpose of the store via the [ABOUT], register for an account, and log in for the main features. Users can browse
+            the movie catalogs, search for movies by ttile, and open movie pages to view more detailed information about that movie.<br></p>
+        <p>Registered users have access to their shopping cart where they can add 1+ copies of movies, view the items in the cart, remove them (and the 
+            options to remove all)  before checking out. When checking out, it completes the purhcase and is stored as orders so users can view their order history
+            later and keep track of what they pruchased.<br></p>
+        <p>The store also has a review system, where users can read reviews left on movies, create their own reviews, edit them, or delete them. Reviews that have
+            inappropriate content can also be reported by other users and removed frmo the page.<br></p>
+        <p>Admins have management tools for maintaining the store. They can manage users, moives, reviews, orders, and items by viewing, creating, updating, or deleting stored information.<br></p>
+        <p>Via pythoneverywhere, the app is accessible through a web browswer and uses a responsive interfance so the pages/features can adapt to different screen sizes.<br></p>
+        <p><br></p>
+
+        <p>Logged in users can view and purchase movies, leave comments (editable, deletable, reportable), and confirm purchase orders of moives.</p>
+        <br>
+        <p><br><br></p>
+        <p id="big-text">Process Description</p>
+        <p>I developed this app incrementally around the user stories. Instead of building the entire application at once, I worked through each user story/feature 
+            individually, such as auth, movie browsing, searching, shopping, reviews, orders, etc.<br></p>
+        <p>For each user story, I first figured out what the user needed to accomplish and what data the app needed to store. I implemented the necessary Django models,
+            views, URLs, and HTML. After adding in each feature, I tested it via localhost and then moved on.<br></p>
+        <p>Each time I encountered a problem, I used django's error messages to trace the issue back to the relavant code. I also referenced the textbook when I needed clarification.<br></p>
+        <p>Working on this project helped me understand Django and how the application works. Features such as purchasing a movie or adding a review requires the database,
+            server-side logic, URL routing, auth, and frontend templates to work together.<br></p>
+
+
+
+        <br>
+
+        <br>
+        <p id="big-text">Video Demonstration</p>
+        <br><br>
+        <br>
+        <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+            <video style="width: 100%; height: auto; display: block;" controls>
+                <source src="project-images/moviesstorevideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p id="big-text">Visuals</p>
+        <br><br>
+        <br>
+        <br>
+        <img id="project-image-inside"
+        src="project-images/moviesstore.png">
+        <img id="project-image-inside"
+        src="project-images/moviesstore1.png">
+
+
+        <br><br><br><br><br><br>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
