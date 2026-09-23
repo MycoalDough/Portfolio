@@ -1032,3 +1032,56 @@ body::after {
     from { transform: translateY(0); }
     to   { transform: translateY(100vh); }
 }
+
+/* subtle convex CRT glass */
+
+html::before,
+html::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+html::before {
+    z-index: 9997;
+    border-radius: 5% / 4%;
+    background:
+        radial-gradient(
+            ellipse at 50% 46%,
+            rgba(255, 255, 255, 0.018) 0%,
+            transparent 43%,
+            rgba(0, 0, 0, 0.055) 72%,
+            rgba(0, 0, 0, 0.3) 100%
+        );
+    box-shadow:
+        inset 0 0 2px rgba(255, 255, 255, 0.15),
+        inset 0 0 54px rgba(0, 0, 0, 0.34),
+        inset 0 0 110px rgba(0, 0, 0, 0.13);
+}
+
+html::after {
+    z-index: 9996;
+    border-radius: 7% / 5%;
+    background: radial-gradient(
+        ellipse at 48% 39%,
+        rgba(255, 255, 255, 0.022) 0%,
+        rgba(255, 255, 255, 0.008) 28%,
+        transparent 59%
+    );
+}
+
+/* seamless navigation: game-style hard cut */
+
+#portfolio-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    visibility: hidden;
+    pointer-events: none;
+    background: #000;
+}
+
+#portfolio-transition.is-active {
+    visibility: visible;
+}

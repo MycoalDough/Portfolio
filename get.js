@@ -3,6 +3,7 @@ let SHEET_TITLE = 'Feed';
 let SHEET_RANGE = 'A:O';
 
 let FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
+const feedEntries = document.getElementById('feedEntries');
 
 fetch(FULL_URL)
     .then(res => res.text())
@@ -87,7 +88,9 @@ fetch(FULL_URL)
             viewsLabel.innerHTML = "views: " + (rowData[14] ? rowData[14].v : '0');
             div.appendChild(viewsLabel);
 
-            document.body.appendChild(div);
+            if (feedEntries?.isConnected) {
+                feedEntries.appendChild(div);
+            }
         }
     });
 

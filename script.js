@@ -77,12 +77,6 @@ intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
 
 
   
-  // Handle browser back/forward buttons
-  window.addEventListener('popstate', () => {
-    loadFullPage(location.pathname);
-  });
-  
-
 function filterProjects() {
     const filters = {
         AI: document.getElementById("checkboxAI").checked,
@@ -145,11 +139,17 @@ const letters = "qwertyuiopasdfghjklzxcvbnm234567890!@#$%^&*()";
 }); */
 
 var reverseState = 0; // Initial state
-let reverse = document.getElementById('reverseButton');
 
-if(reverse){
-    document.getElementById('reverseButton').addEventListener('click', function() {
+function initializeReverseButton() {
+    const reverse = document.getElementById('reverseButton');
+
+    if(reverse && reverse.dataset.bound !== 'true'){
+        reverse.dataset.bound = 'true';
+        reverse.addEventListener('click', function() {
         var rows = document.querySelectorAll('.row');
+        if (!rows.length) {
+            return;
+        }
         var parent = rows[0].parentNode;
         for (var i = rows.length - 1; i >= 0; i--) {
             parent.appendChild(rows[i]);
@@ -163,8 +163,11 @@ if(reverse){
         }
         
         reverseState++; // Increment reverseState
-    });
+        });
+    }
 }
+
+initializeReverseButton();
 
 let SHEET_ID = '1nFR59bYCagHk8Hr_bFGLOLiBpILrPv0iIk4LMtH5EY0';
 let SHEET_TITLE = 'Feed';
@@ -203,6 +206,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 
                 let tempTextDiv = document.querySelector('.temp-text');
+                window.__portfolioTemperatureText = text;
                 if (tempTextDiv) {
                     tempTextDiv.textContent = text;
                 }
@@ -214,41 +218,74 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-const hoverSound = new Audio('hover.mp3');
-const unhoverSound = new Audio('unhover.mp3');
+const hoverSound = new Audio('/hover.mp3');
+const unhoverSound = new Audio('/unhover.mp3');
+const loadPageSound = new Audio('/loadpage.mp3');
+
+hoverSound.preload = 'auto';
+unhoverSound.preload = 'auto';
+loadPageSound.preload = 'auto';
+
+let portfolioAudioUnlocked = false;
+
+window.unlockPortfolioAudio = function() {
+    if (portfolioAudioUnlocked) {
+        return;
+    }
+
+    portfolioAudioUnlocked = true;
+
+    [hoverSound, unhoverSound, loadPageSound].forEach((audio) => {
+        const previousVolume = audio.volume;
+        audio.volume = 0;
+
+        const playAttempt = audio.play();
+        if (playAttempt) {
+            playAttempt
+                .then(() => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    audio.volume = previousVolume;
+                })
+                .catch(() => {
+                    portfolioAudioUnlocked = false;
+                    audio.volume = previousVolume;
+                });
+        }
+    });
+};
+
+document.addEventListener('pointerdown', window.unlockPortfolioAudio, { once: true, capture: true });
+document.addEventListener('keydown', window.unlockPortfolioAudio, { once: true, capture: true });
 
 window.addEventListener('DOMContentLoaded', (event) => {
     hoverSound.load();
     unhoverSound.load();
+    loadPageSound.load();
 });
 function playHoverSound() {
-    if (hoverSound.paused) {
-        hoverSound.currentTime = 0; // Rewind to the beginning
-        hoverSound.play();
-    } else {
-        hoverSound.currentTime = 0; // Rewind to the beginning
-    }
+    hoverSound.currentTime = 0;
+    hoverSound.play().catch(() => {});
 }
 
 // Function to play unhover sound
 function playUnhoverSound() {
-    if (unhoverSound.paused) {
-        unhoverSound.currentTime = 0; // Rewind to the beginning
-        unhoverSound.play();
-    } else {
-        unhoverSound.currentTime = 0; // Rewind to the beginning
-    }
+    unhoverSound.currentTime = 0;
+    unhoverSound.play().catch(() => {});
 }
+
+window.playLoadPageSound = function() {
+    loadPageSound.currentTime = 0;
+    loadPageSound.play().catch(() => {});
+};
 
 
 function playHover(){
-    var audio = document.getElementById("hover-sound");
-    audio.play();
+    playHoverSound();
 }
 
 function playUNHover(){
-    var audio = document.getElementById("unhover-sound");
-    audio.play();
+    playUnhoverSound();
 }
 
 
@@ -288,7 +325,7 @@ function highlightText(row, searchValue) {
 // Change text on hover and click
 
 
-document.addEventListener("DOMContentLoaded", function() {
+function initializeLofiEasterEgg() {
     let lofiImageDrawer = document.getElementById("lofi_image_drawer");
     
     if (lofiImageDrawer) {
@@ -308,26 +345,52 @@ document.addEventListener("DOMContentLoaded", function() {
             lofi_image_desk.src = "sans.png";
         }
     }
+}
+
+document.addEventListener("DOMContentLoaded", initializeLofiEasterEgg);
+
+
+function initializeCopyButton() {
+    const copyButton = document.getElementById('copyButton');
+    const popup = document.getElementById('popup');
+
+    if(copyButton && popup && copyButton.dataset.bound !== 'true'){
+        copyButton.dataset.bound = 'true';
+        copyButton.addEventListener('click', () => {
+            navigator.clipboard.writeText("mycoaldough@gmail.com").catch(function(error) {
+                console.error("Failed to copy text: ", error);
+            });
+            popup.textContent = 'Copied!';
+        });
+
+        // Reset popup text when unhovered
+        copyButton.addEventListener('mouseleave', () => {
+            popup.textContent = 'Copy to clipboard';
+        });
+    }
+}
+
+initializeCopyButton();
+
+document.addEventListener('portfolio:page-loaded', () => {
+    initializeReverseButton();
+    initializeLofiEasterEgg();
+    initializeCopyButton();
+
+    const tempText = document.querySelector('.temp-text');
+    if (tempText && window.__portfolioTemperatureText) {
+        tempText.textContent = window.__portfolioTemperatureText;
+    }
 });
 
-
-const copyButton = document.getElementById('copyButton');
-const popup = document.getElementById('popup');
-
-
-if(copyButton){
-    copyButton.addEventListener('click', () => {
-    navigator.clipboard.writeText("mycoaldough@gmail.com").catch(function(error) {
-        console.error("Failed to copy text: ", error);
-    });
-        popup.textContent = 'Copied!';
-});
-
-// Reset popup text when unhovered
-copyButton.addEventListener('mouseleave', () => {
-    popup.textContent = 'Copy to clipboard';
-});
-
+// Every main page loads script.js, so this bootstraps seamless navigation
+// even when a visitor lands directly on a subpage instead of the homepage.
+if (!window.__portfolioPageSwapperRequested) {
+    window.__portfolioPageSwapperRequested = true;
+    const pageSwapper = document.createElement('script');
+    pageSwapper.src = '/page-swapper.js?v=11';
+    pageSwapper.defer = true;
+    document.body.appendChild(pageSwapper);
 }
 
 
