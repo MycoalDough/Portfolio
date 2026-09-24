@@ -41,7 +41,8 @@
         const overlay = getTransitionOverlay();
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        await wait(reducedMotion ? 100 : 200);
+        await wait(reducedMotion ? 250 : 500);
+        window.playLoadPageSound?.();
         overlay.className = '';
     }
 

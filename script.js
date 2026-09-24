@@ -1,11 +1,3 @@
-// Run this as early as possible (inline <script> in <head>)
-const DURATION = 12000; // must match animation duration in ms
-const elapsed = Date.now() % DURATION;
-
-const style = document.createElement('style');
-style.textContent = `body::after { animation-delay: -${elapsed}ms; }`;
-document.head.appendChild(style);
-
 function getRandomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -388,7 +380,7 @@ document.addEventListener('portfolio:page-loaded', () => {
 if (!window.__portfolioPageSwapperRequested) {
     window.__portfolioPageSwapperRequested = true;
     const pageSwapper = document.createElement('script');
-    pageSwapper.src = '/page-swapper.js?v=11';
+    pageSwapper.src = '/page-swapper.js?v=14';
     pageSwapper.defer = true;
     document.body.appendChild(pageSwapper);
 }
