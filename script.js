@@ -380,7 +380,7 @@ document.addEventListener('portfolio:page-loaded', () => {
 if (!window.__portfolioPageSwapperRequested) {
     window.__portfolioPageSwapperRequested = true;
     const pageSwapper = document.createElement('script');
-    pageSwapper.src = '/page-swapper.js?v=14';
+    pageSwapper.src = '/page-swapper.js?v=15';
     pageSwapper.defer = true;
     document.body.appendChild(pageSwapper);
 }

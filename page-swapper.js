@@ -52,6 +52,14 @@
         }
 
         const path = url.pathname.toLowerCase();
+
+        // TBHN is a standalone mini-site with its own stylesheet and runtime.
+        // Let the browser perform a normal navigation so portfolio styles and
+        // persistent page-swap elements cannot leak into it.
+        if (path === '/tbhn' || path.startsWith('/tbhn/')) {
+            return false;
+        }
+
         return path.endsWith('.html') || path.endsWith('/');
     }
 
@@ -364,7 +372,7 @@
 
     function warmLinkedPage(event) {
         const clickable = event.target.closest('a, [onclick*="location.href"]');
-        if (!clickable) {
+        if (!clickable || clickable.hasAttribute('data-no-swap')) {
             return;
         }
 
@@ -388,7 +396,7 @@
         }
 
         const clickable = event.target.closest('a, [onclick*="location.href"]');
-        if (!clickable) {
+        if (!clickable || clickable.hasAttribute('data-no-swap')) {
             return;
         }
 
