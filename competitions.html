@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / competitions</title>
-    <link rel="stylesheet" href="style.css?v=20261006-14">
+    <link rel="stylesheet" href="style.css?v=20261006-16">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/competitions">
 
@@ -15,29 +15,53 @@
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
         <div class="prompt">/ competitions</div>
     </div>
-    <main class="records-file">
+    <main class="records-file competitions-file">
         <p class="file-label">RECORDS / COMPETITIONS.LOG</p>
-        <div class="nav records-list" id="about_me_div">
-            <p class="records-intro">These are all the hackathons and competitions I've competed in.</p>
-        <div class="block">
-            <a id="about-me-link" href="https://devpost.com/software/multi-agent-social-deduction-engine-masde">Hacklytics: Golden Byte - 2026<br></a>    
-            <p id="about-me-no-link">FBLA Computer Game and Simulation Programming - 2025</p> <p id="about-me-no-link-yellow"> - 1st in California</p><br>
-            <p id="about-me-no-link">FBLA Website Coding and Development - 2025</p><p id="about-me-no-link-yellow"> - 2nd in California</p><br>  
-            <p id="about-me-no-link">Hack-a-Vation - 2024</p><p id="about-me-no-link-yellow"> - Winner</p><br>  
-            <a id="about-me-link" href="https://devpost.com/software/reaping-rewards-4769xu">Luna Vista ADC Q-Dev Hackathon - 2024</a><p id="about-me-no-link-yellow"> - Winner [Best Overall Project]</p><br>
-            <a id="about-me-link" href="https://devpost.com/software/reactive-ai-ecosystem">Steel City Hacks: Spring Hackathon - 2023</a><br>        
-            <p id="about-me-no-link">FBLA Coding and Programming - 2024</p><p id="about-me-no-link-yellow"> - 1st in California, 12th National</p><br>  
-            <p id="about-me-no-link">Volunteer Tech - 2024</p><p id="about-me-no-link-yellow"> - Winner</p><br>  
-            <p id="about-me-no-link">FBLA Computer Game and Simulation Programming - 2024</p><p id="about-me-no-link-yellow"> - 4th in California</p><br>  
-            <a id="about-me-link" href="https://www.congressionalappchallenge.us/23-ca33/">Congressional App Challenge CA33 - 2023</a><p id="about-me-no-link-yellow"> - Winner</p><br>        
-            <p id="about-me-no-link">FBLA Coding and Programming - 2023</p><p id="about-me-no-link-yellow"> - 5th in California</p><br>  
+        <section class="competition-directory">
+            <div class="directory-heading">
+                <span>directory / competition records</span>
+                <span>11 entries</span>
+            </div>
+            <p class="records-intro">Hackathons, programming competitions, and a few very long weekends.</p>
 
+            <div class="records-table" aria-label="Competition history">
+                <a class="record-row" href="https://devpost.com/software/multi-agent-social-deduction-engine-masde">
+                    <span class="record-index">01</span><strong>Hacklytics: Golden Byte</strong><span>2026</span><em>view project</em>
+                </a>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">02</span><strong>FBLA Computer Game &amp; Simulation Programming</strong><span>2025</span><em>1st · California</em>
+                </div>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">03</span><strong>FBLA Website Coding &amp; Development</strong><span>2025</span><em>2nd · California</em>
+                </div>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">04</span><strong>Hack-a-Vation</strong><span>2024</span><em>winner</em>
+                </div>
+                <a class="record-row" href="https://devpost.com/software/reaping-rewards-4769xu">
+                    <span class="record-index">05</span><strong>Luna Vista ADC Q-Dev Hackathon</strong><span>2024</span><em>winner · best overall</em>
+                </a>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">06</span><strong>FBLA Coding &amp; Programming</strong><span>2024</span><em>1st CA · 12th national</em>
+                </div>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">07</span><strong>Volunteer Tech</strong><span>2024</span><em>winner</em>
+                </div>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">08</span><strong>FBLA Computer Game &amp; Simulation Programming</strong><span>2024</span><em>4th · California</em>
+                </div>
+                <a class="record-row" href="https://www.congressionalappchallenge.us/23-ca33/">
+                    <span class="record-index">09</span><strong>Congressional App Challenge · CA-33</strong><span>2023</span><em>winner</em>
+                </a>
+                <a class="record-row" href="https://devpost.com/software/reactive-ai-ecosystem">
+                    <span class="record-index">10</span><strong>Steel City Hacks: Spring Hackathon</strong><span>2023</span><em>view project</em>
+                </a>
+                <div class="record-row is-unlinked">
+                    <span class="record-index">11</span><strong>FBLA Coding &amp; Programming</strong><span>2023</span><em>5th · California</em>
+                </div>
+            </div>
 
-
-        </div>
-
-            <p class="records-note">Purple entries aren't linked—the project was in person, got lost, or was never posted online.</p>
-        </div>
+            <p class="records-note">Dim rows are offline records—the project was in person, got lost, or was never posted online.</p>
+        </section>
 
         <figure class="records-illustration draggable-window" data-draggable-window>
             <div class="window-art">
@@ -45,6 +69,6 @@
             </div>
         </figure>
     </main>
-    <script src="script.js?v=20261006-7"></script>
+    <script src="script.js?v=20261006-10"></script>
 </body>
 </html>

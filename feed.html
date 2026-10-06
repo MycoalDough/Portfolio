@@ -4,31 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / feed</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261006-16">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/feed">
 
 </head>
-<body>
+<body class="site-feed">
     <div class="background"></div>
     <div class="prompt-container">
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
         <div class="prompt">/ feed</div>
     </div>
-    <div class="feed_sort">
-        <div class="dot"></div> 
-        <p>LIVE</p>
-        <div class="nav">
-            <a id="reverseButton">SORT: Recent</div></a>
+    <main class="feed-file">
+        <p class="file-label">LIVE / FEED.LOG</p>
+        <section class="feed-toolbar" aria-label="Feed controls">
+            <div class="feed-status">
+                <span class="dot" aria-hidden="true"></span>
+                <div>
+                    <strong>live archive</strong>
+                    <small>notes, updates, and assorted nonsense</small>
+                </div>
+            </div>
+            <div class="feed-controls">
+                <label for="searchBox">search entries</label>
+                <input type="search" id="searchBox" placeholder="type to filter..." oninput="filterContent()">
+                <button type="button" id="reverseButton">sort / recent</button>
+            </div>
+        </section>
+        <div class="directory-heading feed-directory-heading">
+            <span>directory / posts</span>
+            <span>newest first</span>
         </div>
-    </div>
-    <div class="search-container">
-        <input type="text" id="searchBox" placeholder="Search..." oninput="filterContent()">
-    </div>
-    <main id="feedEntries"></main>
+        <section id="feedEntries" aria-live="polite"></section>
+    </main>
     
-    <script type="module" src="get.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="get.js?v=20261006-4"></script>
+    <script src="script.js?v=20261006-10"></script>
     <script>
         window.onload = async function() {
             try{

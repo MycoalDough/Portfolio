@@ -55,23 +55,46 @@ fetch(FULL_URL)
             if (rowData[3] && rowData[3].v) {
                 let imageUrl = convertToThumbnailLink(rowData[3].v);
                 let imageElement = document.createElement('img');
-                imageElement.style.display = "none";
-                imageElement.id = "image-feed";
-                imageElement.src = imageUrl;
-                imageElement.alt = 'Image';
+                imageElement.className = "feed-image";
+                imageElement.hidden = true;
+                imageElement.dataset.src = imageUrl;
+                imageElement.alt = `${columnALabel.textContent.trim()} attachment`;
+                imageElement.decoding = 'async';
+                imageElement.referrerPolicy = 'no-referrer';
 
                 let toggleButton = document.createElement('button');
-                toggleButton.innerHTML = 'View Image';
-                toggleButton.id = "image-button-feed";
+                toggleButton.textContent = 'View Image';
+                toggleButton.className = "feed-image-button";
+                toggleButton.type = 'button';
+                toggleButton.setAttribute('aria-expanded', 'false');
                 toggleButton.onclick = function() {
-                    if (imageElement.style.display === 'none') {
-                        imageElement.style.display = 'block';
-                        toggleButton.innerHTML = 'Hide Image';
+                    if (imageElement.hidden) {
+                        if (!imageElement.src) {
+                            imageElement.src = imageElement.dataset.src;
+                        }
+
+                        imageElement.hidden = false;
+                        toggleButton.textContent = 'Hide Image';
+                        toggleButton.setAttribute('aria-expanded', 'true');
                     } else {
-                        imageElement.style.display = 'none';
-                        toggleButton.innerHTML = 'View Image';
+                        imageElement.hidden = true;
+                        toggleButton.textContent = 'View Image';
+                        toggleButton.setAttribute('aria-expanded', 'false');
                     }
                 };
+
+                imageElement.addEventListener('error', () => {
+                    if (imageElement.dataset.fallbackAttempted !== 'true') {
+                        imageElement.dataset.fallbackAttempted = 'true';
+                        imageElement.src = imageElement.dataset.src.replace('=s1600', '=s800');
+                        return;
+                    }
+
+                    imageElement.hidden = true;
+                    toggleButton.textContent = 'Image unavailable';
+                    toggleButton.disabled = true;
+                    toggleButton.setAttribute('aria-expanded', 'false');
+                });
 
                 div.appendChild(toggleButton);
                 div.appendChild(imageElement);
@@ -111,11 +134,14 @@ function convertDate(inputDate) {
 }
 
 function convertToThumbnailLink(driveLink) {
-    // Extract the file ID from the Google Drive link
-    let fileIdMatch = driveLink.match(/id=([^&]+)/);
-    if (fileIdMatch && fileIdMatch[1]) {
-        return `https://drive.google.com/thumbnail?id=${fileIdMatch[1]}`;
-    } else {
-        return driveLink; // Return the original link if it doesn't match the expected pattern
+    const value = String(driveLink || '').trim();
+    const fileIdMatch = value.match(/[?&]id=([^&]+)/) || value.match(/\/d\/([^/?#]+)/);
+
+    if (!fileIdMatch?.[1]) {
+        return value;
     }
+
+    // The Drive thumbnail endpoint redirects when embedded and fails in some
+    // browsers. Its direct image host works reliably in an <img> element.
+    return `https://lh3.googleusercontent.com/d/${encodeURIComponent(fileIdMatch[1])}=s1600`;
 }

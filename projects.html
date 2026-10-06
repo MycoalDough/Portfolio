@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / projects</title>
-    <link rel="stylesheet" href="style.css?v=20261006-14">
+    <link rel="stylesheet" href="style.css?v=20261006-16">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/projects">
 </head>
@@ -13,7 +13,7 @@
     <audio id="unhover-sound" src="unhover.mp3"></audio>
 
     <div class="background"></div>
-    <link rel="stylesheet" href="projects.css?v=20261006-2" data-page-style="projects">
+    <link rel="stylesheet" href="projects.css?v=20261006-3" data-page-style="projects">
 
     <div class="prompt-container">
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
@@ -27,25 +27,35 @@
             <span>filter files</span>
         </div>
         <div class="projects-filter-controls">
-        <input type="checkbox" id="sortCheckbox">
-        <label for="sortCheckbox">Sort by Importance</label>
+            <div class="project-filter-tools">
+                <label class="sr-only" for="projectSearch">Search projects</label>
+                <input type="search" id="projectSearch" placeholder="search title, description, or tech...">
+                <label class="sr-only" for="techFilter">Filter by technology</label>
+                <select id="techFilter">
+                    <option value="">all technologies</option>
+                </select>
+                <button type="button" id="clearProjectFilters">clear</button>
+                <output id="projectResultCount" aria-live="polite">23 files</output>
+            </div>
+            <div class="project-category-filters" aria-label="Project categories">
+                <input type="checkbox" id="sortCheckbox">
+                <label for="sortCheckbox">Sort by Importance</label>
 
-        <br>
+                <input type="checkbox" id="checkboxAI" onclick="filterProjects()">
+                <label for="checkboxAI">AI</label>
 
-        <input type="checkbox" id="checkboxAI" onclick="filterProjects()">
-        <label for="checkboxAI">AI</label>
+                <input type="checkbox" id="checkboxGAME" onclick="filterProjects()">
+                <label for="checkboxGAME">GAME</label>
 
-        <input type="checkbox" id="checkboxGAME" onclick="filterProjects()">
-        <label for="checkboxGAME">GAME</label>
+                <input type="checkbox" id="checkboxSWE" onclick="filterProjects()">
+                <label for="checkboxSWE">SWE</label>
 
-        <input type="checkbox" id="checkboxSWE" onclick="filterProjects()">
-        <label for="checkboxSWE">SWE</label>
+                <input type="checkbox" id="checkboxFULLSTACK" onclick="filterProjects()">
+                <label for="checkboxFULLSTACK">FULL STACK</label>
 
-        <input type="checkbox" id="checkboxFULLSTACK" onclick="filterProjects()">
-        <label for="checkboxFULLSTACK">FULL STACK</label>
-
-        <input type="checkbox" id="checkboxOTHER" onclick="filterProjects()">
-        <label for="checkboxOTHER">OTHER</label>
+                <input type="checkbox" id="checkboxOTHER" onclick="filterProjects()">
+                <label for="checkboxOTHER">OTHER</label>
+            </div>
         </div>
     </div>
 
@@ -53,7 +63,7 @@
 
     <div class="projects-container">
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="FULLSTACK SWE" data-rank="3.1">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="FULLSTACK SWE" data-tech="Python|Django|JavaScript|HTML/CSS|SQLite" data-rank="3.1">
             <div class="project-content">
                 <a id="project-image-button" href="moviesstore2340.html">
                     <img src="project-images/moviesstore.png" alt="gt movies store image" class="project-image" >
@@ -72,7 +82,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME SWE" data-rank="1.1">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME SWE" data-tech="Unity|C#|Steam|Multiplayer" data-rank="1.1">
             <div class="project-content">
                 <a id="project-image-button" href="corescapes.html">
                     <img src="project-images/corescapes.png" alt="corescapes game image" class="project-image" >
@@ -91,7 +101,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME SWE" data-rank="2.4">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME SWE" data-tech="Python|LLMs|Multi-Agent Systems" data-rank="2.4">
             <div class="project-content">
                 <a id="project-image-button" href="masde.html">
                     <img src="project-images/masde.png" alt="multi agent social deduction engine" class="project-image" >
@@ -110,7 +120,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="2.4">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#" data-rank="2.4">
             <div class="project-content">
                 <a id="project-image-button" href="corebreach.html">
                     <img src="project-images/corebreach.png" alt="corebreach" class="project-image" >
@@ -129,7 +139,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME" data-rank="5.9">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME" data-tech="Python|PyTorch|PPO|Reinforcement Learning" data-rank="5.9">
             <div class="project-content">
                 <a id="project-image-button" href="aigrg.html">
                     <img src="project-images/aigrg.jpg" alt="ai rl grow a garden ppo" class="project-image" >
@@ -147,7 +157,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME SWE" data-rank="2.1">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME SWE" data-tech="Python|PyTorch|MAPPO|Reinforcement Learning" data-rank="2.1">
             <div class="project-content">
                 <a id="project-image-button" href="duelist.html">
                     <img src="project-images/duelist.jpg" alt="mappo sticman duelist" class="project-image" >
@@ -165,7 +175,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME SWE FULLSTACK" data-rank="3.7">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME SWE FULLSTACK" data-tech="Python|Pygame|JSON" data-rank="3.7">
             <div class="project-content">
                 <a id="project-image-button" href="crc.html">
                     <img src="project-images/crc.jpg" alt="custom rhythm creator" class="project-image" >
@@ -184,7 +194,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI SWE" data-rank="5.1">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI SWE" data-tech="Python|LLM API|FFmpeg|PDF Processing" data-rank="5.1">
             <div class="project-content">
                 <a id="project-image-button" href="yapdollar.html">
                     <img src="project-images/yapdollar.png" alt="llm api pdf to video summary" class="project-image" >
@@ -202,7 +212,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="SWE OTHER" data-rank="4">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="SWE OTHER" data-tech="Python|FFmpeg|Desktop" data-rank="4">
             <div class="project-content">
                 <a id="project-image-button" href="clippingsoftware.html">
                     <img src="project-images/clippingsoftware.png" alt="custom clipping software" class="project-image" >
@@ -218,7 +228,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI SWE" data-rank="1">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI SWE" data-tech="Python|PyTorch|Transformers|Speech Recognition" data-rank="1">
             <div class="project-content">
                 <a id="project-image-button" href="miragev5.html">
                     <img src="project-images/miragev5.png" alt="custom llm v5" class="project-image">
@@ -235,7 +245,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME SWE" data-rank="3">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME SWE" data-tech="Python|Pygame|YouTube" data-rank="3">
             <div class="project-content">
                 <a id="project-image-button" href="undertalewithinyoutube.html">
                     <img src="project-images/uwy6.png" alt="undertale within youtube via python" class="project-image">
@@ -253,7 +263,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI" data-rank="5">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI" data-tech="Python|PyTorch|Machine Learning" data-rank="5">
             <div class="project-content">
                 <a id="project-image-button" href="summerai.html">
                     <img src="project-images/summerai.png" alt="some summer ai projects" class="project-image">
@@ -268,7 +278,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME SWE" data-rank="2">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME SWE" data-tech="Python|PyTorch|Rainbow DQN|MAPPO" data-rank="2">
             <div class="project-content">
                 <a id="project-image-button" href="stickwar.html">
                     <img src="project-images/stickwar.png" alt="stick war ai rainbow dqn and mappo" class="project-image">
@@ -286,7 +296,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="SWE FULLSTACK" data-rank="6.5">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="SWE FULLSTACK" data-tech="JavaScript|HTML/CSS|Google Sheets API|Apps Script" data-rank="6.5">
             <div class="project-content">
                 <a id="project-image-button" href="feedserver.html">
                     <img src="project-images/feedserver.png" alt="feed server fullstack project" class="project-image">
@@ -303,7 +313,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="6">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#" data-rank="6">
             <div class="project-content">
                 <a id="project-image-button" href="viper.html">
                     <img src="project-images/viper1.png" alt="viper squadron" class="project-image">
@@ -347,7 +357,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="4">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#" data-rank="4">
             <div class="project-content">
                 <a id="project-image-button" href="reapingrewards.html">
                     <img src="project-images/reapingrewards.png" alt="Reaping Rewards Image" class="project-image" >
@@ -365,7 +375,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="2.5">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#|Ragdoll Physics" data-rank="2.5">
             <div class="project-content">
                 <a id="project-image-button" href="ragdollrpg.html">
                     <img src="project-images/rpg1.png" alt="Ragdoll RPG Image" class="project-image" >
@@ -383,7 +393,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="9">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#" data-rank="9">
             <div class="project-content">
                 <a id="project-image-button" href="omegaflowey.html">
                     <img src="project-images/omegaflowey.png" alt="Omega Flowey Image" class="project-image">
@@ -427,7 +437,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI" data-rank="6">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI" data-tech="Python|PyTorch|Transformers" data-rank="6">
             <div class="project-content">
                 <a id="project-image-button" href="miragev3.html">
                     <img src="project-images/miragev3.png" alt="Mirage V3 Image" class="project-image" >
@@ -444,7 +454,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME" data-rank="7">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME" data-tech="Python|PyTorch|DQN" data-rank="7">
             <div class="project-content">
                 <a id="project-image-button" href="fnaf.html">
                     <img src="project-images/fnaf.png" alt="FNAF AI Image" class="project-image" >
@@ -461,7 +471,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME" data-rank="7">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="AI GAME" data-tech="Python|PyTorch|DQN|Reinforcement Learning" data-rank="7">
             <div class="project-content">
                 <a id="project-image-button" href="buckshot.html">
                     <img src="project-images/buckshot.png" alt="ai dqn buckshot Roulette" class="project-image">
@@ -505,7 +515,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="6.1">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#" data-rank="6.1">
             <div class="project-content">
                 <a id="project-image-button" href="ucn.html">
                     <img src="project-images/ucn3.png" alt="fnaf ai dqn" class="project-image" >
@@ -523,7 +533,7 @@
             </div>
         </div>
 
-        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-rank="3.6">
+        <div class="project" onmouseover="playHover()" onmouseleave="playUNHover()" data-tags="GAME" data-tech="Unity|C#|Ragdoll Physics" data-rank="3.6">
             <div class="project-content">
                 <a id="project-image-button" href="ragdollwars.html">
                     <img src="project-images/war7.png" alt="Ragdoll RPG Image" class="project-image" >
@@ -547,6 +557,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=20261006-7"></script>
+    <script src="script.js?v=20261006-10"></script>
 </body>
 </html>

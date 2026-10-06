@@ -16,6 +16,98 @@ function applyPortfolioPageType() {
 
 applyPortfolioPageType();
 
+function initializeBreadcrumbNavigation() {
+    const breadcrumb = document.querySelector('.prompt-container');
+    if (!breadcrumb) {
+        return;
+    }
+
+    const clickableItems = breadcrumb.querySelectorAll('.prompt[onclick*="location.href"]');
+
+    clickableItems.forEach((item, index) => {
+        const inlineHandler = item.getAttribute('onclick') || '';
+        const destinationMatch = inlineHandler.match(/location\.href\s*=\s*['"]([^'"]+)['"]/);
+        const destination = destinationMatch ? destinationMatch[1] : 'index.html';
+        const isHome = index === 0 || /(^|\/)index\.html(?:$|[?#])/.test(destination);
+
+        if (!isHome && item.id === 'main_button') {
+            item.removeAttribute('id');
+        }
+
+        item.classList.add('breadcrumb-link');
+        item.dataset.tooltip = isHome ? 'back to home' : 'back to projects';
+        item.setAttribute('role', 'link');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-label', `${item.textContent.trim()}, ${item.dataset.tooltip}`);
+
+        if (item.dataset.keyboardBound !== 'true') {
+            item.dataset.keyboardBound = 'true';
+            item.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') {
+                    return;
+                }
+
+                event.preventDefault();
+                item.click();
+            });
+        }
+    });
+
+    const homeLink = breadcrumb.querySelector('#main_button');
+    if (!homeLink || document.body.classList.contains('portfolio-home')) {
+        return;
+    }
+
+    const guideKey = 'portfolio-home-navigation-guide-dismissed-v2';
+
+    try {
+        if (sessionStorage.getItem(guideKey)) {
+            return;
+        }
+    } catch (_) {
+        // The guide can still appear when storage is unavailable.
+    }
+
+    if (breadcrumb.querySelector('.home-navigation-guide')) {
+        return;
+    }
+
+    const guide = document.createElement('aside');
+    guide.className = 'home-navigation-guide';
+    guide.setAttribute('role', 'note');
+    guide.setAttribute('aria-label', 'Homepage navigation tip');
+    guide.innerHTML = `
+        <div class="home-navigation-guide-copy">
+            <strong>↑ return home</strong>
+            <span>Click <b>MYCOAL</b> anytime to go back to the homepage.</span>
+        </div>
+        <button type="button" aria-label="Dismiss navigation tip">×</button>
+    `;
+
+    const rememberGuide = () => {
+        try {
+            sessionStorage.setItem(guideKey, 'true');
+        } catch (_) {
+            // Dismissing still works when storage is unavailable.
+        }
+    };
+
+    const closeGuide = () => {
+        rememberGuide();
+        guide.classList.add('is-closing');
+        homeLink.classList.remove('has-home-guide');
+        window.setTimeout(() => guide.remove(), 180);
+    };
+
+    guide.querySelector('button').addEventListener('click', closeGuide);
+    homeLink.addEventListener('click', rememberGuide, { capture: true, once: true });
+    homeLink.classList.add('has-home-guide');
+    breadcrumb.appendChild(guide);
+    requestAnimationFrame(() => guide.classList.add('is-visible'));
+}
+
+initializeBreadcrumbNavigation();
+
 function spawnCloud() {
     if (document.visibilityState != "visible") {
         return;
@@ -84,33 +176,49 @@ intervalCloud = setInterval(spawnCloud, getRandomNumber(10000, 20000));
 
   
 function filterProjects() {
+    const projects = document.querySelectorAll('.projects-container .project');
+    if (!projects.length) {
+        return;
+    }
+
     const filters = {
-        AI: document.getElementById("checkboxAI").checked,
-        GAME: document.getElementById("checkboxGAME").checked,
-        SWE: document.getElementById("checkboxSWE").checked,
-        FULLSTACK: document.getElementById("checkboxFULLSTACK").checked,
-        OTHER: document.getElementById("checkboxOTHER").checked
+        AI: document.getElementById('checkboxAI')?.checked || false,
+        GAME: document.getElementById('checkboxGAME')?.checked || false,
+        SWE: document.getElementById('checkboxSWE')?.checked || false,
+        FULLSTACK: document.getElementById('checkboxFULLSTACK')?.checked || false,
+        OTHER: document.getElementById('checkboxOTHER')?.checked || false
     };
 
     const selectedTags = Object.keys(filters).filter(tag => filters[tag]);
-    const projects = document.querySelectorAll(".project");
+    const searchValue = (document.getElementById('projectSearch')?.value || '').trim().toLowerCase();
+    const selectedTech = (document.getElementById('techFilter')?.value || '').toLowerCase();
+    let visibleCount = 0;
 
     projects.forEach(project => {
         const projectTags = (project.dataset.tags || "")
             .split(" ")
             .filter(Boolean);
-
-        if (selectedTags.length === 0) {
-            project.style.display = "";
-            return;
-        }
-
-        const matches = selectedTags.some(tag =>
+        const projectTech = (project.dataset.tech || '')
+            .split('|')
+            .map((tech) => tech.trim().toLowerCase())
+            .filter(Boolean);
+        const categoryMatches = selectedTags.length === 0 || selectedTags.some(tag =>
             projectTags.includes(tag)
         );
+        const techMatches = !selectedTech || projectTech.includes(selectedTech);
+        const textMatches = !searchValue || `${project.textContent} ${project.dataset.tech || ''}`
+            .toLowerCase()
+            .includes(searchValue);
+        const isVisible = categoryMatches && techMatches && textMatches;
 
-        project.style.display = matches ? "" : "none";
+        project.style.display = isVisible ? '' : 'none';
+        visibleCount += isVisible ? 1 : 0;
     });
+
+    const resultCount = document.getElementById('projectResultCount');
+    if (resultCount) {
+        resultCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'file' : 'files'}`;
+    }
 }
 
 
@@ -163,9 +271,9 @@ function initializeReverseButton() {
         
         // Update button text based on reverseState
         if (reverseState % 2 === 0) {
-            this.textContent = "SORT: Oldest";
+            this.textContent = "sort / oldest";
         } else {
-            this.textContent = "SORT: Recent";
+            this.textContent = "sort / recent";
         }
         
         reverseState++; // Increment reverseState
@@ -189,7 +297,62 @@ function initializeProjectsPage() {
         if (!project.dataset.originalOrder) {
             project.dataset.originalOrder = String(index);
         }
+
+        const projectInfo = project.querySelector('.project-info');
+        if (projectInfo && !projectInfo.querySelector('.project-tech')) {
+            const technologies = (project.dataset.tech || '')
+                .split('|')
+                .map((technology) => technology.trim())
+                .filter(Boolean);
+
+            if (technologies.length) {
+                const techList = document.createElement('div');
+                techList.className = 'project-tech';
+                techList.setAttribute('aria-label', 'Technology stack');
+                technologies.forEach((technology) => {
+                    const label = document.createElement('span');
+                    label.textContent = technology;
+                    techList.appendChild(label);
+                });
+                projectInfo.appendChild(techList);
+            }
+        }
     });
+
+    const techFilter = document.getElementById('techFilter');
+    if (techFilter && techFilter.options.length <= 1) {
+        const technologies = [...new Set(projects.flatMap((project) =>
+            (project.dataset.tech || '').split('|').map((technology) => technology.trim()).filter(Boolean)
+        ))].sort((a, b) => a.localeCompare(b));
+
+        technologies.forEach((technology) => {
+            const option = document.createElement('option');
+            option.value = technology;
+            option.textContent = technology;
+            techFilter.appendChild(option);
+        });
+    }
+
+    ['projectSearch', 'techFilter'].forEach((id) => {
+        const control = document.getElementById(id);
+        if (control && control.dataset.bound !== 'true') {
+            control.dataset.bound = 'true';
+            control.addEventListener(id === 'projectSearch' ? 'input' : 'change', filterProjects);
+        }
+    });
+
+    const clearFilters = document.getElementById('clearProjectFilters');
+    if (clearFilters && clearFilters.dataset.bound !== 'true') {
+        clearFilters.dataset.bound = 'true';
+        clearFilters.addEventListener('click', () => {
+            document.querySelectorAll('.projects-filter-controls input[type="checkbox"]')
+                .forEach((checkbox) => { checkbox.checked = false; });
+            const search = document.getElementById('projectSearch');
+            if (search) search.value = '';
+            if (techFilter) techFilter.value = '';
+            filterProjects();
+        });
+    }
 
     const sortProjects = () => {
         const sortedProjects = [...projects].sort((a, b) => {
@@ -209,6 +372,7 @@ function initializeProjectsPage() {
     }
 
     sortProjects();
+    filterProjects();
 
     document.querySelectorAll('.version-button').forEach((button) => {
         const project = button.closest('.project');
@@ -631,6 +795,7 @@ if (!window.__portfolioMarqueeResizeBound) {
 
 document.addEventListener('portfolio:page-loaded', () => {
     applyPortfolioPageType();
+    initializeBreadcrumbNavigation();
     initializeReverseButton();
     initializeLofiEasterEgg();
     initializeCopyButton();
