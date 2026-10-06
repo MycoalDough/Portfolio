@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / competitions</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261006-14">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/competitions">
 
 </head>
-<body>
+<body class="site-records">
     <div class="background"></div>
     <div class="prompt-container">
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
         <div class="prompt">/ competitions</div>
     </div>
-    <p style="color: rgb(129, 157, 182);"><br><br></p>
-    <br>
-    <div class="nav" id="about_me_div">
-            These are all the hackathons I've competed in!<br><br>
+    <main class="records-file">
+        <p class="file-label">RECORDS / COMPETITIONS.LOG</p>
+        <div class="nav records-list" id="about_me_div">
+            <p class="records-intro">These are all the hackathons and competitions I've competed in.</p>
         <div class="block">
             <a id="about-me-link" href="https://devpost.com/software/multi-agent-social-deduction-engine-masde">Hacklytics: Golden Byte - 2026<br></a>    
             <p id="about-me-no-link">FBLA Computer Game and Simulation Programming - 2025</p> <p id="about-me-no-link-yellow"> - 1st in California</p><br>
@@ -36,18 +36,15 @@
 
         </div>
 
-        <br>
-        <br>
-        <br>
+            <p class="records-note">Purple entries aren't linked—the project was in person, got lost, or was never posted online.</p>
+        </div>
 
-        purple hackathons are the ones that aren't linked; i either lost them or they didn't display the projeccts online / was in person.
-        <br>
-        <br>
-        <br>
-
-        <img id="lofi_image_desk" src="desk.png">
-
-    </div>
-    <script src="script.js"></script>
+        <figure class="records-illustration draggable-window" data-draggable-window>
+            <div class="window-art">
+                <img id="lofi_image_desk" src="desk.png" alt="A hand-drawn desk and lamp">
+            </div>
+        </figure>
+    </main>
+    <script src="script.js?v=20261006-7"></script>
 </body>
 </html>

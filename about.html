@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / about</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261006-13">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/about">
     <meta name="description" content="Michael Do is a Georgia Tech computer science student focused on deep learning, reinforcement learning, Transformers, AI, and game development.">
@@ -37,50 +37,77 @@
     </script>
 
 </head>
-<body>
+<body class="site-about">
     <div class="background"></div>
     <div class="prompt-container">
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
         <div class="prompt">/ about</div>
     </div>
-    <p style="color: rgb(129, 157, 182);">^click the above address bar components to cycle back pages!<br><br><br><br></p>
-    <br>
-    <div class="nav" id="about_me_div">
-    <h3>Hello! I'm <span>Michael Do</span>, a computer science student at Georgia Tech.</h3>
+    <main class="about-file">
+        <p class="file-label">PROFILE / MICHAEL_DO.TXT</p>
+        <div class="about-grid">
+            <section class="about-copy">
+                <h1>Hello! I'm Michael Do, a computer science student at Georgia Tech.</h1>
+                <p>
+                    I'm an aspiring <span>software engineer</span> interested in building software across
+                    artificial intelligence, machine learning, and game development.
+                </p>
+                <p>
+                    I'm currently studying computer science at the
+                    <span>Georgia Institute of Technology (Georgia Tech)</span>, with interests in
+                    software engineering, reinforcement learning, deep learning, robotics, and interactive systems.
+                </p>
+            </section>
 
-    I'm an aspiring <span>deep learning engineer</span> interested in artificial intelligence,
-    machine learning, and game development.
-
-    <br><br>
-
-    I'm currently studying computer science at the
-    <span>Georgia Institute of Technology (Georgia Tech)</span>, with a focus on
-    machine learning, reinforcement learning, Transformers, and game development.
-
-            <br>
-            <br>
-            <br>
-
-
-            For fun, I
-        <div class="block">
-            <a id="about-me-link" href="music.html">listen to music</a>,
-            <a id="about-me-link" href="feed.html">blog</a>, and            
-            <a id="about-me-link" href="https://github.com/MycoalDough">program</a>!
+            <aside class="about-index" aria-label="Profile summary">
+                <div><span>status</span><strong>studying / researching / building</strong></div>
+                <div><span>school</span><strong>georgia tech</strong></div>
+                <div><span>focus</span><strong>AI · SWE · ML · games</strong></div>
+                <div><span>person</span><strong>awesome</strong></div>
+            </aside>
         </div>
 
-        <br>
-        <br>
-        <br>
+        <section class="about-personal">
+            <p class="file-label">OFF THE CLOCK</p>
+            <p>
+                for fun, I
+                <a id="about-me-link" href="music.html">listen to music</a>,
+                <a id="about-me-link" href="feed.html">blog</a>, and
+                <a id="about-me-link" href="projects.html">program</a>.
+            </p>
+            <p>thanks for checking out my website! feel free to poke around.</p>
+        </section>
 
-        Thanks for checking out my website; feel free to explore more!
-        <br>
-        <br>
-        <br>
+        
+        <section class="about-personal">
+            <p class="file-label">TBHN STUDIOS</p>
+            <p>
+                i love to do game development as a hobby! i am currently the founder and lead artist/developer of
+                <a id="about-me-link" href="tbhn/index.html">TBHN Studios!</a>
+            </p>
+            <p>i also really enjoy content creation where i post on my 
+                <a id="about-me-link" href="https://www.youtube.com/@MycoalD">YouTube channel.</a>
+            </p>
+        </section>
 
-        <img id="lofi_image_desk" src="desk.png">
+        <section class="about-personal">
+            <p class="file-label">VIDEO GAMES</p>
+            <p>
+                despite being a video game creator, i am terriable at games... i do play a lot of pvp minecraft and friendslop on roblox tho
+            </p>
+            <p>
+                was once top 500 stick wars saga player in the world. im better than you.
+            </p>
 
-    </div>
-    <script src="script.js"></script>
+        </section>
+
+
+        <figure class="about-illustration draggable-window" data-draggable-window>
+            <div class="window-art">
+                <img id="lofi_image_desk" src="desk.png" alt="A hand-drawn desk and lamp">
+            </div>
+        </figure>
+    </main>
+    <script src="script.js?v=20261006-7"></script>
 </body>
 </html>

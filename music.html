@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL / about / music</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261006-14">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/music">
 
 </head>
-<body>
+<body class="site-text-file">
     <div class="background"></div>
     <div class="prompt-container">
         <div class="prompt" onclick="location.href='index.html';" id="main_button">MYCOAL</div>
@@ -17,19 +17,13 @@
         <div class="prompt" onclick="location.href='about.html';" id="main_button">about</div>
         <div class="prompt">/ music</div>
     </div>
-    <div class="nav" id="about_me_div">
-            most of the artists i listen to are (semi-small?) artists.<br><br>
-
-            my favourite type of music is indie band, lofi hip hop rap, and anything really related to that!
-            <br>
-            
-
-            <br>
-            <br>
-
-
-            My favourite artists are </span>
-        <div class="block">
+    <main class="text-file">
+        <p class="file-label">PERSONAL / MUSIC.TXT</p>
+        <section class="text-file-copy">
+            <h1>most of the artists i listen to are <span>(semi-small?)</span> artists.</h1>
+            <p>My favourite type of music is indie band, lofi hip hop rap, and anything related to that.</p>
+            <p>My favourite artists are:</p>
+        <div class="block artist-links">
             <a id="about-me-link" href="https://www.youtube.com/@kuri_ken/videos">Kuri Ken (big inspiration for me as a person)</a>,
             <a id="about-me-link" href="https://open.spotify.com/artist/14apS9tKI3K30GK92BNQUL?si=huzbP5oCQtaT1zFbZy8gXQ">James Marriott (best artist of all time)</a>, 
             <a id="about-me-link" href="https://open.spotify.com/artist/2jmo1S0qDb6WzvNfTf6PUr?si=4f9191501a914431">Golden Cats (great music to stare at your ceiling at 3am to)</a>, 
@@ -37,20 +31,18 @@
             <a id="about-me-link" href="https://open.spotify.com/artist/4tpVKOHMbYOFLuNEQ54hVl?si=dcc8537d14d14389">Løvesick (got me through tough times)</a>.
         </div>
 
-        <br>
-        <br>
-        <br>
-
-        <div class="block">
+        <div class="block music-footer">
             Here's my 
             <a id="about-me-link" href="https://open.spotify.com/user/l7gnti2b1t8pwdqmoseaihgk8?si=2b6948a1da3b4a22">spotify</a> account if you want to see my playlists :) 
-        </div>        <br>
-        <br>
-        <br>
+        </div>
+        </section>
 
-        <img id="lofi_image_desk" src="desk.png">
-
-    </div>
-    <script src="script.js"></script>
+        <figure class="records-illustration draggable-window" data-draggable-window>
+            <div class="window-art">
+                <img id="lofi_image_desk" src="desk.png" alt="A hand-drawn desk and lamp">
+            </div>
+        </figure>
+    </main>
+    <script src="script.js?v=20261006-7"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261006-14">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/">
     <meta name="description" content="Michael Do is a Georgia Tech computer science student focused on SWE, artificial intelligence, deep learning, machine learning, reinforcement learning, Transformers, and game development.">
@@ -60,28 +60,84 @@
     }
     </script>
 </head>
-<body>
+<body class="portfolio-home">
     <div class="background"></div>
-    <div class="prompt-container">
-        <div class="prompt" id="main_button">MYCOAL</div>
-        <!--<div class="prompt">/ about</div> -->
-    </div>
-    <!-- <p id="main_menu_p" data-value="Aspiring reinforcement learning engineer">Aspiring reinforcement learning engineer</p> -->
-    <div class="nav">
-        <a href="about.html">about</a>
-        <a href="links.html">links</a>
-        <a href="projects.html">projects</a>
-        <a href="competitions.html">competitions</a>
-        <a href="publications.html">publications</a>
-        <a href="contact.html">contact / work</a>
-        <a href="/tbhn/" target="_top" data-no-swap>TBHN Studios</a>
+    <main class="home-shell">
+        <header class="home-header">
+            <div class="prompt-container">
+                <div class="prompt" id="main_button">MYCOAL</div>
+            </div>
+            <p class="home-location">georgia tech cs&nbsp;&nbsp;·&nbsp;&nbsp;atlanta / los angeles</p>
+        </header>
 
-        <a href="feed.html">feed</a>
+        <section class="home-hero" aria-labelledby="home-title">
+            <div class="home-intro">
+                <p class="home-kicker">software engineer · game developer · creator of odd things</p>
+                <h1 id="home-title">i make things<br><span>that work, learn, and play.</span></h1>
+                <p class="home-summary">
+                    hi, i'm michael! i build software, ai experiments, and games. i obsess over
+                    making them fast, useful, and (most importantly) awesome!
+                </p>
+                <p class="home-current">currently studying computer science at Georgia Tech and leading TBHN Studios</p>
+            </div>
 
-    </div>
-    <img id="lofi_image" src="picnic.png">
-    <div class="temp-text"></div>
-    <script src="script.js"></script>
+            <aside class="home-directory" aria-label="Portfolio navigation">
+                <div class="home-directory-label">
+                    <span>directory</span>
+                    <span>08 links</span>
+                </div>
+                <nav class="nav">
+                    <a href="about.html">about</a>
+                    <a href="links.html">links</a>
+                    <a href="projects.html?v=20261006-17">projects</a>
+                    <a href="competitions.html">competitions</a>
+                    <a href="publications.html">publications</a>
+                    <a href="contact.html">contact / work</a>
+                    <a href="/tbhn/" target="_top" data-no-swap>TBHN Studios</a>
+                    <a href="feed.html">feed</a>
+                </nav>
+            </aside>
+        </section>
+
+        <div class="home-marquee" aria-label="Areas of work">
+            <div class="home-marquee-track">
+                <div class="home-marquee-group">
+                    <span>software engineering</span><i>—</i>
+                    <span>artificial intelligence</span><i>—</i>
+                    <span>game development</span><i>—</i>
+                    <span>full stack</span><i>—</i>
+                    <span>machine learning</span><i>—</i>
+                    <span>deep learning</span><i>—</i>
+                    <span>reinforcement learning</span><i>—</i>
+                    <span>robotics</span><i>—</i>
+                    <span>computer vision</span><i>—</i>
+                    <span>simulation</span><i>—</i>
+                    <span>multiplayer systems</span><i>—</i>
+                </div>
+                <div class="home-marquee-group" aria-hidden="true">
+                    <span>software engineering</span><i>—</i>
+                    <span>artificial intelligence</span><i>—</i>
+                    <span>game development</span><i>—</i>
+                    <span>full stack</span><i>—</i>
+                    <span>machine learning</span><i>—</i>
+                    <span>deep learning</span><i>—</i>
+                    <span>reinforcement learning</span><i>—</i>
+                    <span>robotics</span><i>—</i>
+                    <span>computer vision</span><i>—</i>
+                    <span>simulation</span><i>—</i>
+                    <span>multiplayer systems</span><i>—</i>
+                </div>
+            </div>
+        </div>
+
+        <section class="home-scene draggable-window" data-draggable-window aria-label="Moveable current weather scene">
+            <div class="window-art">
+                <img id="lofi_image" src="picnic.png" alt="A hand-drawn picnic table scene">
+                <div class="temp-text"></div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js?v=20261006-7"></script>
 
 </body>
 </html>
