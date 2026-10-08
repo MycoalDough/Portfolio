@@ -4,7 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYCOAL</title>
-    <link rel="stylesheet" href="style.css?v=20261006-16">
+    <script>
+        (() => {
+            const forceIntro = new URLSearchParams(window.location.search).get('intro') === '1';
+            let introSeen = false;
+
+            try {
+                introSeen = localStorage.getItem('portfolio-home-intro-seen-v1') === 'true';
+            } catch (_) {
+                // The intro can still run when storage is unavailable.
+            }
+
+            if ((forceIntro || !introSeen) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.documentElement.classList.add('portfolio-intro-pending');
+                window.__portfolioIntroFallback = window.setTimeout(() => {
+                    document.documentElement.classList.remove('portfolio-intro-pending', 'portfolio-intro-running');
+                }, 4000);
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="style.css?v=20261008-17">
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <link rel="canonical" href="https://michaeldo.dev/">
     <meta name="description" content="Michael Do is a Georgia Tech computer science student focused on SWE, artificial intelligence, deep learning, machine learning, reinforcement learning, Transformers, and game development.">
@@ -137,7 +156,7 @@
             </div>
         </section>
     </main>
-    <script src="script.js?v=20261006-10"></script>
+    <script src="script.js?v=20261008-11"></script>
 
 </body>
 </html>

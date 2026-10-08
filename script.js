@@ -108,6 +108,90 @@ function initializeBreadcrumbNavigation() {
 
 initializeBreadcrumbNavigation();
 
+function initializeFirstVisitIntro() {
+    const root = document.documentElement;
+
+    if (
+        !document.body.classList.contains('portfolio-home') ||
+        !root.classList.contains('portfolio-intro-pending') ||
+        window.__portfolioHomeIntroStarted
+    ) {
+        return;
+    }
+
+    window.__portfolioHomeIntroStarted = true;
+    root.classList.add('portfolio-intro-running');
+
+    const logo = document.querySelector('.home-header .prompt-container');
+    const directoryLinks = document.querySelectorAll('.home-directory .nav a');
+
+    if (logo) {
+        const logoRect = logo.getBoundingClientRect();
+        const destinationX = window.innerWidth * 0.5;
+        const destinationY = window.innerHeight * 0.46;
+        logo.style.setProperty('--intro-logo-x', `${destinationX - (logoRect.left + logoRect.width / 2)}px`);
+        logo.style.setProperty('--intro-logo-y', `${destinationY - (logoRect.top + logoRect.height / 2)}px`);
+    }
+
+    directoryLinks.forEach((link, index) => {
+        const irregularOffset = [0, 34, 12, 46][index % 4];
+        link.style.setProperty('--intro-row-delay', `${720 + index * 45 + irregularOffset}ms`);
+    });
+
+    const stage = document.createElement('div');
+    stage.className = 'portfolio-intro-stage';
+    stage.setAttribute('aria-hidden', 'true');
+    stage.innerHTML = `
+        <span class="portfolio-intro-scan portfolio-intro-scan--horizontal"></span>
+        <span class="portfolio-intro-scan portfolio-intro-scan--vertical"></span>
+        <span class="portfolio-intro-lock"></span>
+    `;
+
+    const skipButton = document.createElement('button');
+    skipButton.className = 'portfolio-intro-skip';
+    skipButton.type = 'button';
+    skipButton.textContent = 'skip intro';
+
+    document.body.append(stage, skipButton);
+
+    let finished = false;
+    const finishIntro = () => {
+        if (finished) {
+            return;
+        }
+
+        finished = true;
+        window.clearTimeout(window.__portfolioIntroFallback);
+        window.clearTimeout(window.__portfolioIntroTimer);
+
+        try {
+            localStorage.setItem('portfolio-home-intro-seen-v1', 'true');
+        } catch (_) {
+            // The animation still completes when storage is unavailable.
+        }
+
+        root.classList.remove('portfolio-intro-pending', 'portfolio-intro-running');
+        logo?.style.removeProperty('--intro-logo-x');
+        logo?.style.removeProperty('--intro-logo-y');
+        directoryLinks.forEach((link) => link.style.removeProperty('--intro-row-delay'));
+        stage.remove();
+        skipButton.remove();
+        document.removeEventListener('keydown', handleIntroKeydown);
+    };
+
+    const handleIntroKeydown = (event) => {
+        if (event.key === 'Escape') {
+            finishIntro();
+        }
+    };
+
+    skipButton.addEventListener('click', finishIntro, { once: true });
+    document.addEventListener('keydown', handleIntroKeydown);
+    window.__portfolioIntroTimer = window.setTimeout(finishIntro, 1850);
+}
+
+initializeFirstVisitIntro();
+
 function spawnCloud() {
     if (document.visibilityState != "visible") {
         return;

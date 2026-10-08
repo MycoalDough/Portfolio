@@ -1215,6 +1215,276 @@ body.portfolio-home {
     color: var(--portfolio-text);
 }
 
+/* First-visit homepage assembly. The real interface animates into place so
+   the intro ends on the exact layout visitors will use. */
+html.portfolio-intro-pending,
+html.portfolio-intro-pending body.portfolio-home {
+    overflow: hidden;
+    background: var(--portfolio-bg);
+}
+
+html.portfolio-intro-pending .home-header .prompt-container,
+html.portfolio-intro-pending .home-location,
+html.portfolio-intro-pending .home-kicker,
+html.portfolio-intro-pending .home-intro h1,
+html.portfolio-intro-pending .home-summary,
+html.portfolio-intro-pending .home-current,
+html.portfolio-intro-pending .home-directory,
+html.portfolio-intro-pending .home-directory .nav a,
+html.portfolio-intro-pending .home-marquee,
+html.portfolio-intro-pending .home-scene,
+html.portfolio-intro-pending .background,
+html.portfolio-intro-pending .cloud,
+html.portfolio-intro-pending .rain {
+    opacity: 0;
+}
+
+.portfolio-intro-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    overflow: hidden;
+    background: var(--portfolio-bg);
+    pointer-events: none;
+    animation: portfolio-intro-stage-release 560ms 170ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.portfolio-intro-stage::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    background:
+        linear-gradient(#5a5a5a, #5a5a5a) left top / 0 3px no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) left top / 3px 0 no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) right top / 0 3px no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) right top / 3px 0 no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) left bottom / 0 3px no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) left bottom / 3px 0 no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) right bottom / 0 3px no-repeat,
+        linear-gradient(#5a5a5a, #5a5a5a) right bottom / 3px 0 no-repeat;
+    animation: portfolio-intro-corners 260ms 40ms steps(5, end) forwards;
+}
+
+.portfolio-intro-scan {
+    position: absolute;
+    display: block;
+    background: #686868;
+    opacity: 0;
+}
+
+.portfolio-intro-scan--horizontal {
+    top: 46%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    animation: portfolio-intro-trace-x 330ms 90ms cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+.portfolio-intro-scan--vertical {
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 100%;
+    transform: scaleY(0);
+    animation: portfolio-intro-trace-y 300ms 160ms cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+.portfolio-intro-lock {
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #888;
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0.45);
+    animation: portfolio-intro-lock 300ms 230ms steps(4, end) forwards;
+}
+
+.portfolio-intro-skip {
+    position: fixed;
+    right: 24px;
+    bottom: 22px;
+    z-index: 10003;
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 0;
+    background: #171717;
+    color: #777;
+    font: inherit;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    cursor: pointer;
+}
+
+.portfolio-intro-skip:hover,
+.portfolio-intro-skip:focus-visible {
+    border-color: #d8d8d8;
+    color: #f2f2f2;
+    outline: none;
+}
+
+html.portfolio-intro-running .home-header .prompt-container {
+    position: relative;
+    z-index: 10002;
+    transform-origin: center;
+    animation: portfolio-intro-logo 720ms 180ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+html.portfolio-intro-running .home-location {
+    animation: portfolio-intro-fade-up 330ms 690ms ease-out forwards;
+}
+
+html.portfolio-intro-running .home-kicker {
+    animation: portfolio-intro-fade-up 320ms 590ms ease-out forwards;
+}
+
+html.portfolio-intro-running .home-intro h1 {
+    clip-path: inset(0 100% 0 0);
+    animation: portfolio-intro-unmask 500ms 650ms cubic-bezier(0.55, 0, 0.2, 1) forwards;
+}
+
+html.portfolio-intro-running .home-summary {
+    animation: portfolio-intro-fade-up 380ms 900ms ease-out forwards;
+}
+
+html.portfolio-intro-running .home-current {
+    animation: portfolio-intro-fade-up 320ms 1040ms ease-out forwards;
+}
+
+html.portfolio-intro-running .home-directory {
+    clip-path: inset(0 0 100% 0);
+    animation: portfolio-intro-directory 470ms 610ms cubic-bezier(0.55, 0, 0.2, 1) forwards;
+}
+
+html.portfolio-intro-running .home-directory .nav a {
+    animation: portfolio-intro-row 260ms var(--intro-row-delay, 760ms) ease-out forwards;
+}
+
+html.portfolio-intro-running .home-marquee {
+    clip-path: inset(0 100% 0 0);
+    animation: portfolio-intro-unmask 440ms 1150ms cubic-bezier(0.55, 0, 0.2, 1) forwards;
+}
+
+html.portfolio-intro-running .home-scene {
+    animation: portfolio-intro-scene 500ms 1180ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+html.portfolio-intro-running .background,
+html.portfolio-intro-running .cloud,
+html.portfolio-intro-running .rain {
+    animation: portfolio-intro-environment 380ms 1440ms ease-out forwards;
+}
+
+@keyframes portfolio-intro-stage-release {
+    0%, 52% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes portfolio-intro-corners {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% {
+        opacity: 1;
+        background-size: 40px 3px, 3px 40px, 40px 3px, 3px 40px, 40px 3px, 3px 40px, 40px 3px, 3px 40px;
+    }
+}
+
+@keyframes portfolio-intro-trace-x {
+    0% { opacity: 0; transform: scaleX(0); }
+    20% { opacity: 0.75; }
+    75% { opacity: 0.35; transform: scaleX(1); }
+    100% { opacity: 0; transform: scaleX(1); }
+}
+
+@keyframes portfolio-intro-trace-y {
+    0% { opacity: 0; transform: scaleY(0); }
+    20% { opacity: 0.65; }
+    75% { opacity: 0.3; transform: scaleY(1); }
+    100% { opacity: 0; transform: scaleY(1); }
+}
+
+@keyframes portfolio-intro-lock {
+    0% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scale(0.45); }
+    35%, 70% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -50%) rotate(135deg) scale(1.35); }
+}
+
+@keyframes portfolio-intro-logo {
+    0%, 12% {
+        opacity: 0;
+        filter: blur(4px);
+        transform: translate(var(--intro-logo-x, 0), var(--intro-logo-y, 0)) scaleX(0.18) scaleY(0.72);
+    }
+    20% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(var(--intro-logo-x, 0), var(--intro-logo-y, 0)) scaleX(1.08) scaleY(1);
+    }
+    42% {
+        transform: translate(var(--intro-logo-x, 0), var(--intro-logo-y, 0)) scale(1);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes portfolio-intro-unmask {
+    0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+    18% { opacity: 1; }
+    100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes portfolio-intro-directory {
+    0% { opacity: 0; clip-path: inset(0 0 100% 0); }
+    20% { opacity: 1; }
+    100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes portfolio-intro-row {
+    0% { opacity: 0; transform: translateX(-13px); }
+    65% { opacity: 1; transform: translateX(3px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes portfolio-intro-fade-up {
+    0% { opacity: 0; transform: translateY(9px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes portfolio-intro-scene {
+    0% { opacity: 0; clip-path: inset(48% 0 48% 0); transform: translateY(13px); }
+    45% { opacity: 0.7; }
+    100% { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+@keyframes portfolio-intro-environment {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 650px) {
+    .portfolio-intro-skip {
+        right: 16px;
+        bottom: 14px;
+    }
+
+    html.portfolio-intro-running .home-header .prompt-container {
+        animation-duration: 570ms;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-intro-stage,
+    .portfolio-intro-skip {
+        display: none !important;
+    }
+}
+
 /* Homepage: the original directory, now with more context and rhythm. */
 
 body.portfolio-home {
