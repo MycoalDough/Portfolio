@@ -165,7 +165,7 @@ function initializeFirstVisitIntro() {
         window.clearTimeout(window.__portfolioIntroTimer);
 
         try {
-            localStorage.setItem('portfolio-home-intro-seen-v1', 'true');
+            sessionStorage.setItem('portfolio-home-intro-seen-v1', 'true');
         } catch (_) {
             // The animation still completes when storage is unavailable.
         }
