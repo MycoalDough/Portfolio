@@ -58,6 +58,23 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .intro h1 em { color: var(--accent); font-style: normal; }
 .intro > p:last-child { max-width: 610px; margin: 0; color: var(--muted); font-size: clamp(1rem, 1.8vw, 1.24rem); }
 
+.streaming { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.stream-card { min-width: 0; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+.stream-card .deck-heading { margin-bottom: 20px; }
+.stream-form label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; }
+.stream-status { min-height: 42px; margin: 12px 0; color: var(--muted); font-size: 12px; }
+.stream-frame { display: grid; min-height: 220px; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #111318; }
+.stream-frame:empty::before { content: 'Player appears here'; color: #78808e; font-size: 13px; }
+.stream-frame iframe { display: block; width: 100%; border: 0; }
+.youtube-frame iframe { aspect-ratio: 16 / 9; min-height: 220px; }
+.spotify-frame iframe { height: 352px; }
+.stream-link { display: inline-block; margin-top: 15px; color: var(--accent); font-size: 13px; text-underline-offset: 3px; }
+.streaming-help { max-width: 840px; margin: 20px 0 80px; color: var(--muted); font-size: 13px; }
+.local-heading { margin-bottom: 24px; }
+.local-heading h2 { margin: 7px 0; font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -.05em; }
+.local-heading p:last-child { margin: 0; color: var(--muted); }
+.local-note { max-width: 800px; margin: 18px 0 64px; color: var(--muted); font-size: 12px; }
+
 .transport {
     display: flex;
     align-items: center;
@@ -99,13 +116,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .deck-controls output { color: var(--text); font-variant-numeric: tabular-nums; }
 .deck-controls input { width: 100%; margin: 0; accent-color: var(--accent); }
 
-.service-note { max-width: 800px; padding: 72px 0 64px; }
-.service-note h2 { margin: 9px 0 18px; font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -.055em; }
-.service-note p { color: var(--muted); }
-.service-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
-.service-links a { padding: 10px 14px; border: 1px solid #59606c; border-radius: 9px; color: var(--text); font-size: 13px; font-weight: 650; text-decoration: none; }
-.service-links a:hover, .service-links a:focus-visible { border-color: var(--accent); color: var(--accent); }
-.service-note .fine-print { max-width: 700px; font-size: 12px; line-height: 1.6; }
 footer { display: flex; gap: 8px; padding: 22px 0 50px; border-top: 1px solid var(--line); color: #78808e; font-size: 10px; font-weight: 700; letter-spacing: .13em; }
 
 @media (max-width: 760px) {
@@ -116,8 +126,8 @@ footer { display: flex; gap: 8px; padding: 22px 0 50px; border-top: 1px solid va
     .transport { align-items: stretch; flex-direction: column; padding: 20px; }
     .transport-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .transport-buttons .primary-button { grid-column: 1 / -1; }
-    .decks { grid-template-columns: 1fr; }
-    .service-note { padding-top: 56px; }
+    .decks, .streaming { grid-template-columns: 1fr; }
+    .streaming-help { margin-bottom: 56px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

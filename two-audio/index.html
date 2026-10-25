@@ -9,24 +9,56 @@
     <link rel="icon" href="../icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
+    <script src="streaming.js" defer></script>
 </head>
 <body>
     <div class="page-shell">
         <header class="topbar">
             <a class="wordmark" href="../index.html">MYCOAL<span> / personal tools</span></a>
-            <span class="local-badge">YOUR AUDIO STAYS ON THIS DEVICE</span>
+            <span class="local-badge">PERSONAL LISTENING TOOL</span>
         </header>
 
         <main>
             <section class="intro" aria-labelledby="page-title">
-                <p class="eyebrow">01 / TWO AUDIO</p>
-                <h1 id="page-title">Two tracks.<br><em>One tap.</em></h1>
-                <p>Pick two MP3s from Files on your iPhone, or load direct audio links. Play them together and set each volume separately.</p>
+                <p class="eyebrow">01 / YOUTUBE + SPOTIFY</p>
+                <h1 id="page-title">Play them<br><em>side by side.</em></h1>
+                <p>Paste a YouTube video link and a Spotify link. Start each player below to try listening to both at once.</p>
             </section>
+
+            <section class="streaming" aria-label="YouTube and Spotify players">
+                <article class="stream-card" aria-labelledby="youtube-title">
+                    <div class="deck-heading"><span class="deck-number">Y</span><h2 id="youtube-title">YouTube</h2></div>
+                    <form id="youtube-form" class="stream-form">
+                        <label for="youtube-url">Video URL</label>
+                        <div class="url-row"><input id="youtube-url" type="url" inputmode="url" placeholder="https://www.youtube.com/watch?v=..." required><button type="submit">Load</button></div>
+                    </form>
+                    <p id="youtube-status" class="stream-status" role="status" aria-live="polite">Paste a video link to load the official YouTube player.</p>
+                    <div id="youtube-frame" class="stream-frame youtube-frame"></div>
+                    <a class="stream-link" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Find a video on YouTube ↗</a>
+                </article>
+                <article class="stream-card" aria-labelledby="spotify-title">
+                    <div class="deck-heading"><span class="deck-number">S</span><h2 id="spotify-title">Spotify</h2></div>
+                    <form id="spotify-form" class="stream-form">
+                        <label for="spotify-url">Track, album, or playlist URL</label>
+                        <div class="url-row"><input id="spotify-url" type="url" inputmode="url" placeholder="https://open.spotify.com/track/..." required><button type="submit">Load</button></div>
+                    </form>
+                    <p id="spotify-status" class="stream-status" role="status" aria-live="polite">Paste a Spotify link to load the official Spotify player.</p>
+                    <div id="spotify-frame" class="stream-frame spotify-frame"></div>
+                    <a class="stream-link" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Find music on Spotify ↗</a>
+                </article>
+            </section>
+
+            <p class="streaming-help">Tap Play in each player. On iPhone, Safari or the services may pause one when the other starts; this page cannot override that. Keep the page visible. YouTube ads and Spotify playback are controlled by their official players and your accounts.</p>
+
+            <div class="local-heading">
+                <p class="eyebrow">02 / LOCAL AUDIO</p>
+                <h2>Mix your own audio files</h2>
+                <p>This option mixes two files or direct audio links with separate volume controls.</p>
+            </div>
 
             <section class="transport" aria-label="Both tracks">
                 <div>
-                    <span class="transport-label">MASTER CONTROLS</span>
+                    <span class="transport-label">LOCAL AUDIO CONTROLS</span>
                     <p id="status" role="status" aria-live="polite">Choose audio for both tracks to get started.</p>
                 </div>
                 <div class="transport-buttons">
@@ -66,15 +98,9 @@
                 </article>
             </section>
 
-            <section class="service-note" aria-labelledby="service-title">
-                <p class="eyebrow">02 / STREAMING SERVICES</p>
-                <h2 id="service-title">About YouTube &amp; Spotify</h2>
-                <p>You can sign in on YouTube to use your recommendations and search, but this page cannot bring that account feed into the mixer or remove ads. Ad-free YouTube playback depends on your Premium membership and YouTube’s own player. Spotify playback also requires its own signed-in player.</p>
-                <div class="service-links"><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Open YouTube ↗</a><a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Open Spotify ↗</a></div>
-                <p class="fine-print">For reliable two-track playback here, use audio files or direct audio URLs. A webpage link, Spotify track link, or YouTube video link is not a direct audio URL. Direct links also need to allow access from this page. Keep this page open while listening; iPhone background playback may vary.</p>
-            </section>
+            <p class="fine-print local-note">Direct audio links need to permit browser access. If an embedded player does not load from this local file, open the page from a hosted website instead.</p>
         </main>
-        <footer>PERSONAL AUDIO TOOL <span>·</span> NOTHING IS UPLOADED</footer>
+        <footer>PERSONAL AUDIO TOOL <span>·</span> YOUTUBE + SPOTIFY</footer>
     </div>
 </body>
 </html>
