@@ -1,5 +1,29 @@
 const videoForm = document.getElementById('youtube-form');
 const spotifyForm = document.getElementById('spotify-form');
+const youtubeVolume = document.getElementById('youtube-volume');
+const youtubeVolumeValue = document.getElementById('youtube-volume-value');
+let youtubePlayer;
+let youtubeLoad = 0;
+let youtubeApiPromise;
+
+function loadYouTubeApi() {
+    if (window.YT?.Player) return Promise.resolve(window.YT);
+    if (!youtubeApiPromise) {
+        youtubeApiPromise = new Promise((resolve, reject) => {
+            window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+            const script = document.createElement('script');
+            script.src = 'https://www.youtube.com/iframe_api';
+            script.onerror = () => reject(new Error('YouTube volume controls could not load.'));
+            document.head.append(script);
+        });
+    }
+    return youtubeApiPromise;
+}
+
+youtubeVolume.addEventListener('input', () => {
+    youtubeVolumeValue.textContent = `${youtubeVolume.value}%`;
+    youtubePlayer?.setVolume(Number(youtubeVolume.value));
+});
 
 function youtubeId(value) {
     const url = new URL(value);
@@ -35,19 +59,46 @@ function spotifyEntity(value) {
     return { type, id };
 }
 
-videoForm.addEventListener('submit', (event) => {
+videoForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const status = document.getElementById('youtube-status');
     try {
         const id = youtubeId(document.getElementById('youtube-url').value.trim());
+        const generation = ++youtubeLoad;
+        youtubePlayer?.destroy();
+        youtubePlayer = null;
+        youtubeVolume.disabled = true;
         const iframe = document.createElement('iframe');
+        iframe.id = 'youtube-embed';
         iframe.title = 'YouTube video player';
-        iframe.src = `https://www.youtube.com/embed/${id}?playsinline=1`;
+        const origin = location.protocol === 'https:' || location.protocol === 'http:' ? `&origin=${encodeURIComponent(location.origin)}` : '';
+        iframe.src = `https://www.youtube.com/embed/${id}?playsinline=1&enablejsapi=1${origin}`;
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
         iframe.referrerPolicy = 'strict-origin-when-cross-origin';
         document.getElementById('youtube-frame').replaceChildren(iframe);
-        status.textContent = 'Video loaded. Tap Play in the YouTube player.';
+        status.textContent = 'Loading YouTube player…';
+        window.audioHistory.addLink('youtube', `https://www.youtube.com/watch?v=${id}`, `YouTube video ${id}`);
+        try {
+            const YT = await Promise.race([
+                loadYouTubeApi(),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('YouTube API timed out.')), 12000)),
+            ]);
+            if (generation !== youtubeLoad) return;
+            youtubePlayer = new YT.Player(iframe, {
+                events: {
+                    onReady: (readyEvent) => {
+                        if (generation !== youtubeLoad) return;
+                        youtubeVolume.disabled = false;
+                        readyEvent.target.setVolume(Number(youtubeVolume.value));
+                        status.textContent = 'Video ready. Tap Play in the YouTube player.';
+                    },
+                    onError: () => { if (generation === youtubeLoad) status.textContent = 'YouTube could not play this video here. Try another link or open it on YouTube.'; },
+                },
+            });
+        } catch (_) {
+            if (generation === youtubeLoad) status.textContent = 'Video loaded. Tap Play in the YouTube player. Its separate volume slider is unavailable.';
+        }
     } catch (error) {
         status.textContent = error.message;
     }
@@ -66,7 +117,17 @@ spotifyForm.addEventListener('submit', (event) => {
         iframe.loading = 'lazy';
         document.getElementById('spotify-frame').replaceChildren(iframe);
         status.textContent = 'Music loaded. Tap Play in the Spotify player.';
+        window.audioHistory.addLink('spotify', `https://open.spotify.com/${type}/${id}`, `Spotify ${type} ${id}`);
     } catch (error) {
         status.textContent = error.message;
     }
+});
+
+window.audioHistory.registerLoader('youtube', (entry) => {
+    document.getElementById('youtube-url').value = entry.url;
+    videoForm.requestSubmit();
+});
+window.audioHistory.registerLoader('spotify', (entry) => {
+    document.getElementById('spotify-url').value = entry.url;
+    spotifyForm.requestSubmit();
 });

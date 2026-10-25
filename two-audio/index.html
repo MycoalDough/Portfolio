@@ -8,6 +8,7 @@
     <title>Two Audio | MYCOAL</title>
     <link rel="icon" href="../icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+    <script src="history.js" defer></script>
     <script src="app.js" defer></script>
     <script src="streaming.js" defer></script>
 </head>
@@ -34,6 +35,8 @@
                     </form>
                     <p id="youtube-status" class="stream-status" role="status" aria-live="polite">Paste a video link to load the official YouTube player.</p>
                     <div id="youtube-frame" class="stream-frame youtube-frame"></div>
+                    <div class="effect-control youtube-volume"><label for="youtube-volume">YouTube volume <output id="youtube-volume-value">100%</output></label><input id="youtube-volume" type="range" min="0" max="100" value="100" aria-label="YouTube player volume" disabled></div>
+                    <p class="control-hint">On iPhone, YouTube may require the phone’s volume buttons.</p>
                     <a class="stream-link" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Find a video on YouTube ↗</a>
                 </article>
                 <article class="stream-card" aria-labelledby="spotify-title">
@@ -53,7 +56,7 @@
             <div class="local-heading">
                 <p class="eyebrow">02 / LOCAL AUDIO</p>
                 <h2>Mix your own audio files</h2>
-                <p>This option mixes two files or direct audio links with separate volume controls.</p>
+                <p>This option mixes two files or direct audio links with separate effects and volume controls.</p>
             </div>
 
             <section class="transport" aria-label="Both tracks">
@@ -77,10 +80,13 @@
                         <label for="url-a">Or paste a direct audio URL</label>
                         <div class="url-row"><input id="url-a" type="url" inputmode="url" placeholder="https://example.com/song.mp3"><button type="button" id="load-url-a">Load</button></div>
                     </div>
+                    <div id="load-state-a" class="load-state" role="status" aria-live="polite" hidden><span id="load-text-a">Loading…</span><progress id="load-progress-a" max="100"></progress></div>
                     <div class="track-info"><strong id="name-a">No audio loaded</strong><span id="duration-a">MP3, M4A, or another format your browser supports</span></div>
                     <input id="seek-a" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek first track" disabled>
                     <div class="time-row"><span id="current-a">0:00</span><span id="total-a">0:00</span></div>
                     <div class="deck-controls"><button type="button" id="toggle-a" disabled>Play A</button><label for="volume-a">Volume <output id="volume-value-a">70%</output></label><input id="volume-a" type="range" min="0" max="100" value="70" aria-label="First track volume"></div>
+                    <div class="effects"><div class="effect-control"><label for="slow-a">Slowed <output id="slow-value-a">1.00×</output></label><input id="slow-a" type="range" min="50" max="100" value="100" aria-label="First track speed"></div><div class="effect-control"><label for="reverb-a">Reverb <output id="reverb-value-a">0%</output></label><input id="reverb-a" type="range" min="0" max="100" value="0" aria-label="First track reverb"></div></div>
+                    <details class="background-player"><summary>Play A in background</summary><p>Use Safari’s native player for a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-a" controls preload="none"></audio></details>
                 </article>
 
                 <article class="deck" data-deck="b" aria-labelledby="track-b-title">
@@ -91,14 +97,19 @@
                         <label for="url-b">Or paste a direct audio URL</label>
                         <div class="url-row"><input id="url-b" type="url" inputmode="url" placeholder="https://example.com/song.mp3"><button type="button" id="load-url-b">Load</button></div>
                     </div>
+                    <div id="load-state-b" class="load-state" role="status" aria-live="polite" hidden><span id="load-text-b">Loading…</span><progress id="load-progress-b" max="100"></progress></div>
                     <div class="track-info"><strong id="name-b">No audio loaded</strong><span id="duration-b">MP3, M4A, or another format your browser supports</span></div>
                     <input id="seek-b" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek second track" disabled>
                     <div class="time-row"><span id="current-b">0:00</span><span id="total-b">0:00</span></div>
                     <div class="deck-controls"><button type="button" id="toggle-b" disabled>Play B</button><label for="volume-b">Volume <output id="volume-value-b">70%</output></label><input id="volume-b" type="range" min="0" max="100" value="70" aria-label="Second track volume"></div>
+                    <div class="effects"><div class="effect-control"><label for="slow-b">Slowed <output id="slow-value-b">1.00×</output></label><input id="slow-b" type="range" min="50" max="100" value="100" aria-label="Second track speed"></div><div class="effect-control"><label for="reverb-b">Reverb <output id="reverb-value-b">0%</output></label><input id="reverb-b" type="range" min="0" max="100" value="0" aria-label="Second track reverb"></div></div>
+                    <details class="background-player"><summary>Play B in background</summary><p>Use Safari’s native player for a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-b" controls preload="none"></audio></details>
                 </article>
             </section>
 
-            <p class="fine-print local-note">Direct audio links need to permit browser access. If an embedded player does not load from this local file, open the page from a hosted website instead.</p>
+            <section class="history" aria-labelledby="history-title"><div class="history-heading"><div><p class="eyebrow">03 / THIS DEVICE</p><h2 id="history-title">Recent audio</h2></div><button type="button" id="clear-history">Clear history</button></div><p>Links and selected files are saved in this browser when storage allows. Large files may need to be chosen again.</p><ul id="history-list"><li class="history-empty">Nothing saved yet.</li></ul></section>
+
+            <p class="fine-print local-note">Direct audio links need to permit browser access. Background playback depends on iPhone Safari and may stop when another app takes over audio. If an embedded player does not load from this local file, open the page from a hosted website instead.</p>
         </main>
         <footer>PERSONAL AUDIO TOOL <span>·</span> YOUTUBE + SPOTIFY</footer>
     </div>
