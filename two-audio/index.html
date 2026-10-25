@@ -42,7 +42,7 @@
                 </article>
             </section>
 
-            <p class="streaming-help">Tap Play in YouTube, then start your audio below. On iPhone, Safari or YouTube may pause one when the other starts; this page cannot override that. Keep the page visible. YouTube ads and playback are controlled by its official player and your account.</p>
+            <p class="streaming-help">Tap Play in YouTube, then start your audio below. On iPhone, Chrome or YouTube may pause one when the other starts; this page cannot override that. Keep the page visible. YouTube ads and playback are controlled by its official player and your account.</p>
 
             <div class="local-heading">
                 <p class="eyebrow">02 / LOCAL AUDIO</p>
@@ -60,8 +60,10 @@
                     <button type="button" id="play-both-quick" disabled>Play both quick · no effects</button>
                     <button type="button" id="pause-both" disabled>Pause both</button>
                     <button type="button" id="restart-both" disabled>Restart both</button>
+                    <button type="button" id="black-screen-button">Keep awake + black screen</button>
                 </div>
             </section>
+            <p class="wake-help">Black screen mode keeps the display on while hiding the page. It uses battery and works only when Chrome grants a screen wake lock.</p>
 
             <section class="decks" aria-label="Audio tracks">
                 <article class="deck" data-deck="a" aria-labelledby="track-a-title">
@@ -78,9 +80,10 @@
                     <input id="seek-a" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek first track" disabled>
                     <div class="time-row"><span id="current-a">0:00</span><span id="total-a">0:00</span></div>
                     <div class="deck-controls"><button type="button" id="toggle-a" disabled>Play A</button><label for="volume-a">Volume <output id="volume-value-a">70%</output></label><input id="volume-a" type="range" min="0" max="100" value="70" aria-label="First track volume"></div>
+                    <button type="button" id="loop-a" class="loop-button" aria-pressed="false">Loop A: Off</button>
                     <div class="effects"><div class="effect-control"><label for="slow-a">Slowed <output id="slow-value-a">1.00×</output></label><input id="slow-a" type="range" min="50" max="100" value="100" aria-label="First track speed"></div><div class="effect-control"><label for="reverb-a">Reverb <output id="reverb-value-a">0%</output></label><input id="reverb-a" type="range" min="0" max="100" value="0" aria-label="First track reverb"></div></div>
                     <div class="effect-presets"><button type="button" id="preset-slow-a">Slowed + reverb · 80% / 40%</button><button type="button" id="preset-normal-a">Normal · 1.00× / 0%</button></div>
-                    <details class="background-player"><summary>Play A in background / quick play</summary><p>This player is ready before the effects mixer finishes preparing. In Safari, it has a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-a" controls preload="none"></audio></details>
+                    <details class="background-player"><summary>Play A in background / quick play</summary><p>This player is ready before the effects mixer finishes preparing. On iPhone, it has a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-a" controls preload="none"></audio></details>
                 </article>
 
                 <article class="deck" data-deck="b" aria-labelledby="track-b-title">
@@ -97,17 +100,22 @@
                     <input id="seek-b" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek second track" disabled>
                     <div class="time-row"><span id="current-b">0:00</span><span id="total-b">0:00</span></div>
                     <div class="deck-controls"><button type="button" id="toggle-b" disabled>Play B</button><label for="volume-b">Volume <output id="volume-value-b">70%</output></label><input id="volume-b" type="range" min="0" max="100" value="70" aria-label="Second track volume"></div>
+                    <button type="button" id="loop-b" class="loop-button" aria-pressed="false">Loop B: Off</button>
                     <div class="effects"><div class="effect-control"><label for="slow-b">Slowed <output id="slow-value-b">1.00×</output></label><input id="slow-b" type="range" min="50" max="100" value="100" aria-label="Second track speed"></div><div class="effect-control"><label for="reverb-b">Reverb <output id="reverb-value-b">0%</output></label><input id="reverb-b" type="range" min="0" max="100" value="0" aria-label="Second track reverb"></div></div>
                     <div class="effect-presets"><button type="button" id="preset-slow-b">Slowed + reverb · 80% / 40%</button><button type="button" id="preset-normal-b">Normal · 1.00× / 0%</button></div>
-                    <details class="background-player"><summary>Play B in background / quick play</summary><p>This player is ready before the effects mixer finishes preparing. In Safari, it has a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-b" controls preload="none"></audio></details>
+                    <details class="background-player"><summary>Play B in background / quick play</summary><p>This player is ready before the effects mixer finishes preparing. On iPhone, it has a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-b" controls preload="none"></audio></details>
                 </article>
             </section>
 
             <section class="history" aria-labelledby="history-title"><div class="history-heading"><div><p class="eyebrow">03 / THIS DEVICE</p><h2 id="history-title">Recent audio</h2></div><button type="button" id="clear-history">Clear history</button></div><p>Links and selected files are saved in this browser when storage allows. Files over 12 MB need to be chosen again.</p><ul id="history-list"><li class="history-empty">Nothing saved yet.</li></ul></section>
 
-            <p class="fine-print local-note">Large audio can use the streaming mixer with volume, slowed, and reverb when its host permits cross-origin playback. Quick play remains available if streaming effects cannot connect. You can also save an MP3 to Files and choose it above. Background playback depends on iPhone Safari and may stop when another app takes over audio. If an embedded player does not load from this local file, open the page from a hosted website instead.</p>
+            <p class="fine-print local-note">Large audio can use the streaming mixer with volume, slowed, and reverb when its host permits cross-origin playback. Quick play remains available if streaming effects cannot connect. You can also save an MP3 to Files and choose it above. Playback with the screen off depends on Chrome for iPhone and may stop when another app takes over audio. If an embedded player does not load from this local file, open the page from a hosted website instead.</p>
         </main>
         <footer>PERSONAL AUDIO TOOL <span>·</span> YOUTUBE + LOCAL AUDIO</footer>
+    </div>
+    <div id="black-screen-overlay" class="black-screen-overlay" role="dialog" aria-modal="true" aria-label="Black screen mode" hidden>
+        <button type="button" id="black-screen-exit">Exit black screen</button>
+        <p id="black-screen-status" role="status" aria-live="polite"></p>
     </div>
 </body>
 </html>

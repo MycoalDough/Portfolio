@@ -89,6 +89,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 
 .transport p { margin: 5px 0 0; color: var(--text); }
 .transport-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.wake-help { margin: 10px 0 0; color: var(--muted); font-size: 12px; }
 .primary-button { border-color: var(--accent); background: var(--accent); color: #191711; }
 .primary-button:hover:not(:disabled), .primary-button:focus-visible:not(:disabled) { background: #ffd494; }
 
@@ -123,6 +124,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .deck-controls label { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
 .deck-controls output { color: var(--text); font-variant-numeric: tabular-nums; }
 .deck-controls input { width: 100%; margin: 0; accent-color: var(--accent); }
+.loop-button { width: 100%; margin-top: 16px; }
+.loop-button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 .effects { display: grid; gap: 18px; margin-top: 27px; padding-top: 22px; border-top: 1px solid var(--line); }
 .effect-control label { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 12px; }
 .effect-control output { color: var(--text); font-variant-numeric: tabular-nums; }
@@ -147,6 +150,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .history-rename input { flex: 1 1 180px; }
 .history-rename button { min-height: 36px; padding: 6px 10px; font-size: 12px; }
 .history .history-empty { color: var(--muted); font-size: 13px; }
+
+.black-screen-overlay { position: fixed; z-index: 9999; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 100dvh; padding: calc(env(safe-area-inset-top) + 24px) 20px calc(env(safe-area-inset-bottom) + 24px); background: #000; color: #777; text-align: center; }
+.black-screen-overlay[hidden] { display: none; }
+.black-screen-overlay button { border-color: #333; background: #111; color: #aaa; }
+.black-screen-overlay p { max-width: 420px; margin: 0; font-size: 12px; }
+body.black-screen-open { overflow: hidden; }
 
 footer { display: flex; gap: 8px; padding: 22px 0 50px; border-top: 1px solid var(--line); color: #78808e; font-size: 10px; font-weight: 700; letter-spacing: .13em; }
 

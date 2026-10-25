@@ -4,6 +4,10 @@ const playBothButton = document.getElementById('play-both');
 const playBothQuickButton = document.getElementById('play-both-quick');
 const pauseBothButton = document.getElementById('pause-both');
 const restartBothButton = document.getElementById('restart-both');
+const blackScreenButton = document.getElementById('black-screen-button');
+const blackScreenOverlay = document.getElementById('black-screen-overlay');
+const blackScreenExit = document.getElementById('black-screen-exit');
+const blackScreenStatus = document.getElementById('black-screen-status');
 const MAX_MIXER_BYTES = 12 * 1024 * 1024;
 
 let audioContext;
@@ -22,6 +26,7 @@ const decks = Object.fromEntries(['a', 'b'].map((key) => [key, {
     offset: 0,
     startedAt: 0,
     playing: false,
+    loop: false,
     generation: 0,
     loadGeneration: 0,
     abortController: null,
@@ -41,6 +46,7 @@ const decks = Object.fromEntries(['a', 'b'].map((key) => [key, {
     currentElement: document.getElementById(`current-${key}`),
     totalElement: document.getElementById(`total-${key}`),
     toggleButton: document.getElementById(`toggle-${key}`),
+    loopButton: document.getElementById(`loop-${key}`),
     volumeInput: document.getElementById(`volume-${key}`),
     volumeValue: document.getElementById(`volume-value-${key}`),
     slowInput: document.getElementById(`slow-${key}`),
@@ -119,7 +125,8 @@ function positionOf(deck) {
     if (!deck.buffer) return 0;
     if (!deck.playing || !audioContext) return deck.offset;
     const elapsed = Math.max(0, audioContext.currentTime - deck.startedAt);
-    return Math.min(deck.buffer.duration, deck.offset + elapsed * speedOf(deck));
+    const position = deck.offset + elapsed * speedOf(deck);
+    return deck.loop ? position % deck.buffer.duration : Math.min(deck.buffer.duration, position);
 }
 
 function pauseDeck(deck) {
@@ -152,6 +159,7 @@ function startDeck(deck, when) {
         if (durationOf(deck) && deck.offset >= durationOf(deck) - 0.01) deck.offset = 0;
         if (Math.abs(media.currentTime - deck.offset) > 0.05) media.currentTime = deck.offset;
         media.playbackRate = speedOf(deck);
+        media.loop = deck.loop;
         deck.playing = true;
         const generation = ++deck.generation;
         media.play().catch(() => {
@@ -166,6 +174,7 @@ function startDeck(deck, when) {
 
     const source = audioContext.createBufferSource();
     source.buffer = deck.buffer;
+    source.loop = deck.loop;
     source.playbackRate.value = speedOf(deck);
     source.connect(deck.gain);
     deck.source = source;
@@ -273,6 +282,7 @@ async function prepareStream(deck, url, name, generation, remote) {
     const media = document.createElement('audio');
     media.hidden = true;
     media.preload = 'metadata';
+    media.loop = deck.loop;
     if (remote) media.crossOrigin = 'anonymous';
     deck.streamAudio = media;
     document.body.appendChild(media);
@@ -535,6 +545,16 @@ Object.values(decks).forEach((deck) => {
     });
     deck.nativeAudio.addEventListener('pause', renderControls);
 
+    deck.loopButton.addEventListener('click', () => {
+        deck.loop = !deck.loop;
+        deck.loopButton.setAttribute('aria-pressed', String(deck.loop));
+        deck.loopButton.textContent = `Loop ${deck.key.toUpperCase()}: ${deck.loop ? 'On' : 'Off'}`;
+        deck.nativeAudio.loop = deck.loop;
+        if (deck.streamAudio) deck.streamAudio.loop = deck.loop;
+        if (deck.source) deck.source.loop = deck.loop;
+        setStatus(`Loop ${deck.key.toUpperCase()} ${deck.loop ? 'on' : 'off'}.`);
+    });
+
     deck.toggleButton.addEventListener('click', () => {
         if (deck.playing) {
             pauseDeck(deck);
@@ -675,14 +695,70 @@ restartBothButton.addEventListener('click', () => {
     }
 });
 
+let blackScreenWanted = false;
+let wakeLockSentinel = null;
+let wakeLockRequest = 0;
+
+function closeBlackScreen(message) {
+    blackScreenWanted = false;
+    wakeLockRequest += 1;
+    blackScreenOverlay.hidden = true;
+    document.body.classList.remove('black-screen-open');
+    const lock = wakeLockSentinel;
+    wakeLockSentinel = null;
+    if (lock) lock.release().catch(() => {});
+    blackScreenButton.focus();
+    if (message) setStatus(message);
+}
+
+async function acquireWakeLock() {
+    if (!blackScreenWanted || document.hidden) return;
+    const request = ++wakeLockRequest;
+    try {
+        const lock = await navigator.wakeLock.request('screen');
+        if (!blackScreenWanted || request !== wakeLockRequest) {
+            lock.release().catch(() => {});
+            return;
+        }
+        wakeLockSentinel = lock;
+        blackScreenStatus.textContent = 'Screen awake while this page stays visible. Audio keeps playing. Tap Exit black screen to return.';
+        lock.addEventListener('release', () => {
+            if (wakeLockSentinel !== lock) return;
+            wakeLockSentinel = null;
+            if (blackScreenWanted && !document.hidden) {
+                closeBlackScreen('The phone released the screen wake lock. Black screen mode ended.');
+            }
+        });
+    } catch (_) {
+        if (!blackScreenWanted || request !== wakeLockRequest) return;
+        if (document.hidden) return;
+        closeBlackScreen('Chrome could not keep the screen awake here. Try opening the page over HTTPS, or use quick play for background audio.');
+    }
+}
+
+blackScreenButton.addEventListener('click', () => {
+    if (!navigator.wakeLock?.request) {
+        setStatus('Screen wake lock is unavailable in this browser or page. Try opening the page over HTTPS in Chrome.');
+        return;
+    }
+    blackScreenWanted = true;
+    blackScreenOverlay.hidden = false;
+    document.body.classList.add('black-screen-open');
+    blackScreenStatus.textContent = 'Requesting screen wake lock…';
+    acquireWakeLock();
+    blackScreenExit.focus();
+});
+blackScreenExit.addEventListener('click', () => closeBlackScreen('Black screen mode ended. Audio keeps playing.'));
+
 document.addEventListener('visibilitychange', () => {
+    if (blackScreenWanted && !document.hidden && (!wakeLockSentinel || wakeLockSentinel.released)) acquireWakeLock();
     if (!document.hidden && audioContext?.state === 'suspended' && Object.values(decks).some((deck) => deck.playing)) {
         setStatus('The audio mixer paused in the background. Tap Play to resume, or use the native background player.');
     }
 });
 
 if (!AudioContextClass) {
-    setStatus('This browser does not support the audio mixer. Try a current version of Safari.');
+    setStatus('This browser does not support the audio mixer. Try a current version of Chrome.');
 }
 renderControls();
 requestAnimationFrame(renderProgress);
