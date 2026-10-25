@@ -3416,3 +3416,88 @@ body:has(#big-text) {
         padding-left: 20px;
     }
 }
+
+/* Music page: keep the artist directory and desk illustration in one layout. */
+.site-text-file .text-file {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.8fr);
+    column-gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+}
+
+.site-text-file .text-file > .file-label {
+    grid-column: 1 / -1;
+}
+
+.site-text-file .text-file-copy {
+    min-width: 0;
+}
+
+.site-text-file .artist-links {
+    max-width: none;
+}
+
+.site-text-file .artist-link {
+    display: flex;
+    min-width: 0;
+    min-height: 92px;
+    flex-direction: column;
+    gap: 7px;
+    padding: 15px 17px;
+    background: #222;
+    color: #e0d1b4;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.site-text-file .artist-link:hover,
+.site-text-file .artist-link:focus-visible {
+    background: #303030;
+    color: #f2dfbd;
+}
+
+.site-text-file .artist-link:focus-visible {
+    outline: 2px solid #e0d1b4;
+    outline-offset: -2px;
+}
+
+.site-text-file .artist-link strong {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.site-text-file .artist-link span {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.site-text-file .artist-link:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+}
+
+.site-text-file .records-illustration {
+    width: 100%;
+    margin: clamp(28px, 5vw, 64px) 0 0;
+}
+
+@media (max-width: 1020px) {
+    .site-text-file .text-file {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .site-text-file .records-illustration {
+        width: min(620px, 100%);
+        margin: 22px auto 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .site-text-file .artist-links {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .site-text-file .artist-link:last-child:nth-child(odd) {
+        grid-column: auto;
+    }
+}
