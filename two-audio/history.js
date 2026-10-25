@@ -1,13 +1,13 @@
 const HISTORY_KEY = 'two-audio-history-v1';
 const HISTORY_LIMIT = 16;
-const MAX_SAVED_FILE = 50 * 1024 * 1024;
+const MAX_SAVED_FILE = 12 * 1024 * 1024;
 const historyList = document.getElementById('history-list');
 const historyLoaders = {};
 
 let historyEntries = [];
 try {
     const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-    if (Array.isArray(saved)) historyEntries = saved.slice(0, HISTORY_LIMIT);
+    if (Array.isArray(saved)) historyEntries = saved.filter((entry) => entry.kind !== 'spotify').slice(0, HISTORY_LIMIT);
 } catch (_) { /* Storage may be unavailable on a local file or private browser. */ }
 
 function saveHistory() {
@@ -76,19 +76,18 @@ function renderHistory() {
         const detail = document.createElement('span');
         const actions = document.createElement('div');
         title.textContent = entry.label;
-        detail.textContent = `${entry.kind === 'file' ? 'File' : entry.kind === 'audio-url' ? 'Audio link' : entry.kind === 'youtube' ? 'YouTube' : 'Spotify'}${entry.kind === 'file' && !entry.restorable ? ' · choose again' : ''}`;
+        detail.textContent = `${entry.kind === 'file' ? 'File' : entry.kind === 'audio-url' ? 'Audio link' : 'YouTube'}${entry.kind === 'file' && !entry.restorable ? ' · choose again' : ''}`;
         actions.className = 'history-actions';
         info.append(title, detail);
 
-        const destinations = entry.kind === 'youtube' ? [['YouTube', 'youtube']]
-            : entry.kind === 'spotify' ? [['Spotify', 'spotify']]
-                : [['A', 'a'], ['B', 'b']];
+        const destinations = entry.kind === 'youtube' ? [['YouTube', 'youtube']] : [['A', 'a'], ['B', 'b']];
         for (const [label, destination] of destinations) {
             const button = document.createElement('button');
             button.type = 'button';
             button.textContent = `${entry.kind === 'file' && !entry.restorable ? 'Choose' : 'Load'} ${label}`;
             button.addEventListener('click', () => {
                 if (entry.kind === 'file' && !entry.restorable) {
+                    document.getElementById(`history-name-${destination}`).value = entry.label;
                     document.getElementById(`file-${destination}`).click();
                 } else {
                     historyLoaders[destination]?.(entry);
@@ -96,6 +95,38 @@ function renderHistory() {
             });
             actions.append(button);
         }
+        const renameButton = document.createElement('button');
+        renameButton.type = 'button';
+        renameButton.textContent = 'Rename';
+        renameButton.addEventListener('click', () => {
+            const editor = document.createElement('form');
+            const input = document.createElement('input');
+            const saveButton = document.createElement('button');
+            const cancelButton = document.createElement('button');
+            editor.className = 'history-rename';
+            input.type = 'text';
+            input.maxLength = 80;
+            input.value = entry.label;
+            input.setAttribute('aria-label', 'History name');
+            saveButton.type = 'submit';
+            saveButton.textContent = 'Save';
+            cancelButton.type = 'button';
+            cancelButton.textContent = 'Cancel';
+            editor.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const label = input.value.trim();
+                if (!label) return;
+                entry.label = label;
+                saveHistory();
+                renderHistory();
+            });
+            cancelButton.addEventListener('click', renderHistory);
+            editor.append(input, saveButton, cancelButton);
+            info.replaceChildren(editor, detail);
+            input.focus();
+            input.select();
+        });
+        actions.append(renameButton);
         item.append(info, actions);
         historyList.append(item);
     }
@@ -112,7 +143,7 @@ window.audioHistory = {
     addLink(kind, url, label) {
         addEntry({ id: `${kind}:${url}`, kind, url, label, savedAt: Date.now() });
     },
-    async addFile(file) {
+    async addFile(file, label = file.name) {
         const id = `file:${Date.now()}:${Math.random().toString(36).slice(2)}`;
         let restorable = false;
         if (file.size <= MAX_SAVED_FILE) {
@@ -121,7 +152,7 @@ window.audioHistory = {
                 restorable = true;
             } catch (_) { /* Show its name even if storage quota is exhausted. */ }
         }
-        addEntry({ id, kind: 'file', label: file.name, restorable, savedAt: Date.now() });
+        addEntry({ id, kind: 'file', label, restorable, savedAt: Date.now() });
         return restorable;
     },
     getFile(id) { return fileOperation('readonly', id); },

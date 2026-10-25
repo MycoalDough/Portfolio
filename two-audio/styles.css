@@ -58,7 +58,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .intro h1 em { color: var(--accent); font-style: normal; }
 .intro > p:last-child { max-width: 610px; margin: 0; color: var(--muted); font-size: clamp(1rem, 1.8vw, 1.24rem); }
 
-.streaming { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.streaming { display: grid; grid-template-columns: minmax(0, 760px); gap: 18px; }
 .stream-card { min-width: 0; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
 .stream-card .deck-heading { margin-bottom: 20px; }
 .stream-form label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; }
@@ -67,7 +67,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .stream-frame:empty::before { content: 'Player appears here'; color: #78808e; font-size: 13px; }
 .stream-frame iframe { display: block; width: 100%; border: 0; }
 .youtube-frame iframe { aspect-ratio: 16 / 9; min-height: 220px; }
-.spotify-frame iframe { height: 352px; }
 .stream-link { display: inline-block; margin-top: 15px; color: var(--accent); font-size: 13px; text-underline-offset: 3px; }
 .youtube-volume { margin-top: 17px; }
 .control-hint { margin: 7px 0 0; color: var(--muted); font-size: 11px; }
@@ -107,6 +106,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .url-row { display: flex; gap: 7px; }
 .url-row input { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #4c5360; border-radius: 9px; background: #14171d; color: var(--text); font-size: 13px; }
 .url-row button { padding: 10px 14px; }
+.history-name { margin: 0 0 17px; }
+.stream-card .history-name { margin: 16px 0 0; }
+.history-name label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; }
+.history-name input, .history-rename input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #4c5360; border-radius: 9px; background: #14171d; color: var(--text); font-size: 13px; }
 .load-state { margin-top: 16px; color: var(--accent); font-size: 12px; }
 .load-state progress { display: block; width: 100%; height: 9px; margin-top: 6px; accent-color: var(--accent); }
 .load-state progress[hidden] { display: none; }
@@ -124,6 +127,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .effect-control label { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 12px; }
 .effect-control output { color: var(--text); font-variant-numeric: tabular-nums; }
 .effect-control input { width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
+.effect-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+.effect-presets button { flex: 1 1 180px; min-height: 42px; padding: 8px 10px; font-size: 12px; }
 .background-player { margin-top: 27px; padding-top: 17px; border-top: 1px solid var(--line); }
 .background-player summary { color: var(--accent); font-size: 13px; font-weight: 700; cursor: pointer; }
 .background-player p { color: var(--muted); font-size: 12px; }
@@ -138,6 +143,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, .file-picker:focus-w
 .history li span { color: var(--muted); font-size: 11px; }
 .history-actions { display: flex; flex-wrap: wrap; gap: 6px; flex: 0 0 auto; }
 .history-actions button, .history-heading button { min-height: 36px; padding: 6px 10px; font-size: 12px; }
+.history-rename { display: flex; flex-wrap: wrap; gap: 6px; max-width: 420px; }
+.history-rename input { flex: 1 1 180px; }
+.history-rename button { min-height: 36px; padding: 6px 10px; font-size: 12px; }
 .history .history-empty { color: var(--muted); font-size: 13px; }
 
 footer { display: flex; gap: 8px; padding: 22px 0 50px; border-top: 1px solid var(--line); color: #78808e; font-size: 10px; font-weight: 700; letter-spacing: .13em; }
