@@ -2721,6 +2721,8 @@ a.record-row:focus-visible {
     padding: 10px 0;
     border-top: 1px solid var(--portfolio-line);
     border-bottom: 1px solid var(--portfolio-line);
+    color: #c0c0c0;
+    font-size: 13px;
 }
 
 .feed-toolbar {
@@ -2760,8 +2762,8 @@ a.record-row:focus-visible {
 .feed-status small {
     display: block;
     margin-top: 10px;
-    color: #777;
-    font-size: 11px;
+    color: #bcbcbc;
+    font-size: 15px;
 }
 
 .feed-controls {
@@ -2772,27 +2774,32 @@ a.record-row:focus-visible {
 
 .feed-controls label {
     grid-column: 1 / -1;
-    color: #6d6d6d;
-    font-size: 9px;
+    color: #c3c3c3;
+    font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: lowercase;
 }
 
 .feed-controls #searchBox,
 .feed-controls #reverseButton {
-    height: 39px;
+    height: 44px;
     margin: 0;
-    border: 1px solid #424242;
+    border: 1px solid #666;
     border-radius: 0;
     background: #202020;
-    color: #bcbcbc;
+    color: #e8e8e8;
     font: inherit;
 }
 
 .feed-controls #searchBox {
     width: 100%;
     padding: 0 12px;
-    font-size: 12px;
+    font-size: 15px;
+}
+
+.feed-controls #searchBox::placeholder {
+    color: #b7b7b7;
+    opacity: 1;
 }
 
 .feed-controls #searchBox:focus,
@@ -2804,7 +2811,7 @@ a.record-row:focus-visible {
 .feed-controls #reverseButton {
     width: auto;
     padding: 0 14px;
-    font-size: 9px;
+    font-size: 14px;
     letter-spacing: 0.06em;
     cursor: pointer;
 }
@@ -2822,6 +2829,8 @@ a.record-row:focus-visible {
     border-top: 1px solid var(--portfolio-line);
     border-bottom: 1px solid var(--portfolio-line);
     text-transform: none;
+    color: #c0c0c0;
+    font-size: 13px;
 }
 
 .site-feed #feedEntries {
@@ -2848,8 +2857,8 @@ a.record-row:focus-visible {
     grid-column: 1;
     grid-row: 1 / 5;
     padding-top: 2px;
-    color: #5e5e5e;
-    font-size: 9px;
+    color: #b8b8b8;
+    font-size: 12px;
     letter-spacing: 0.08em;
 }
 
@@ -2870,8 +2879,8 @@ a.record-row:focus-visible {
 
 .site-feed .top-right {
     padding: 3px 0 0;
-    color: #707070;
-    font-size: 9px;
+    color: #b8b8b8;
+    font-size: 12px;
     letter-spacing: 0.04em;
     white-space: nowrap;
 }
@@ -2880,8 +2889,8 @@ a.record-row:focus-visible {
     grid-column: 2 / -1;
     max-width: 960px;
     margin: 11px 0 0;
-    color: #a5a5a5;
-    font-size: 13px;
+    color: #c6c6c6;
+    font-size: 16px;
     line-height: 1.55;
 }
 
@@ -2900,21 +2909,22 @@ a.record-row:focus-visible {
 
 .site-feed .no-image {
     margin-top: 12px;
-    color: #555;
-    font-size: 9px;
+    color: #aaa;
+    font-size: 12px;
 }
 
 .site-feed #image-button-feed,
 .site-feed .feed-image-button {
     width: fit-content;
     margin: 14px 0 0;
-    padding: 7px 10px;
-    border: 1px solid #474747;
+    min-height: 40px;
+    padding: 9px 13px;
+    border: 1px solid #666;
     border-radius: 0;
     background: transparent;
-    color: #9292ba;
+    color: #c5c5ed;
     font: inherit;
-    font-size: 9px;
+    font-size: 13px;
     cursor: pointer;
 }
 
@@ -2936,8 +2946,8 @@ a.record-row:focus-visible {
     grid-row: 4;
     align-self: end;
     margin: 10px 0 0 18px;
-    color: #666;
-    font-size: 9px;
+    color: #b8b8b8;
+    font-size: 12px;
     white-space: nowrap;
 }
 

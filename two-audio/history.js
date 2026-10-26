@@ -80,7 +80,7 @@ function renderHistory() {
         actions.className = 'history-actions';
         info.append(title, detail);
 
-        const destinations = entry.kind === 'youtube' ? [['YouTube', 'youtube']] : [['A', 'a'], ['B', 'b']];
+        const destinations = entry.kind === 'youtube' ? [['YouTube 1', 'youtube-1'], ['YouTube 2', 'youtube-2']] : [['A', 'a'], ['B', 'b']];
         for (const [label, destination] of destinations) {
             const button = document.createElement('button');
             button.type = 'button';

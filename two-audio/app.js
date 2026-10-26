@@ -8,10 +8,20 @@ const blackScreenButton = document.getElementById('black-screen-button');
 const blackScreenOverlay = document.getElementById('black-screen-overlay');
 const blackScreenExit = document.getElementById('black-screen-exit');
 const blackScreenStatus = document.getElementById('black-screen-status');
+const sleepTimerStatus = document.getElementById('sleep-timer-status');
+const resetSleepTimerButton = document.getElementById('reset-sleep-timer');
 const MAX_MIXER_BYTES = 12 * 1024 * 1024;
+const SLEEP_DURATION_MS = 90 * 60 * 1000;
 
 let audioContext;
 let roomImpulse;
+let sleepDeadline = null;
+let sleepTickInterval = null;
+let sleepDeadlineTimeout = null;
+let sleepIdleTimeout = null;
+let sleepEnding = false;
+let sleepSawPlayback = false;
+const youtubePlaying = new Set();
 
 const decks = Object.fromEntries(['a', 'b'].map((key) => [key, {
     key,
@@ -199,9 +209,93 @@ function unlockAudio() {
     return context;
 }
 
+function anyLocalAudioPlaying() {
+    return Object.values(decks).some((deck) => deck.playing || !deck.nativeAudio.paused);
+}
+
+function anyPlayback() {
+    return anyLocalAudioPlaying() || youtubePlaying.size > 0;
+}
+
+function sleepTimeLeft() {
+    const seconds = Math.max(0, Math.ceil((sleepDeadline - Date.now()) / 1000));
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor(seconds % 3600 / 60);
+    return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function clearSleepTimer(message = 'Ready. Starts when local audio plays or black screen opens.') {
+    clearInterval(sleepTickInterval);
+    clearTimeout(sleepDeadlineTimeout);
+    clearTimeout(sleepIdleTimeout);
+    sleepTickInterval = null;
+    sleepDeadlineTimeout = null;
+    sleepIdleTimeout = null;
+    sleepDeadline = null;
+    sleepSawPlayback = false;
+    sleepTimerStatus.textContent = message;
+    resetSleepTimerButton.disabled = true;
+}
+
+function endSleepSession(message) {
+    if (sleepEnding || sleepDeadline === null) return;
+    sleepEnding = true;
+    pauseDeck(decks.a);
+    pauseDeck(decks.b);
+    decks.a.nativeAudio.pause();
+    decks.b.nativeAudio.pause();
+    audioContext?.suspend().catch(() => {});
+    window.stopYouTubeForSleep?.();
+    if (blackScreenWanted) closeBlackScreen();
+    clearSleepTimer(message);
+    renderControls();
+    setStatus(message);
+    sleepEnding = false;
+}
+
+function tickSleepTimer() {
+    if (sleepDeadline === null) return;
+    if (Date.now() >= sleepDeadline) {
+        endSleepSession('Sleep mode finished after 1 hour 30 minutes. Audio stopped and the screen wake lock was released.');
+        return;
+    }
+    sleepTimerStatus.textContent = `${sleepTimeLeft()} remaining. Stops audio and exits dark screen when time is up.`;
+}
+
+function setSleepDeadline() {
+    clearInterval(sleepTickInterval);
+    clearTimeout(sleepDeadlineTimeout);
+    sleepDeadline = Date.now() + SLEEP_DURATION_MS;
+    resetSleepTimerButton.disabled = false;
+    tickSleepTimer();
+    sleepTickInterval = setInterval(tickSleepTimer, 1000);
+    sleepDeadlineTimeout = setTimeout(tickSleepTimer, SLEEP_DURATION_MS);
+}
+
+function syncSleepSession(anyPlaying) {
+    if (sleepEnding) return;
+    if (anyPlaying) {
+        clearTimeout(sleepIdleTimeout);
+        sleepIdleTimeout = null;
+        sleepSawPlayback = true;
+        if (sleepDeadline === null) setSleepDeadline();
+    } else if (sleepSawPlayback && sleepDeadline !== null && sleepIdleTimeout === null) {
+        sleepIdleTimeout = setTimeout(() => {
+            sleepIdleTimeout = null;
+            if (!anyPlayback()) endSleepSession('Playback stopped. Sleep timer reset and dark screen ended.');
+        }, 1500);
+    }
+}
+
+window.setYouTubePlaybackState = (key, playing) => {
+    if (playing) youtubePlaying.add(key);
+    else youtubePlaying.delete(key);
+    syncSleepSession(anyPlayback());
+};
+
 function renderControls() {
     const bothReady = mixerReady(decks.a) && mixerReady(decks.b);
-    const anyPlaying = decks.a.playing || decks.b.playing || Object.values(decks).some((deck) => deck.nativeAudio.paused === false);
+    const anyPlaying = anyLocalAudioPlaying();
     playBothButton.disabled = !bothReady;
     playBothQuickButton.disabled = !decks.a.nativeAudio.src || !decks.b.nativeAudio.src;
     restartBothButton.disabled = !bothReady;
@@ -217,7 +311,14 @@ function renderControls() {
             : 'MP3, M4A, or another format your browser supports';
         deck.totalElement.textContent = formatTime(durationOf(deck));
     });
+    syncSleepSession(anyPlaying || youtubePlaying.size > 0);
 }
+
+resetSleepTimerButton.addEventListener('click', () => {
+    if (sleepDeadline === null || (!anyPlayback() && !blackScreenWanted)) return;
+    setSleepDeadline();
+    setStatus('Sleep timer reset to 1 hour 30 minutes.');
+});
 
 function renderProgress() {
     Object.values(decks).forEach((deck) => {
@@ -227,7 +328,6 @@ function renderProgress() {
             deck.seekInput.value = String(Math.round(position / durationOf(deck) * 1000));
         }
     });
-    requestAnimationFrame(renderProgress);
 }
 
 function showLoad(deck, message, percent) {
@@ -255,8 +355,6 @@ function beginLoad(deck, name) {
 
 function skipMixer(deck, name, reason = 'is too large for the effects mixer (12 MB limit)') {
     const message = `${name} ${reason}. Use quick play below.`;
-    const backgroundPanel = deck.nativeAudio.closest?.('details');
-    if (backgroundPanel) backgroundPanel.open = true;
     deck.loadState.hidden = false;
     deck.loadProgress.hidden = true;
     deck.loadText.textContent = message;
@@ -544,6 +642,7 @@ Object.values(decks).forEach((deck) => {
         setStatus(`Playing ${deck.pendingName || deck.name} in the native player. Use your phone's volume buttons.`);
     });
     deck.nativeAudio.addEventListener('pause', renderControls);
+    deck.nativeAudio.addEventListener('ended', renderControls);
 
     deck.loopButton.addEventListener('click', () => {
         deck.loop = !deck.loop;
@@ -742,6 +841,7 @@ blackScreenButton.addEventListener('click', () => {
         return;
     }
     blackScreenWanted = true;
+    if (sleepDeadline === null) setSleepDeadline();
     blackScreenOverlay.hidden = false;
     document.body.classList.add('black-screen-open');
     blackScreenStatus.textContent = 'Requesting screen wake lock…';
@@ -751,14 +851,17 @@ blackScreenButton.addEventListener('click', () => {
 blackScreenExit.addEventListener('click', () => closeBlackScreen('Black screen mode ended. Audio keeps playing.'));
 
 document.addEventListener('visibilitychange', () => {
+    tickSleepTimer();
     if (blackScreenWanted && !document.hidden && (!wakeLockSentinel || wakeLockSentinel.released)) acquireWakeLock();
     if (!document.hidden && audioContext?.state === 'suspended' && Object.values(decks).some((deck) => deck.playing)) {
         setStatus('The audio mixer paused in the background. Tap Play to resume, or use the native background player.');
     }
 });
+window.addEventListener('pageshow', tickSleepTimer);
 
 if (!AudioContextClass) {
     setStatus('This browser does not support the audio mixer. Try a current version of Chrome.');
 }
 renderControls();
-requestAnimationFrame(renderProgress);
+renderProgress();
+setInterval(renderProgress, 1000);

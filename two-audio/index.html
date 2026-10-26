@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#111318">
     <meta name="robots" content="noindex, nofollow">
-    <title>Two Audio | MYCOAL</title>
+    <title>Mix audio | MYCOAL</title>
     <link rel="icon" href="../icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <script src="history.js" defer></script>
@@ -15,107 +15,94 @@
 <body>
     <div class="page-shell">
         <header class="topbar">
-            <a class="wordmark" href="../index.html">MYCOAL<span> / personal tools</span></a>
-            <span class="local-badge">PERSONAL LISTENING TOOL</span>
+            <a class="wordmark" href="../index.html">MYCOAL <span>/ audio mixer</span></a>
         </header>
 
         <main>
             <section class="intro" aria-labelledby="page-title">
-                <p class="eyebrow">01 / YOUTUBE</p>
-                <h1 id="page-title">Play them<br><em>side by side.</em></h1>
-                <p>Play YouTube alongside your own audio files or direct links. The default YouTube video is ready when this page opens.</p>
+                <h1 id="page-title">Mix your audio.</h1>
+                <p>Load and play up to two YouTube videos and two audio tracks.</p>
             </section>
 
-            <section class="streaming" aria-label="YouTube player">
-                <article class="stream-card" aria-labelledby="youtube-title">
-                    <div class="deck-heading"><span class="deck-number">Y</span><h2 id="youtube-title">YouTube</h2></div>
-                    <form id="youtube-form" class="stream-form">
-                        <label for="youtube-url">Video URL</label>
-                        <div class="url-row"><input id="youtube-url" type="url" inputmode="url" value="https://www.youtube.com/watch?v=DUuiaHEJOmU" placeholder="https://www.youtube.com/watch?v=..." required><button type="submit">Load</button></div>
-                    </form>
-                    <div class="history-name"><label for="youtube-name">Name in history (optional)</label><input id="youtube-name" type="text" maxlength="80" placeholder="My YouTube video"></div>
-                    <p id="youtube-status" class="stream-status" role="status" aria-live="polite">Paste a video link to load the official YouTube player.</p>
-                    <div id="youtube-frame" class="stream-frame youtube-frame"></div>
-                    <div class="effect-control youtube-volume"><label for="youtube-volume">YouTube volume <output id="youtube-volume-value">100%</output></label><input id="youtube-volume" type="range" min="0" max="100" value="100" aria-label="YouTube player volume" disabled></div>
-                    <p class="control-hint">On iPhone, YouTube may require the phone’s volume buttons.</p>
-                    <a class="stream-link" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Find a video on YouTube ↗</a>
-                </article>
+            <section class="section-block" aria-labelledby="youtube-heading">
+                <div class="section-heading"><div><h2 id="youtube-heading">YouTube</h2><p>Paste a video link into either player. Your usual video is ready in Player 1.</p></div><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Find a video ↗</a></div>
+                <div class="youtube-grid">
+                    <article class="stream-card" aria-labelledby="youtube-title-1">
+                        <h3 id="youtube-title-1">YouTube 1</h3>
+                        <form id="youtube-form-1" class="stream-form">
+                            <label for="youtube-url-1">Video link</label>
+                            <div class="url-row"><input id="youtube-url-1" type="url" inputmode="url" value="https://www.youtube.com/watch?v=DUuiaHEJOmU" placeholder="Paste a YouTube URL" required><button type="submit">Load</button></div>
+                            <div class="history-name youtube-name"><label for="youtube-name-1">Name in history (optional)</label><input id="youtube-name-1" type="text" maxlength="80" placeholder="My video"></div>
+                        </form>
+                        <p id="youtube-status-1" class="stream-status" role="status" aria-live="polite">Loading your usual video…</p>
+                        <div id="youtube-frame-1" class="stream-frame youtube-frame"></div>
+                        <div class="effect-control youtube-volume"><label for="youtube-volume-1">Volume <output id="youtube-volume-value-1">100%</output></label><input id="youtube-volume-1" type="range" min="0" max="100" value="100" aria-label="YouTube 1 volume" disabled></div>
+                    </article>
+                    <article class="stream-card" aria-labelledby="youtube-title-2">
+                        <h3 id="youtube-title-2">YouTube 2</h3>
+                        <form id="youtube-form-2" class="stream-form">
+                            <label for="youtube-url-2">Video link</label>
+                            <div class="url-row"><input id="youtube-url-2" type="url" inputmode="url" placeholder="Paste a YouTube URL" required><button type="submit">Load</button></div>
+                            <div class="history-name youtube-name"><label for="youtube-name-2">Name in history (optional)</label><input id="youtube-name-2" type="text" maxlength="80" placeholder="My video"></div>
+                        </form>
+                        <p id="youtube-status-2" class="stream-status" role="status" aria-live="polite">Paste a link and tap Load.</p>
+                        <div id="youtube-frame-2" class="stream-frame youtube-frame"></div>
+                        <div class="effect-control youtube-volume"><label for="youtube-volume-2">Volume <output id="youtube-volume-value-2">100%</output></label><input id="youtube-volume-2" type="range" min="0" max="100" value="100" aria-label="YouTube 2 volume" disabled></div>
+                    </article>
+                </div>
+                <p class="section-note">Tap Play inside each video. iPhone may pause one player when another starts.</p>
             </section>
 
-            <p class="streaming-help">Tap Play in YouTube, then start your audio below. On iPhone, Chrome or YouTube may pause one when the other starts; this page cannot override that. Keep the page visible. YouTube ads and playback are controlled by its official player and your account.</p>
-
-            <div class="local-heading">
-                <p class="eyebrow">02 / LOCAL AUDIO</p>
-                <h2>Mix your own audio files</h2>
-                <p>This option mixes two files or direct audio links with separate effects and volume controls. Large audio streams through the mixer when the file’s host permits it.</p>
-            </div>
-
-            <section class="transport" aria-label="Both tracks">
-                <div>
-                    <span class="transport-label">LOCAL AUDIO CONTROLS</span>
+            <section class="section-block" aria-labelledby="audio-heading">
+                <div class="section-heading"><div><h2 id="audio-heading">Your audio</h2><p>Use a file from your phone or a direct audio link for each track.</p></div></div>
+                <div class="transport">
+                    <div class="transport-buttons">
+                        <button type="button" id="play-both" class="primary-button" disabled>Play Audio A + B</button>
+                        <button type="button" id="pause-both" disabled>Pause Audio A + B</button>
+                        <button type="button" id="black-screen-button">Dark screen · stays awake</button>
+                    </div>
                     <p id="status" role="status" aria-live="polite">Choose audio for both tracks to get started.</p>
+                    <div class="extra-buttons"><button type="button" id="play-both-quick" disabled>Play both without effects</button><button type="button" id="restart-both" disabled>Restart both</button></div>
                 </div>
-                <div class="transport-buttons">
-                    <button type="button" id="play-both" class="primary-button" disabled>Play both</button>
-                    <button type="button" id="play-both-quick" disabled>Play both quick · no effects</button>
-                    <button type="button" id="pause-both" disabled>Pause both</button>
-                    <button type="button" id="restart-both" disabled>Restart both</button>
-                    <button type="button" id="black-screen-button">Keep awake + black screen</button>
+                <div class="sleep-timer" aria-label="Sleep timer"><div><strong>Sleep timer · 1 hour 30 minutes</strong><p id="sleep-timer-status">Ready. Starts when audio plays or dark screen opens.</p></div><button type="button" id="reset-sleep-timer" disabled>Reset timer</button></div>
+                <p class="wake-help">Dark screen keeps the display on. It can still heat your phone, especially while charging.</p>
+
+                <div class="decks">
+                    <article class="deck" data-deck="a" aria-labelledby="track-a-title">
+                        <h3 id="track-a-title">Audio A</h3>
+                        <div class="source-picker"><label class="file-picker" for="file-a">Choose file</label><input id="file-a" type="file" accept="audio/mpeg,audio/mp3,.mp3,audio/*"><span>or paste a direct audio link</span></div>
+                        <div class="url-row"><input id="url-a" type="url" inputmode="url" aria-label="Audio A link" placeholder="https://example.com/audio.mp3"><button type="button" id="load-url-a">Load</button></div>
+                        <div id="load-state-a" class="load-state" role="status" aria-live="polite" hidden><span id="load-text-a">Loading…</span><progress id="load-progress-a" max="100"></progress></div>
+                        <div class="track-info"><strong id="name-a">No audio loaded</strong><span id="duration-a">MP3, M4A, or another supported audio format</span></div>
+                        <input id="seek-a" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek Audio A" disabled>
+                        <div class="time-row"><span id="current-a">0:00</span><span id="total-a">0:00</span></div>
+                        <div class="deck-controls"><button type="button" id="toggle-a" disabled>Play A</button><label for="volume-a">Volume <output id="volume-value-a">70%</output></label><input id="volume-a" type="range" min="0" max="100" value="70" aria-label="Audio A volume"></div>
+                        <button type="button" id="loop-a" class="loop-button" aria-pressed="false">Loop A: Off</button>
+                        <div class="effect-presets"><button type="button" id="preset-slow-a">Slow + reverb</button><button type="button" id="preset-normal-a">Normal sound</button></div>
+                        <div class="fine-tune"><div class="effects"><div class="effect-control"><label for="slow-a">Speed <output id="slow-value-a">1.00×</output></label><input id="slow-a" type="range" min="50" max="100" value="100" aria-label="Audio A speed"></div><div class="effect-control"><label for="reverb-a">Reverb <output id="reverb-value-a">0%</output></label><input id="reverb-a" type="range" min="0" max="100" value="0" aria-label="Audio A reverb"></div></div><div class="history-name"><label for="history-name-a">Name in history (optional)</label><input id="history-name-a" type="text" maxlength="80" placeholder="My audio"></div></div>
+                        <div class="background-player"><span>Quick play · no effects</span><audio id="native-a" controls preload="none"></audio></div>
+                    </article>
+
+                    <article class="deck" data-deck="b" aria-labelledby="track-b-title">
+                        <h3 id="track-b-title">Audio B</h3>
+                        <div class="source-picker"><label class="file-picker" for="file-b">Choose file</label><input id="file-b" type="file" accept="audio/mpeg,audio/mp3,.mp3,audio/*"><span>or paste a direct audio link</span></div>
+                        <div class="url-row"><input id="url-b" type="url" inputmode="url" aria-label="Audio B link" placeholder="https://example.com/audio.mp3"><button type="button" id="load-url-b">Load</button></div>
+                        <div id="load-state-b" class="load-state" role="status" aria-live="polite" hidden><span id="load-text-b">Loading…</span><progress id="load-progress-b" max="100"></progress></div>
+                        <div class="track-info"><strong id="name-b">No audio loaded</strong><span id="duration-b">MP3, M4A, or another supported audio format</span></div>
+                        <input id="seek-b" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek Audio B" disabled>
+                        <div class="time-row"><span id="current-b">0:00</span><span id="total-b">0:00</span></div>
+                        <div class="deck-controls"><button type="button" id="toggle-b" disabled>Play B</button><label for="volume-b">Volume <output id="volume-value-b">70%</output></label><input id="volume-b" type="range" min="0" max="100" value="70" aria-label="Audio B volume"></div>
+                        <button type="button" id="loop-b" class="loop-button" aria-pressed="false">Loop B: Off</button>
+                        <div class="effect-presets"><button type="button" id="preset-slow-b">Slow + reverb</button><button type="button" id="preset-normal-b">Normal sound</button></div>
+                        <div class="fine-tune"><div class="effects"><div class="effect-control"><label for="slow-b">Speed <output id="slow-value-b">1.00×</output></label><input id="slow-b" type="range" min="50" max="100" value="100" aria-label="Audio B speed"></div><div class="effect-control"><label for="reverb-b">Reverb <output id="reverb-value-b">0%</output></label><input id="reverb-b" type="range" min="0" max="100" value="0" aria-label="Audio B reverb"></div></div><div class="history-name"><label for="history-name-b">Name in history (optional)</label><input id="history-name-b" type="text" maxlength="80" placeholder="My audio"></div></div>
+                        <div class="background-player"><span>Quick play · no effects</span><audio id="native-b" controls preload="none"></audio></div>
+                    </article>
                 </div>
             </section>
-            <p class="wake-help">Black screen mode keeps the display on while hiding the page. It uses battery and works only when Chrome grants a screen wake lock.</p>
 
-            <section class="decks" aria-label="Audio tracks">
-                <article class="deck" data-deck="a" aria-labelledby="track-a-title">
-                    <div class="deck-heading"><span class="deck-number">A</span><h2 id="track-a-title">First track</h2></div>
-                    <div class="history-name"><label for="history-name-a">Name in history (optional)</label><input id="history-name-a" type="text" maxlength="80" placeholder="Leave blank to use the file name or link"></div>
-                    <label class="file-picker" for="file-a">Choose audio from Files</label>
-                    <input id="file-a" type="file" accept="audio/mpeg,audio/mp3,.mp3,audio/*">
-                    <div class="url-loader">
-                        <label for="url-a">Or paste a direct audio URL</label>
-                        <div class="url-row"><input id="url-a" type="url" inputmode="url" placeholder="https://example.com/song.mp3"><button type="button" id="load-url-a">Load</button></div>
-                    </div>
-                    <div id="load-state-a" class="load-state" role="status" aria-live="polite" hidden><span id="load-text-a">Loading…</span><progress id="load-progress-a" max="100"></progress></div>
-                    <div class="track-info"><strong id="name-a">No audio loaded</strong><span id="duration-a">MP3, M4A, or another format your browser supports</span></div>
-                    <input id="seek-a" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek first track" disabled>
-                    <div class="time-row"><span id="current-a">0:00</span><span id="total-a">0:00</span></div>
-                    <div class="deck-controls"><button type="button" id="toggle-a" disabled>Play A</button><label for="volume-a">Volume <output id="volume-value-a">70%</output></label><input id="volume-a" type="range" min="0" max="100" value="70" aria-label="First track volume"></div>
-                    <button type="button" id="loop-a" class="loop-button" aria-pressed="false">Loop A: Off</button>
-                    <div class="effects"><div class="effect-control"><label for="slow-a">Slowed <output id="slow-value-a">1.00×</output></label><input id="slow-a" type="range" min="50" max="100" value="100" aria-label="First track speed"></div><div class="effect-control"><label for="reverb-a">Reverb <output id="reverb-value-a">0%</output></label><input id="reverb-a" type="range" min="0" max="100" value="0" aria-label="First track reverb"></div></div>
-                    <div class="effect-presets"><button type="button" id="preset-slow-a">Slowed + reverb · 80% / 40%</button><button type="button" id="preset-normal-a">Normal · 1.00× / 0%</button></div>
-                    <details class="background-player"><summary>Play A in background / quick play</summary><p>This player is ready before the effects mixer finishes preparing. On iPhone, it has a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-a" controls preload="none"></audio></details>
-                </article>
-
-                <article class="deck" data-deck="b" aria-labelledby="track-b-title">
-                    <div class="deck-heading"><span class="deck-number">B</span><h2 id="track-b-title">Second track</h2></div>
-                    <div class="history-name"><label for="history-name-b">Name in history (optional)</label><input id="history-name-b" type="text" maxlength="80" placeholder="Leave blank to use the file name or link"></div>
-                    <label class="file-picker" for="file-b">Choose audio from Files</label>
-                    <input id="file-b" type="file" accept="audio/mpeg,audio/mp3,.mp3,audio/*">
-                    <div class="url-loader">
-                        <label for="url-b">Or paste a direct audio URL</label>
-                        <div class="url-row"><input id="url-b" type="url" inputmode="url" placeholder="https://example.com/song.mp3"><button type="button" id="load-url-b">Load</button></div>
-                    </div>
-                    <div id="load-state-b" class="load-state" role="status" aria-live="polite" hidden><span id="load-text-b">Loading…</span><progress id="load-progress-b" max="100"></progress></div>
-                    <div class="track-info"><strong id="name-b">No audio loaded</strong><span id="duration-b">MP3, M4A, or another format your browser supports</span></div>
-                    <input id="seek-b" class="seek" type="range" min="0" max="1000" value="0" aria-label="Seek second track" disabled>
-                    <div class="time-row"><span id="current-b">0:00</span><span id="total-b">0:00</span></div>
-                    <div class="deck-controls"><button type="button" id="toggle-b" disabled>Play B</button><label for="volume-b">Volume <output id="volume-value-b">70%</output></label><input id="volume-b" type="range" min="0" max="100" value="70" aria-label="Second track volume"></div>
-                    <button type="button" id="loop-b" class="loop-button" aria-pressed="false">Loop B: Off</button>
-                    <div class="effects"><div class="effect-control"><label for="slow-b">Slowed <output id="slow-value-b">1.00×</output></label><input id="slow-b" type="range" min="50" max="100" value="100" aria-label="Second track speed"></div><div class="effect-control"><label for="reverb-b">Reverb <output id="reverb-value-b">0%</output></label><input id="reverb-b" type="range" min="0" max="100" value="0" aria-label="Second track reverb"></div></div>
-                    <div class="effect-presets"><button type="button" id="preset-slow-b">Slowed + reverb · 80% / 40%</button><button type="button" id="preset-normal-b">Normal · 1.00× / 0%</button></div>
-                    <details class="background-player"><summary>Play B in background / quick play</summary><p>This player is ready before the effects mixer finishes preparing. On iPhone, it has a better chance of playing with the screen off. Effects and the fine volume slider do not apply here; use the phone’s volume buttons.</p><audio id="native-b" controls preload="none"></audio></details>
-                </article>
-            </section>
-
-            <section class="history" aria-labelledby="history-title"><div class="history-heading"><div><p class="eyebrow">03 / THIS DEVICE</p><h2 id="history-title">Recent audio</h2></div><button type="button" id="clear-history">Clear history</button></div><p>Links and selected files are saved in this browser when storage allows. Files over 12 MB need to be chosen again.</p><ul id="history-list"><li class="history-empty">Nothing saved yet.</li></ul></section>
-
-            <p class="fine-print local-note">Large audio can use the streaming mixer with volume, slowed, and reverb when its host permits cross-origin playback. Quick play remains available if streaming effects cannot connect. You can also save an MP3 to Files and choose it above. Playback with the screen off depends on Chrome for iPhone and may stop when another app takes over audio. If an embedded player does not load from this local file, open the page from a hosted website instead.</p>
+            <section class="history-panel history" aria-labelledby="history-title"><div class="history-heading"><h2 id="history-title">Recent links and files</h2><button type="button" id="clear-history">Clear history</button></div><p>Saved on this device when storage allows. Files over 12 MB must be chosen again.</p><ul id="history-list"><li class="history-empty">Nothing saved yet.</li></ul></section>
         </main>
-        <footer>PERSONAL AUDIO TOOL <span>·</span> YOUTUBE + LOCAL AUDIO</footer>
     </div>
-    <div id="black-screen-overlay" class="black-screen-overlay" role="dialog" aria-modal="true" aria-label="Black screen mode" hidden>
-        <button type="button" id="black-screen-exit">Exit black screen</button>
-        <p id="black-screen-status" role="status" aria-live="polite"></p>
-    </div>
+    <div id="black-screen-overlay" class="black-screen-overlay" role="dialog" aria-modal="true" aria-label="Dark screen" hidden><button type="button" id="black-screen-exit">Exit dark screen</button><p id="black-screen-status" role="status" aria-live="polite"></p></div>
 </body>
 </html>
