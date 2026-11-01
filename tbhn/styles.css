@@ -675,6 +675,29 @@ img {
     margin: 0 0 1.4em;
 }
 
+.studio-details .studio-founders {
+    display: grid;
+    gap: 7px;
+    margin: 26px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.studio-founders span {
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.studio-founders strong {
+    color: var(--white);
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 500;
+    line-height: 1.35;
+}
+
 .contact {
     padding-top: clamp(55px, 8vw, 100px);
     padding-bottom: 44px;
